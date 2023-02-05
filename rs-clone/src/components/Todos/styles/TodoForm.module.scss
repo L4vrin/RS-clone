@@ -1,0 +1,16 @@
+.form {
+  background-color: aqua;
+  max-width: 600px;
+  margin: 25px auto;
+  .input {
+    width: 400px;
+    padding: 10px;
+    padding-left: 50px;
+    border-radius: 5px;
+    outline: 2px solid transparent;
+    border: 0;
+    &:focus {
+      outline: 2px solid red;
+    }
+  }
+}

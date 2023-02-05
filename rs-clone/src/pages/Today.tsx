@@ -1,8 +1,8 @@
+import TodoForm from "../components/Todos/TodoForm";
+
 const Today = () => {
   return (
-    <div>
-      
-    </div>
+    <TodoForm />
   );
 };
 
