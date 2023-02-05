@@ -1,19 +1,19 @@
 import {useState} from 'react';
 import styles from './styles/TodoForm.module.scss';
 import {FiPlus} from 'react-icons/fi';
+import {TodoEvent} from './types/todoTypes';
 
-type TodoEvent = React.FormEvent<HTMLFormElement> | React.MouseEvent<SVGElement>
-
-const TodoForm = () => {
+const TodoForm = ({addTodo}: {addTodo: Function}) => {
   const [text, setText] = useState('');
-  const onSubmitHandler = (e: TodoEvent ) => {
+  const onSubmitHandler = (e: TodoEvent) => {
     e.preventDefault();
+    addTodo(text);
     setText('');
   };
   return (
     <form className={styles.form} onSubmit={onSubmitHandler}>
-      <div className={styles.input_wrapper}>
-        <FiPlus className={styles.input_add} onClick = {onSubmitHandler}/>
+      <div className={styles.inputWrapper}>
+        <FiPlus className={styles.inputAdd} onClick={onSubmitHandler} />
         <input
           className={styles.input}
           type="text"

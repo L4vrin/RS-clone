@@ -1,0 +1,27 @@
+.todo {
+display: flex;
+align-items: center;
+padding: 10px 20px;
+margin: 15px 0;
+font-size: 1.2rem;
+border-radius: 5px;
+border: 2px solid #555;
+color: #112d49;
+background-color: #fbfef9;
+user-select: none;
+}
+
+.todoText {
+  width: 100%;
+  text-align: left;
+}
+
+.todoCircleIcon {
+  margin: 3px 20px 0 10px;
+}
+
+.todoDeleteIcon,
+.todoCircleIcon {
+  font-size: 1.2rem;
+  cursor: pointer;
+}
