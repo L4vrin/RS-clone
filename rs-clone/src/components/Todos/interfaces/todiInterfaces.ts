@@ -3,3 +3,9 @@ export interface ITodo {
   isCompleted: boolean;
   id: string;
 }
+
+export interface IProps {
+  todos: Array<ITodo>,
+  todo: ITodo,
+  deleteTodo?: (id: string) => void
+};
