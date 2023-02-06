@@ -1,0 +1,24 @@
+.timer {
+  max-width: 400px;
+}
+
+.circleStatic {
+  fill: none;
+  stroke: rgba($color: #ffffff, $alpha: 0.5);
+  stroke-dasharray: 1;
+  stroke-width: 3;
+}
+
+.circleActive {
+  fill: none;
+  stroke: rgba($color: red, $alpha: 0.7);
+  stroke-dasharray: 240;
+  stroke-width: 3;
+  transform-origin: center;
+  transform: rotate(-90deg);
+}
+
+.time {
+  font-size: 16px;
+  fill: #ffffff;
+}
