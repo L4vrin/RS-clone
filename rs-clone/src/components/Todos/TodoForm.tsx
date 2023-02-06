@@ -1,15 +1,18 @@
 import {useState} from 'react';
-import styles from './styles/TodoForm.module.scss';
 import {FiPlus} from 'react-icons/fi';
 import {TodoEvent} from './types/todoTypes';
+import styles from './styles/TodoForm.module.scss';
 
 const TodoForm = ({addTodo}: {addTodo: Function}) => {
   const [text, setText] = useState('');
   const onSubmitHandler = (e: TodoEvent) => {
     e.preventDefault();
-    addTodo(text);
-    setText('');
+    if (text) {
+      addTodo(text);
+      setText('');
+    }
   };
+
   return (
     <form className={styles.form} onSubmit={onSubmitHandler}>
       <div className={styles.inputWrapper}>
