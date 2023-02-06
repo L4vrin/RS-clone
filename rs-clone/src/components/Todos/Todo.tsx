@@ -20,8 +20,13 @@ const Todo = ({todo, deleteTodo, toggleTodo}: any) => {
           }}
         />
       )}
-
-      <div className={styles.todoText}>{todo.text}</div>
+      <div
+        className={`${
+          todo.isCompleted ? styles.todoCompletedText : styles.todoText
+        }`}
+      >
+        {todo.text}
+      </div>
       <RiDeleteBin2Line
         className={styles.todoDeleteIcon}
         onClick={() => deleteTodo(todo.id)}

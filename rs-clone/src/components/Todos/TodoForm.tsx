@@ -20,7 +20,7 @@ const TodoForm = ({addTodo}: {addTodo: Function}) => {
         <input
           className={styles.input}
           type="text"
-          placeholder='Adding task in "Tasks". Press Enter for save'
+          placeholder='Adding task in "Todo list". Press Enter for save'
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
