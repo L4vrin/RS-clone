@@ -4,7 +4,7 @@ import Today from './pages/Today';
 
 import './App.scss';
 
-function App() {
+const App: React.FC = () => {
   return (
     <Routes>
       <Route path='/' element={<Layout />}>
