@@ -1,14 +1,14 @@
 .todo {
-display: flex;
-align-items: center;
-padding: 10px 20px;
-margin: 15px 0;
-font-size: 1.2rem;
-border-radius: 5px;
-border: 2px solid #555;
-color: #112d49;
-background-color: #fbfef9;
-user-select: none;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  margin: 15px 0;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  border: 2px solid #555;
+  color: #112d49;
+  background-color: #fbfef9;
+  user-select: none;
 }
 
 .todoText {
@@ -19,15 +19,14 @@ user-select: none;
 .todoCircleIcon {
   margin: 3px 20px 0 10px;
 
-  &:active {
+  &:hover {
     color: green;
-    transition: 0;
   }
 }
 
 .todoCheckedCircleIcon {
   margin: 3px 20px 0 10px;
-  color:green;
+  color: green;
 }
 
 .todoDeleteIcon {
@@ -40,8 +39,8 @@ user-select: none;
 .todoCircleIcon,
 .todoCheckedCircleIcon {
   font-size: 1.2rem;
+  transition: 0.2s ease-in;
   cursor: pointer;
-  transition: .2s ease-in;
 
   &:hover {
     transform: scale(1.3);
