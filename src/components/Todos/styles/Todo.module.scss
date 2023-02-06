@@ -1,0 +1,56 @@
+.todo {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  margin: 15px 0;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  border: 2px solid #555;
+  color: #112d49;
+  background-color: #fbfef9;
+  user-select: none;
+}
+
+.todoText {
+  width: 100%;
+  text-align: left;
+}
+
+.todoCompletedText {
+  width: 100%;
+  text-align: left;
+  color: gray;
+  text-decoration: line-through;
+}
+
+.todoCircleIcon {
+  margin: 3px 20px 0 10px;
+
+  &:hover {
+    color: green;
+  }
+}
+
+.todoDeleteIcon {
+  &:hover {
+    color: red;
+  }
+}
+
+.todoDeleteIcon,
+.todoCircleIcon,
+.todoCheckedCircleIcon {
+  font-size: 1.2rem;
+  transition: 0.2s ease-in;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.3);
+  }
+}
+
+.todoCheckedCircleIcon {
+  margin: 3px 20px 0 10px;
+  font-size: 1.5rem;
+  color: green;
+}
