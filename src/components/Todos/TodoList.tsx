@@ -3,10 +3,7 @@ import Todo from './Todo';
 import styles from './styles/TodoList.module.scss';
 
 const TodoList = ({todos, deleteTodo, toggleTodo}: any) => {
-  const filterNotCompletedTodos = (todos: Array<ITodo>) => {
-    return todos.filter((todo: ITodo) => !todo.isCompleted);
-  };
-  const notCompletedTodos = filterNotCompletedTodos(todos);
+  const notCompletedTodos = todos.filter((todo: ITodo) => !todo.isCompleted);
   return (
     <>
       <div className={styles.todoList}>
