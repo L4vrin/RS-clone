@@ -10,7 +10,7 @@ const TodoWidget = () => {
 
   const addTodoHandler = (text: string) => {
     const newTodo = {
-      text: text,
+      text,
       isCompleted: false,
       id: uuidv4(),
     };

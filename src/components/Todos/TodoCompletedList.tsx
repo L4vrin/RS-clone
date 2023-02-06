@@ -5,7 +5,6 @@ import styles from './styles/TodoCompletedList.module.scss';
 const TodoCompletedList = ({todos, deleteTodo, toggleTodo}: any) => {
   const completedTodos = todos.filter((todo: ITodo) => todo.isCompleted);
   return (
-    <>
       <div className={styles.todoCompletedList}>
         {!!completedTodos.length && <h2>Completed Todo list</h2>}
         {completedTodos.map((todo: ITodo) => {
@@ -19,7 +18,6 @@ const TodoCompletedList = ({todos, deleteTodo, toggleTodo}: any) => {
           );
         })}
       </div>
-    </>
   );
 };
 

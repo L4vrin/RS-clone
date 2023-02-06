@@ -1,2 +1,5 @@
-export type TodoEvent = React.FormEvent<HTMLFormElement> | React.MouseEvent<SVGElement>
+import React from 'react';
 
+export type TodoEvent =
+  | React.FormEvent<HTMLFormElement>
+  | React.MouseEvent<SVGElement>;

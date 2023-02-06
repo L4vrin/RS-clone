@@ -4,8 +4,8 @@ export interface ITodo {
   id: string;
 }
 
-export interface IProps {
-  todos: Array<ITodo>,
-  todo: ITodo,
-  deleteTodo?: (id: string) => void
-};
+// export interface IProps {
+//   todos: Array<ITodo>,
+//   todo: ITodo,
+//   deleteTodo?: (id: string) => void
+// };
