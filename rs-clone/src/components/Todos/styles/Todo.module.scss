@@ -18,10 +18,32 @@ user-select: none;
 
 .todoCircleIcon {
   margin: 3px 20px 0 10px;
+
+  &:active {
+    color: green;
+    transition: 0;
+  }
+}
+
+.todoCheckedCircleIcon {
+  margin: 3px 20px 0 10px;
+  color:green;
+}
+
+.todoDeleteIcon {
+  &:hover {
+    color: red;
+  }
 }
 
 .todoDeleteIcon,
-.todoCircleIcon {
+.todoCircleIcon,
+.todoCheckedCircleIcon {
   font-size: 1.2rem;
   cursor: pointer;
+  transition: .2s ease-in;
+
+  &:hover {
+    transform: scale(1.3);
+  }
 }

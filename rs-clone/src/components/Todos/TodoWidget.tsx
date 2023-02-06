@@ -2,11 +2,11 @@ import {useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
-// import todayTodos from '../../data/todayTodos';
+import TodoCompletedList from './TodoCompletedList';
 import {ITodo} from './interfaces/todiInterfaces';
 
 const TodoWidget = () => {
-  const [todos, setTodos]: [Array<ITodo>, Function] = useState([]);
+  const [todos, setTodos]: any = useState([]);
 
   const addTodoHandler = (text: string) => {
     const newTodo = {
@@ -15,18 +15,35 @@ const TodoWidget = () => {
       id: uuidv4(),
     };
     setTodos([...todos, newTodo]);
-    console.log(todos);
   };
 
-  const deleteTodoHandler = (id:string) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-    console.log(1)
+  const deleteTodoHandler = (id: string) => {
+    setTodos(todos.filter((todo: ITodo) => todo.id !== id));
+  };
+
+  const toggleTodoHandler = (id: string) => {
+    setTodos(
+      todos.map((todo: ITodo) => {
+        return todo.id === id
+          ? {...todo, isCompleted: !todo.isCompleted}
+          : {...todo};
+      })
+    );
   };
 
   return (
     <>
       <TodoForm addTodo={addTodoHandler} />
-      <TodoList todos={todos} deleteTodo={deleteTodoHandler} />
+      <TodoList
+        todos={todos}
+        deleteTodo={deleteTodoHandler}
+        toggleTodo={toggleTodoHandler}
+      />
+      <TodoCompletedList
+        todos={todos}
+        deleteTodo={deleteTodoHandler}
+        toggleTodo={toggleTodoHandler}
+      />
     </>
   );
 };
