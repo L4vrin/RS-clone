@@ -1,7 +1,6 @@
 import {Link} from 'react-router-dom';
 import styles from './Header.module.scss';
 
-console.log(styles);
 const Header = () => {
   return (
     <div className={styles.header}>
