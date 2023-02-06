@@ -1,10 +1,15 @@
 import {useState} from 'react';
 import {FiPlus} from 'react-icons/fi';
-import {TodoEvent} from './types/todoTypes';
+import {TodoEvent, ITodoAdd} from './types/data';
 import styles from './styles/TodoForm.module.scss';
 
-const TodoForm = ({addTodo}: {addTodo: Function}) => {
+const TodoForm: React.FC<ITodoAdd> = ({addTodo}) => {
   const [text, setText] = useState('');
+
+  const changeTextHandler: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    setText(e.target.value);
+  };
+
   const onSubmitHandler = (e: TodoEvent) => {
     e.preventDefault();
     if (text) {
@@ -22,7 +27,7 @@ const TodoForm = ({addTodo}: {addTodo: Function}) => {
           type="text"
           placeholder='Adding task in "Todo list". Press Enter for save'
           value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={changeTextHandler}
         />
       </div>
     </form>

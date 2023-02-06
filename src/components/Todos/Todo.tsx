@@ -1,8 +1,9 @@
 import {BiCircle, BiCheckCircle} from 'react-icons/bi';
 import {RiDeleteBin2Line} from 'react-icons/ri';
+import {ITodoItem} from './types/data';
 import styles from './styles/Todo.module.scss';
 
-const Todo = ({todo, deleteTodo, toggleTodo}: any) => {
+const Todo: React.FC<ITodoItem> = ({todo, deleteTodo, toggleTodo}) => {
   return (
     <div className={styles.todo}>
       {!todo.isCompleted ? (

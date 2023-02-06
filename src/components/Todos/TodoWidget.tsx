@@ -3,10 +3,10 @@ import {v4 as uuidv4} from 'uuid';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 import TodoCompletedList from './TodoCompletedList';
-import {ITodo} from './interfaces/todiInterfaces';
+import {ITodo} from './types/data';
 
-const TodoWidget = () => {
-  const [todos, setTodos]: any = useState([]);
+const TodoWidget: React.FC = () => {
+  const [todos, setTodos] = useState<ITodo[]>([]);
 
   const addTodoHandler = (text: string) => {
     const newTodo = {
@@ -34,6 +34,7 @@ const TodoWidget = () => {
   return (
     <>
       <TodoForm addTodo={addTodoHandler} />
+
       <TodoList
         todos={todos}
         deleteTodo={deleteTodoHandler}
