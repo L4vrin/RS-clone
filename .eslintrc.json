@@ -24,11 +24,11 @@
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
-    "react/jsx-filename-extension": [1, {"extensions": [".ts", ".tsx"]}],
+    "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }],
     "@typescript-eslint/no-explicit-any": "warn",
     "arrow-body-style": ["off"],
-    "react/function-component-definition" : ["off"],
-    "react/prop-types": "off"
+    "react/function-component-definition": ["off"],
+    "react/prop-types": "off",
+    "no-param-reassign": "off"
   }
-
 }

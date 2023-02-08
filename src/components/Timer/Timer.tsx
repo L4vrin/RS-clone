@@ -1,31 +1,24 @@
-import styles from './Timer.module.scss';
 import React, { useEffect, useState } from 'react';
+import styles from './Timer.module.scss';
 import getPadTime from './helpers/getPadTime';
 import useAppSelector from '../../hooks/useAppSelector';
 
 const TIMER_RADIUS = 38.2;
 
-interface TimerProps {
-  duration: number; // duration in seconds
-}
-
-const Timer: React.FC<TimerProps> = ({ duration }) => {
+const Timer: React.FC = () => {
   const { workPeriodInMinutes, breakPeriodInMinutes } = useAppSelector(
     (store) => store.timerSettings
   );
 
-  const getTotalSeconds = () =>
-    mode === 'work' ? workPeriodInMinutes * 60 : breakPeriodInMinutes * 60;
-
   const [mode, setMode] = useState('work'); // work | break
-  const [totalSeconds, setTotalSeconds] = useState(getTotalSeconds);
+  const [totalSeconds, setTotalSeconds] = useState(workPeriodInMinutes * 60);
 
   const [secondsLeft, setSecondsLeft] = useState(totalSeconds);
   const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (isRunning) setSecondsLeft((secondsLeft) => (secondsLeft >= 0.1 ? secondsLeft - 0.1 : 0));
+      if (isRunning) setSecondsLeft((prev) => (prev >= 0.1 ? prev - 0.1 : 0));
     }, 100);
 
     if (secondsLeft === 0) {
@@ -79,11 +72,17 @@ const Timer: React.FC<TimerProps> = ({ duration }) => {
       </div>
       <div>
         {isRunning ? (
-          <button onClick={handlePause}>Pause</button>
+          <button type="button" onClick={handlePause}>
+            Pause
+          </button>
         ) : (
           <>
-            <button onClick={handleStart}>Start</button>
-            <button onClick={handleReset}>Reset</button>
+            <button type="button" onClick={handleStart}>
+              Start
+            </button>
+            <button type="button" onClick={handleReset}>
+              Reset
+            </button>
           </>
         )}
       </div>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FiPlus } from 'react-icons/fi';
-import { TodoEvent } from './types/todoTypes';
+import { TodoEvent } from './types/data';
 import styles from './styles/TodoForm.module.scss';
 import useActions from '../../hooks/useActions';
 

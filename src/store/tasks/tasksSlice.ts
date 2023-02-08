@@ -1,6 +1,6 @@
+import { v4 as uuidv4 } from 'uuid';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ITask } from '../../models';
-import { v4 as uuidv4 } from 'uuid';
 
 const LS_TASKS_KEY = 'tasks';
 
@@ -30,7 +30,7 @@ export const tasksSlice = createSlice({
           isCompleted: false,
           pomodoroTime: 25,
           pomodorosNumber: 1,
-          title: title,
+          title,
         };
 
         return { payload: newTask };
