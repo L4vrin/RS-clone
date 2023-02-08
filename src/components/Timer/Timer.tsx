@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { BiPauseCircle, BiPlayCircle, BiStopCircle } from 'react-icons/bi';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './Timer.module.scss';
 import getPadTime from './helpers/getPadTime';
 import useAppSelector from '../../hooks/useAppSelector';
@@ -16,22 +17,26 @@ const Timer: React.FC = () => {
   const [secondsLeft, setSecondsLeft] = useState(totalSeconds);
   const [isRunning, setIsRunning] = useState(false);
 
+  const modeRef = useRef(mode);
+
   useEffect(() => {
     const interval = setInterval(() => {
       if (isRunning) setSecondsLeft((prev) => (prev >= 0.1 ? prev - 0.1 : 0));
     }, 100);
 
     if (secondsLeft === 0) {
-      // setIsRunning(false);
-      setMode('break');
-      setSecondsLeft(totalSeconds);
-      setTotalSeconds(mode === 'work' ? workPeriodInMinutes * 60 : breakPeriodInMinutes * 60);
+      const nextMode = modeRef.current === 'work' ? 'break' : 'work';
+      const nextSeconds = (nextMode === 'work' ? workPeriodInMinutes : breakPeriodInMinutes) * 60;
+      setMode(nextMode);
+      modeRef.current = nextMode;
+      setTotalSeconds(() => nextSeconds);
+      setSecondsLeft(() => nextSeconds);
     }
 
     return () => {
       clearInterval(interval);
     };
-  }, [secondsLeft, isRunning, mode, totalSeconds]);
+  }, [isRunning, secondsLeft, totalSeconds]);
 
   const handleStart = () => {
     if (secondsLeft === 0) setSecondsLeft(totalSeconds);
@@ -44,8 +49,10 @@ const Timer: React.FC = () => {
 
   const handleReset = () => {
     setIsRunning(false);
+
     setMode('work');
-    setSecondsLeft(totalSeconds);
+    setSecondsLeft(workPeriodInMinutes * 60);
+    setTotalSeconds(workPeriodInMinutes * 60);
   };
 
   const minutes = Math.floor(secondsLeft / 60);
@@ -58,30 +65,45 @@ const Timer: React.FC = () => {
         <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" fill="none">
           <circle className={styles.circleStatic} cx="40" cy="40" r="38.2" strokeDasharray="1" />
           <circle
-            className={styles.circleActive}
+            className={`${styles.circleActive} ${mode === 'break' ? styles.circleActiveBreak : ''}`}
             cx="40"
             cy="40"
             r="38.2"
             strokeDasharray="240"
             strokeDashoffset={String(dashoffset)}
           />
-          <text className={styles.time} x="20" y="45.5" fontSize="16px">
-            {getPadTime(minutes)}:{getPadTime(seconds)}
-          </text>
         </svg>
+        <div className={styles.time}>
+          {getPadTime(minutes)}:{getPadTime(seconds)}
+        </div>
       </div>
-      <div>
+      <div className={styles.buttons}>
         {isRunning ? (
-          <button type="button" onClick={handlePause}>
-            Pause
+          <button
+            className={styles.timerButton}
+            type="button"
+            aria-label="Pause timer"
+            onClick={handlePause}
+          >
+            <BiPauseCircle />
           </button>
         ) : (
           <>
-            <button type="button" onClick={handleStart}>
-              Start
+            <button
+              className={styles.timerButton}
+              type="button"
+              aria-label="Start timer"
+              onClick={handleStart}
+            >
+              <BiPlayCircle />
             </button>
-            <button type="button" onClick={handleReset}>
-              Reset
+            <button
+              className={styles.timerButton}
+              type="button"
+              aria-label="Stop timer"
+              onClick={handleReset}
+            >
+              <BiStopCircle />
             </button>
           </>
         )}
