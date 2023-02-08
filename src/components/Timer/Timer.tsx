@@ -1,6 +1,7 @@
 import styles from './Timer.module.scss';
 import React, { useEffect, useState } from 'react';
 import getPadTime from './helpers/getPadTime';
+import useAppSelector from '../../hooks/useAppSelector';
 
 const TIMER_RADIUS = 38.2;
 
@@ -9,27 +10,38 @@ interface TimerProps {
 }
 
 const Timer: React.FC<TimerProps> = ({ duration }) => {
-  const [timeLeft, setTimeLeft] = useState(duration);
-  const [isRunning, setIsRunning] = useState(false);
+  const { workPeriodInMinutes, breakPeriodInMinutes } = useAppSelector(
+    (store) => store.timerSettings
+  );
 
-  const minutes = Math.floor(timeLeft / 60);
-  const seconds = timeLeft - minutes * 60;
-  const dashoffset = -((TIMER_RADIUS * 2 * Math.PI * (duration - timeLeft)) / duration);
+  const getTotalSeconds = () =>
+    mode === 'work' ? workPeriodInMinutes * 60 : breakPeriodInMinutes * 60;
+
+  const [mode, setMode] = useState('work'); // work | break
+  const [totalSeconds, setTotalSeconds] = useState(getTotalSeconds);
+
+  const [secondsLeft, setSecondsLeft] = useState(totalSeconds);
+  const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (isRunning) setTimeLeft((timeLeft) => (timeLeft >= 0.1 ? timeLeft - 0.1 : 0));
+      if (isRunning) setSecondsLeft((secondsLeft) => (secondsLeft >= 0.1 ? secondsLeft - 0.1 : 0));
     }, 100);
 
-    if (timeLeft === 0) setIsRunning(false);
+    if (secondsLeft === 0) {
+      // setIsRunning(false);
+      setMode('break');
+      setSecondsLeft(totalSeconds);
+      setTotalSeconds(mode === 'work' ? workPeriodInMinutes * 60 : breakPeriodInMinutes * 60);
+    }
 
     return () => {
       clearInterval(interval);
     };
-  }, [timeLeft, isRunning]);
+  }, [secondsLeft, isRunning, mode, totalSeconds]);
 
   const handleStart = () => {
-    if (timeLeft === 0) setTimeLeft(duration);
+    if (secondsLeft === 0) setSecondsLeft(totalSeconds);
     setIsRunning(true);
   };
 
@@ -39,8 +51,13 @@ const Timer: React.FC<TimerProps> = ({ duration }) => {
 
   const handleReset = () => {
     setIsRunning(false);
-    setTimeLeft(duration);
+    setMode('work');
+    setSecondsLeft(totalSeconds);
   };
+
+  const minutes = Math.floor(secondsLeft / 60);
+  const seconds = secondsLeft - minutes * 60;
+  const dashoffset = -((TIMER_RADIUS * 2 * Math.PI * (totalSeconds - secondsLeft)) / totalSeconds);
 
   return (
     <div className={styles.timer}>
