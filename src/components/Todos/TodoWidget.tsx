@@ -1,49 +1,17 @@
-import {useState} from 'react';
-import {v4 as uuidv4} from 'uuid';
+import React from 'react';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 import TodoCompletedList from './TodoCompletedList';
-import {ITodo} from './interfaces/todiInterfaces';
+import useAppSelector from '../../hooks/useAppSelector';
 
 const TodoWidget = () => {
-  const [todos, setTodos]: any = useState([]);
-
-  const addTodoHandler = (text: string) => {
-    const newTodo = {
-      text: text,
-      isCompleted: false,
-      id: uuidv4(),
-    };
-    setTodos([...todos, newTodo]);
-  };
-
-  const deleteTodoHandler = (id: string) => {
-    setTodos(todos.filter((todo: ITodo) => todo.id !== id));
-  };
-
-  const toggleTodoHandler = (id: string) => {
-    setTodos(
-      todos.map((todo: ITodo) => {
-        return todo.id === id
-          ? {...todo, isCompleted: !todo.isCompleted}
-          : {...todo};
-      })
-    );
-  };
+  const todos = useAppSelector((state) => state.tasks.list);
 
   return (
     <>
-      <TodoForm addTodo={addTodoHandler} />
-      <TodoList
-        todos={todos}
-        deleteTodo={deleteTodoHandler}
-        toggleTodo={toggleTodoHandler}
-      />
-      <TodoCompletedList
-        todos={todos}
-        deleteTodo={deleteTodoHandler}
-        toggleTodo={toggleTodoHandler}
-      />
+      <TodoForm />
+      <TodoList todos={todos} />
+      <TodoCompletedList todos={todos} />
     </>
   );
 };

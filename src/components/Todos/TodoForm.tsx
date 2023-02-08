@@ -1,14 +1,17 @@
-import {useState} from 'react';
-import {FiPlus} from 'react-icons/fi';
-import {TodoEvent} from './types/todoTypes';
+import { useState } from 'react';
+import { FiPlus } from 'react-icons/fi';
+import { TodoEvent } from './types/todoTypes';
 import styles from './styles/TodoForm.module.scss';
+import useActions from '../../hooks/useActions';
 
-const TodoForm = ({addTodo}: {addTodo: Function}) => {
-  const [text, setText] = useState('');
+const TodoForm = () => {
+  const { addTask } = useActions();
+  const [title, setText] = useState('');
+
   const onSubmitHandler = (e: TodoEvent) => {
     e.preventDefault();
-    if (text) {
-      addTodo(text);
+    if (title) {
+      addTask(title);
       setText('');
     }
   };
@@ -21,7 +24,7 @@ const TodoForm = ({addTodo}: {addTodo: Function}) => {
           className={styles.input}
           type="text"
           placeholder='Adding task in "Todo list". Press Enter for save'
-          value={text}
+          value={title}
           onChange={(e) => setText(e.target.value)}
         />
       </div>
