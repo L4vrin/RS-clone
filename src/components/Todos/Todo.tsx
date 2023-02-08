@@ -6,7 +6,7 @@ import styles from './styles/Todo.module.scss';
 
 const Todo = ({ todo }: { todo: ITask }) => {
   const { toggleComplete, deleteTask } = useActions();
-
+  
   return (
     <div className={styles.todo}>
       {!todo.isCompleted ? (
