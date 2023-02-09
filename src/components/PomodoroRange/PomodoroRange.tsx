@@ -22,7 +22,6 @@ const PomodoroRange = ({ onChange }: Props) => {
 
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(evt.target.value) < 0 ? 0 : Number(evt.target.value);
-    console.log(newValue);
     setValue(newValue);
     onChange(newValue);
   };

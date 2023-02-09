@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  padding: 15px;
+  text-align: center;
+  background: white;
+  border-radius: 15px;
+  color: gray;
+}
+
+.item {
+  flex: 1 0;
+}
+
+.number,
+.stat {
+  font-size: 1.8rem;
+  color: red;
+}
+
+.text {
+  color: gray;
+  font-size: 1rem;
+}

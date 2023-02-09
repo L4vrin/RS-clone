@@ -1,13 +1,11 @@
-import {Routes, Route} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Today from './pages/Today';
-
-import './App.scss';
 
 const App: React.FC = () => {
   return (
     <Routes>
-      <Route path='/' element={<Layout />}>
+      <Route path="/" element={<Layout />}>
         <Route index element={<Today />} />
         {/* <Route path="tomorrow" element={<Tomorrow />} />
         <Route path="week" element={<Week />} />
@@ -15,6 +13,6 @@ const App: React.FC = () => {
       </Route>
     </Routes>
   );
-}
+};
 
 export default App;

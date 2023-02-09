@@ -11,14 +11,15 @@ const Timer: React.FC = () => {
   const { workPeriodInMinutes, breakPeriodInMinutes } = useAppSelector(
     (store) => store.timerSettings
   );
-  const { currentTask } = useAppSelector((store) => store.timer);
-  const { setCompletedPomodoro } = useActions();
+
+  const { currentTask, isRunning } = useAppSelector((store) => store.timer);
+  const { setCompletedPomodoro, setIsRunning } = useActions();
 
   const [mode, setMode] = useState('work'); // work | break
   const [totalSeconds, setTotalSeconds] = useState(workPeriodInMinutes * 60);
 
   const [secondsLeft, setSecondsLeft] = useState(totalSeconds);
-  const [isRunning, setIsRunning] = useState(false);
+  // const [isRunning, setIsRunning] = useState(startRunning);
 
   const modeRef = useRef(mode);
 
