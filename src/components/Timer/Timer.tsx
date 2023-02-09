@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from './Timer.module.scss';
 import getPadTime from './helpers/getPadTime';
 import useAppSelector from '../../hooks/useAppSelector';
+import useActions from '../../hooks/useActions';
 
 const TIMER_RADIUS = 38.2;
 
@@ -10,6 +11,8 @@ const Timer: React.FC = () => {
   const { workPeriodInMinutes, breakPeriodInMinutes } = useAppSelector(
     (store) => store.timerSettings
   );
+  const { currentTask } = useAppSelector((store) => store.timer);
+  const { setCompletedPomodoro } = useActions();
 
   const [mode, setMode] = useState('work'); // work | break
   const [totalSeconds, setTotalSeconds] = useState(workPeriodInMinutes * 60);
@@ -31,6 +34,7 @@ const Timer: React.FC = () => {
       modeRef.current = nextMode;
       setTotalSeconds(() => nextSeconds);
       setSecondsLeft(() => nextSeconds);
+      if (currentTask && mode === 'work') setCompletedPomodoro(currentTask.id);
     }
 
     return () => {
@@ -60,7 +64,7 @@ const Timer: React.FC = () => {
   const dashoffset = -((TIMER_RADIUS * 2 * Math.PI * (totalSeconds - secondsLeft)) / totalSeconds);
 
   return (
-    <div className={styles.timer}>
+    <div className={`${styles.timer} ${currentTask ? styles.timerWithTask : ''}`}>
       <div className={styles.dial}>
         <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" fill="none">
           <circle className={styles.circleStatic} cx="40" cy="40" r="38.2" strokeDasharray="1" />
@@ -77,6 +81,7 @@ const Timer: React.FC = () => {
           {getPadTime(minutes)}:{getPadTime(seconds)}
         </div>
       </div>
+      <div className={styles.task}>{currentTask && currentTask.title}</div>
       <div className={styles.buttons}>
         {isRunning ? (
           <button

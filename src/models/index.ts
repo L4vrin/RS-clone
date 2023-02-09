@@ -2,9 +2,11 @@ export interface ITask {
   id: string;
   title: string;
   note?: string;
-  createdAt: number;
-  deadlineAt: number;
-  pomodorosNumber: number;
-  pomodoroTime: number;
+  createdAt: number; // timestamp
+  deadlineAt: number; // timestamp
+  deadlineId: string;
   isCompleted: boolean;
+  pomodorosNumber: number;
+  pomodoroTime: number; // time in minutes
+  completedPomodors: number;
 }
