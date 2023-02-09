@@ -6,8 +6,8 @@ interface TimerSettingsState {
 }
 
 const initialState: TimerSettingsState = {
-  workPeriodInMinutes: 0.5,
-  breakPeriodInMinutes: 0.25,
+  workPeriodInMinutes: 2,
+  breakPeriodInMinutes: 1,
 };
 
 export const timerSettingsSlice = createSlice({

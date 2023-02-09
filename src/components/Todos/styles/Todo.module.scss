@@ -39,7 +39,8 @@
 
 .todoDeleteIcon,
 .todoCircleIcon,
-.todoCheckedCircleIcon {
+.todoCheckedCircleIcon,
+.todoAddToTimerBtn {
   font-size: 1.2rem;
   transition: 0.2s ease-in;
   cursor: pointer;
@@ -53,4 +54,16 @@
   margin: 3px 20px 0 10px;
   font-size: 1.5rem;
   color: green;
+}
+
+.todoAddToTimerBtn {
+  margin-right: 5px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background: rgba($color: red, $alpha: 0.2);
+  color: red;
+  border-radius: 50%;
+  line-height: 1;
 }

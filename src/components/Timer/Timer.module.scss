@@ -1,5 +1,28 @@
 .timer {
-  max-width: 400px;
+  width: 250px;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1e1e1e;
+  border-radius: 15px;
+  color: white;
+}
+
+.timerWithTask {
+  width: 400px;
+}
+
+.dial {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  width: 100px;
+  margin-right: 15px;
 }
 
 .circleStatic {
@@ -14,9 +37,43 @@
   stroke-width: 3;
   transform-origin: center;
   transform: rotate(-90deg);
+
+  &Break {
+    stroke: rgba($color: blue, $alpha: 0.7);
+  }
 }
 
 .time {
-  fill: #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 26px;
+  color: #ffffff;
   user-select: none;
+}
+
+.task {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.buttons {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: flex-end;
+}
+
+.timerButton {
+  margin-left: 10px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  color: #ffffff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
 }
