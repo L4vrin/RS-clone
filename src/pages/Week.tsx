@@ -1,9 +1,7 @@
+import TodoWidget from '../components/Todos/TodoWidget';
+
 const Week = () => {
-  return (
-    <>
-      
-    </>
-  );
+  return <TodoWidget />;
 };
 
 export default Week;
