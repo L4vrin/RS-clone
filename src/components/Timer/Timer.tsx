@@ -1,6 +1,7 @@
 import { BiPauseCircle, BiPlayCircle, BiStopCircle } from 'react-icons/bi';
+import { BsGearFill } from 'react-icons/bs';
 import React, { useEffect, useRef, useState } from 'react';
-import styles from './Timer.module.scss';
+import styles from './timer.module.scss';
 import getPadTime from './helpers/getPadTime';
 import useAppSelector from '../../hooks/useAppSelector';
 import useActions from '../../hooks/useActions';
@@ -8,12 +9,11 @@ import useActions from '../../hooks/useActions';
 const TIMER_RADIUS = 38.2;
 
 const Timer: React.FC = () => {
-  const { workPeriodInMinutes, breakPeriodInMinutes } = useAppSelector(
+  const { workPeriodInMinutes, shortBreakPeriodInMinutes } = useAppSelector(
     (store) => store.timerSettings
   );
-
   const { currentTask, isRunning } = useAppSelector((store) => store.timer);
-  const { setCompletedPomodoro, setIsRunning } = useActions();
+  const { setCompletedPomodoro, setIsRunning, setIsSettingsVisible } = useActions();
 
   const [mode, setMode] = useState('work'); // work | break
   const [totalSeconds, setTotalSeconds] = useState(workPeriodInMinutes * 60);
@@ -30,7 +30,8 @@ const Timer: React.FC = () => {
 
     if (secondsLeft === 0) {
       const nextMode = modeRef.current === 'work' ? 'break' : 'work';
-      const nextSeconds = (nextMode === 'work' ? workPeriodInMinutes : breakPeriodInMinutes) * 60;
+      const nextSeconds =
+        (nextMode === 'work' ? workPeriodInMinutes : shortBreakPeriodInMinutes) * 60;
       setMode(nextMode);
       modeRef.current = nextMode;
       setTotalSeconds(() => nextSeconds);
@@ -41,7 +42,7 @@ const Timer: React.FC = () => {
     return () => {
       clearInterval(interval);
     };
-  }, [isRunning, secondsLeft, totalSeconds]);
+  }, [isRunning, secondsLeft, totalSeconds, workPeriodInMinutes]);
 
   const handleStart = () => {
     if (secondsLeft === 0) setSecondsLeft(totalSeconds);
@@ -114,6 +115,14 @@ const Timer: React.FC = () => {
           </>
         )}
       </div>
+      <button
+        className={styles.settingsButton}
+        type="button"
+        aria-label="Open settings"
+        onClick={() => setIsSettingsVisible(true)}
+      >
+        <BsGearFill />
+      </button>
     </div>
   );
 };

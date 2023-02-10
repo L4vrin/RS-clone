@@ -2,24 +2,34 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface TimerSettingsState {
   workPeriodInMinutes: number;
-  breakPeriodInMinutes: number;
+  shortBreakPeriodInMinutes: number;
+  longBreakPeriodInMinutes: number;
+  longBreakInterval: number;
+  autoRunWork: boolean;
+  autoRunBreak: boolean;
+  offBreak: boolean;
 }
 
 const initialState: TimerSettingsState = {
   workPeriodInMinutes: 2,
-  breakPeriodInMinutes: 1,
+  shortBreakPeriodInMinutes: 1,
+  longBreakPeriodInMinutes: 1,
+  longBreakInterval: 4,
+  autoRunWork: true,
+  autoRunBreak: true,
+  offBreak: false,
 };
 
 export const timerSettingsSlice = createSlice({
   name: 'timerSettings',
   initialState,
   reducers: {
-    setWorkPeriod(state, action: PayloadAction<number>) {
-      state.workPeriodInMinutes = action.payload;
+    setWorkPeriod(state, action: PayloadAction<number | string>) {
+      state.workPeriodInMinutes = Number(action.payload);
     },
 
-    setRestPeriod(state, action: PayloadAction<number>) {
-      state.breakPeriodInMinutes = action.payload;
+    setShortBreakPeriod(state, action: PayloadAction<number>) {
+      state.shortBreakPeriodInMinutes = action.payload;
     },
   },
 });
