@@ -2,17 +2,23 @@ import {useEffect, useState} from 'react';
 import styles from './FormReg.module.scss';
 import {useCreateUserMutation} from '../../store/auth/usersApi';
 
-// interface IError {
-//   status: string, 
-//   data: string[]
-// }
+interface IError {
+  status: string, 
+  data: string[]
+}
+
+interface IUserCreate {
+	email: string,
+	password: string,
+	fullName: string
+}
 
 const FormReg = () => {
   const [userNameReg, setUserNameReg] = useState('');
   const [emailReg, setEmailReg] = useState('');
   const [passwordReg, setPasswordReg] = useState('');
 
-  const [error, setError] = useState({})
+  const [error, setError] = useState<any>({})
   const [addNewUser, {isLoading, isError, isSuccess}] = useCreateUserMutation();
 
   const formData = {
@@ -21,18 +27,17 @@ const FormReg = () => {
     password: passwordReg,
   };
 
-  const handleAddNewUser = async (data: any) => {
+  const handleAddNewUser = async (data: IUserCreate) => {
     try {
       await addNewUser(data).unwrap();
     } catch (err) {
-      if (err instanceof Object) {
         setError(err)
-      }
-    }
   };
+}
 
   useEffect(() => {
-    console.log(error)
+    const a = error
+    console.log(a.data)
   }, [error])
   
   return (
