@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 20px;
 }
 
 .icon {
@@ -19,6 +20,7 @@
   border: none;
   outline: none;
   appearance: none;
+  font-size: 20px;
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -31,9 +33,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   font-size: 1rem;
   line-height: 1;
+  font-size: 20px;
   cursor: pointer;
+  border-radius: 20%;
+  background-color: #eee6e2;
+  border: 0px;
+  transition: ease-in all 0.1s;
+}
+
+.button:hover {
+  background-color: rgb(185, 185, 185);
 }

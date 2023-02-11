@@ -5,8 +5,12 @@ import { ITask } from '../../models';
 const TodoCompletedList = ({ todos }: { todos: ITask[] }) => {
   const completedTodos = todos.filter((todo) => todo.isCompleted);
   return (
-    <div className={styles.todoCompletedList}>
-      {!!completedTodos.length && <h2>Completed Todo list</h2>}
+    <div
+      className={
+        completedTodos.length ? styles.todoCompletedList : styles.hidden
+      }
+    >
+      {!!completedTodos.length && <h2>Completed</h2>}
       {completedTodos.map((todo) => {
         return <Todo key={todo.id} todo={todo} />;
       })}

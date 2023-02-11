@@ -1,6 +1,5 @@
 import { BiCircle, BiCheckCircle } from 'react-icons/bi';
 import { BsPlayCircle } from 'react-icons/bs';
-import { RiDeleteBin2Line } from 'react-icons/ri';
 import { SlClock } from 'react-icons/sl';
 import useActions from '../../hooks/useActions';
 import useAppSelector from '../../hooks/useAppSelector';
@@ -8,7 +7,8 @@ import { ITask } from '../../models';
 import styles from './styles/Todo.module.scss';
 
 const Todo = ({ todo }: { todo: ITask }) => {
-  const { toggleComplete, deleteTask, addTaskToTimer, removeTaskFromTimer } = useActions();
+  const { toggleComplete, deleteTask, addTaskToTimer, removeTaskFromTimer } =
+    useActions();
   const taskInTimer = useAppSelector((state) => state.timer.currentTask);
 
   return (
@@ -40,7 +40,11 @@ const Todo = ({ todo }: { todo: ITask }) => {
         />
       )}
 
-      <div className={`${todo.isCompleted ? styles.todoCompletedText : styles.todoText}`}>
+      <div
+        className={`${
+          todo.isCompleted ? styles.todoCompletedText : styles.todoText
+        }`}
+      >
         <div className={styles.title}>{todo.title}</div>
         <div>
           <span className={styles.PomodoroIcon}>🍅</span>
@@ -49,13 +53,16 @@ const Todo = ({ todo }: { todo: ITask }) => {
           </span>
         </div>
       </div>
-      <RiDeleteBin2Line
-        className={styles.todoDeleteIcon}
+      <button
+        type="button"
+        className={styles.todoDeleteButton}
         onClick={() => {
           deleteTask(todo.id);
           removeTaskFromTimer(todo.id);
         }}
-      />
+      >
+        Delete
+      </button>
     </div>
   );
 };

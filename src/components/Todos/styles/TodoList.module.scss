@@ -1,5 +1,11 @@
 .todoList {
   max-width: 1000px;
-  min-height: 500px;
   margin: 0 auto;
+  background-color: white;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.hidden {
+  display: none;
 }
