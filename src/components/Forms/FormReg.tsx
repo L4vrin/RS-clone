@@ -1,24 +1,18 @@
-import {useEffect, useState} from 'react';
-import styles from '../FormReg/FormReg.module.scss';
+import {useState} from 'react';
+import styles from './Forms.module.scss';
 import {useCreateUserMutation} from '../../store/auth/usersApi';
-
+import {IUserCreate, IErrorValidation} from './types/data';
 // interface IError {
-//   status: string, 
+//   status: string,
 //   data: string[]
 // }
-
-interface IUserCreate {
-	email: string,
-	password: string,
-	fullName: string
-}
 
 const FormReg = () => {
   const [userNameReg, setUserNameReg] = useState('');
   const [emailReg, setEmailReg] = useState('');
   const [passwordReg, setPasswordReg] = useState('');
 
-  const [error, setError] = useState<any>({})
+  const [error, setError] = useState<any>({status: 0, data: []});
   const [addNewUser, {isLoading, isError, isSuccess}] = useCreateUserMutation();
 
   const formData = {
@@ -31,42 +25,37 @@ const FormReg = () => {
     try {
       await addNewUser(data).unwrap();
     } catch (err) {
-        setError(err)
+      setError(err);
+    }
   };
-}
 
-  useEffect(() => {
-    const a = error
-    console.log(a.data)
-  }, [error])
-  
   return (
-    <div className={styles.formRegWrapper}>
-      <h2 className={styles.formRegTitle}>Registration Form</h2>
-      <form className={styles.formReg}>
+    <div className={styles.formWrapper}>
+      <h2 className={styles.formTitle}>Registration Form</h2>
+      <form className={styles.form}>
         <input
-          className={styles.inputReg}
+          className={styles.input}
           type="text"
           placeholder="User Name"
           value={userNameReg}
           onChange={(e) => setUserNameReg(e.target.value)}
         />
         <input
-          className={styles.inputReg}
+          className={styles.input}
           type="email"
           placeholder="Email"
           value={emailReg}
           onChange={(e) => setEmailReg(e.target.value)}
         />
         <input
-          className={styles.inputReg}
+          className={styles.input}
           type="password"
           placeholder="Password"
           value={passwordReg}
           onChange={(e) => setPasswordReg(e.target.value)}
         />
         <button
-          className={styles.submitBtnReg}
+          className={styles.submitBtn}
           type="submit"
           onClick={(e) => {
             e.preventDefault();
@@ -76,9 +65,17 @@ const FormReg = () => {
           Confirm
         </button>
       </form>
-      {isLoading && <div> Loading... </div>}
-      {isError && <div> An error has occurred! </div>}
-      {isSuccess && <div> User created! </div>}
+      <div className={styles.serverAnswer}>
+        {isLoading && <div className={styles.loading}> Loading... </div>}
+        {isError && (
+          <ul className={styles.errorsList}>
+            {error.data.map((errorObj: IErrorValidation) => (
+              <li key={errorObj.param}>{errorObj.msg}</li>
+            ))}
+          </ul>
+        )}
+        {isSuccess && <div className={styles.success}> User created! </div>}
+      </div>
     </div>
   );
 };

@@ -1,22 +1,21 @@
-.formRegWrapper {
+.formWrapper {
   display: flex;
   flex-direction: column;
-  max-width: 300px;
+  max-width: 400px;
   margin: 0 auto;
 }
 
-.formReg {
+.form {
   background-color: bisque;
-  height: 300px;
   border-radius: 10px;
   box-shadow: 0px 2px 4px 1px rgb(174, 156, 134);
 }
 
-.formRegTitle {
+.formTitle {
   margin: 25px 0;
 }
 
-.inputReg {
+.input{
   border-radius: 10px;
   height: 30px;
   margin: 10px auto;
@@ -28,9 +27,9 @@
   }
 }
 
-.submitBtnReg {
+.submitBtn {
   width: 50%;
-  margin-top: 50px;
+  margin: 20px 0;
   border-radius: 5px;
   border: none;
   padding: 10px;
@@ -42,4 +41,22 @@
   &:hover {
     background-color:rgb(254, 249, 126);
   }
+}
+
+.serverAnswer {
+  height: 50px;
+}
+
+.success {
+  margin: 10px;
+}
+
+.loading {
+  margin: 10px;
+}
+
+.errorsList {
+  list-style: none;
+  margin: 10px;
+  color: rgb(141, 50, 50);
 }
