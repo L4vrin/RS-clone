@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import styles from './FormReg.module.scss';
+import styles from '../FormReg/FormReg.module.scss';
 import {useCreateUserMutation} from '../../store/auth/usersApi';
 
 // interface IError {
