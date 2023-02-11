@@ -8,44 +8,83 @@ import useActions from '../../hooks/useActions';
 
 const TIMER_RADIUS = 38.2;
 
+const MODES = {
+  work: 'work',
+  break: 'break',
+};
+
 const Timer: React.FC = () => {
-  const { workPeriodInMinutes, shortBreakPeriodInMinutes } = useAppSelector(
-    (store) => store.timerSettings
-  );
+  const {
+    workPeriodInMinutes,
+    shortBreakPeriodInMinutes,
+    autoRunWork,
+    autoRunBreak,
+    offBreak,
+    longBreakPeriodInMinutes,
+    longBreakInterval,
+  } = useAppSelector((store) => store.timerSettings);
+
   const { currentTask, isRunning } = useAppSelector((store) => store.timer);
   const { setCompletedPomodoro, setIsRunning, setIsSettingsVisible } = useActions();
 
-  const [mode, setMode] = useState('work'); // work | break
-  const [totalSeconds, setTotalSeconds] = useState(workPeriodInMinutes * 60);
+  const [mode, setMode] = useState(MODES.work);
+  const totalSeconds = useRef(workPeriodInMinutes * 60);
+  const [secondsLeft, setSecondsLeft] = useState(totalSeconds.current);
+  const pomodoroCount = useRef(0);
 
-  const [secondsLeft, setSecondsLeft] = useState(totalSeconds);
-  // const [isRunning, setIsRunning] = useState(startRunning);
-
-  const modeRef = useRef(mode);
+  const updatePeriod = (newMode: string) => {
+    switch (newMode) {
+      case MODES.work:
+        totalSeconds.current = workPeriodInMinutes * 60;
+        break;
+      case MODES.break:
+        if (pomodoroCount.current === longBreakInterval) {
+          totalSeconds.current = longBreakPeriodInMinutes * 60;
+          pomodoroCount.current = 0;
+        } else {
+          totalSeconds.current = shortBreakPeriodInMinutes * 60;
+        }
+        break;
+      default:
+        break;
+    }
+    setSecondsLeft(totalSeconds.current);
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (isRunning) setSecondsLeft((prev) => (prev >= 0.1 ? prev - 0.1 : 0));
     }, 100);
 
-    if (secondsLeft === 0) {
-      const nextMode = modeRef.current === 'work' ? 'break' : 'work';
-      const nextSeconds =
-        (nextMode === 'work' ? workPeriodInMinutes : shortBreakPeriodInMinutes) * 60;
-      setMode(nextMode);
-      modeRef.current = nextMode;
-      setTotalSeconds(() => nextSeconds);
-      setSecondsLeft(() => nextSeconds);
-      if (currentTask && mode === 'work') setCompletedPomodoro(currentTask.id);
-    }
-
     return () => {
       clearInterval(interval);
     };
-  }, [isRunning, secondsLeft, totalSeconds, workPeriodInMinutes]);
+  }, [isRunning]);
+
+  useEffect(() => {
+    if (secondsLeft === 0) {
+      let nextMode = mode;
+
+      if (!offBreak) {
+        nextMode = mode === MODES.work ? MODES.break : MODES.work;
+        setMode(() => nextMode);
+      }
+
+      if (!autoRunWork && nextMode === MODES.work) setIsRunning(false);
+      if (!autoRunBreak && nextMode === MODES.break) setIsRunning(false);
+      if (mode === MODES.work) pomodoroCount.current += 1;
+      updatePeriod(nextMode);
+
+      if (currentTask && mode === MODES.work) setCompletedPomodoro(currentTask.id);
+    }
+  }, [secondsLeft]);
+
+  useEffect(() => {
+    updatePeriod(mode);
+  }, [workPeriodInMinutes, shortBreakPeriodInMinutes]);
 
   const handleStart = () => {
-    if (secondsLeft === 0) setSecondsLeft(totalSeconds);
+    if (secondsLeft === 0) setSecondsLeft(totalSeconds.current);
     setIsRunning(true);
   };
 
@@ -55,15 +94,16 @@ const Timer: React.FC = () => {
 
   const handleReset = () => {
     setIsRunning(false);
-
-    setMode('work');
+    setMode(MODES.work);
     setSecondsLeft(workPeriodInMinutes * 60);
-    setTotalSeconds(workPeriodInMinutes * 60);
   };
 
   const minutes = Math.floor(secondsLeft / 60);
   const seconds = secondsLeft - minutes * 60;
-  const dashoffset = -((TIMER_RADIUS * 2 * Math.PI * (totalSeconds - secondsLeft)) / totalSeconds);
+  const dashoffset = -(
+    (TIMER_RADIUS * 2 * Math.PI * (totalSeconds.current - secondsLeft)) /
+    totalSeconds.current
+  );
 
   return (
     <div className={`${styles.timer} ${currentTask ? styles.timerWithTask : ''}`}>
@@ -71,7 +111,9 @@ const Timer: React.FC = () => {
         <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" fill="none">
           <circle className={styles.circleStatic} cx="40" cy="40" r="38.2" strokeDasharray="1" />
           <circle
-            className={`${styles.circleActive} ${mode === 'break' ? styles.circleActiveBreak : ''}`}
+            className={`${styles.circleActive} ${
+              mode === MODES.break ? styles.circleActiveBreak : ''
+            }`}
             cx="40"
             cy="40"
             r="38.2"
