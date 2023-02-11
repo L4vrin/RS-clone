@@ -66,7 +66,7 @@ const FormReg = () => {
         </button>
       </form>
       <div className={styles.serverAnswer}>
-        {isLoading && <div className={styles.loading}> Loading... </div>}
+        {isLoading && <div className={styles.loading}> <div className={styles.loader}/> </div>}
         {isError && (
           <ul className={styles.errorsList}>
             {error.data.map((errorObj: IErrorValidation) => (

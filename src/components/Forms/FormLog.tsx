@@ -61,15 +61,17 @@ const FormLog = () => {
           Confirm
         </button>
       </form>
-      {isLoading && <div> Loading... </div>}
-      {isError && (
-        <ul className={styles.errorsList}>
-          {error.data.map((errorObj: IErrorValidation) => (
-            <li key={errorObj.param}>{errorObj.msg}</li>
-          ))}
-        </ul>
-      )}
-      {isSuccess && <div> User created! </div>}
+      <div className={styles.serverAnswer}>
+        {isLoading && <div className={styles.loading}> <div className={styles.loader}/> </div>}
+        {isError && (
+          <ul className={styles.errorsList}>
+            {error.data.map((errorObj: IErrorValidation) => (
+              <li key={errorObj.param}>{errorObj.msg}</li>
+            ))}
+          </ul>
+        )}
+        {isSuccess && <div className={styles.success}> User created! </div>}
+      </div>
     </div>
   );
 };
