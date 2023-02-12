@@ -1,0 +1,68 @@
+.container {
+  width: 320px;
+}
+
+.header {
+  padding-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba($color: grey, $alpha: 0.8);
+}
+
+.title {
+  color: gray;
+  text-transform: uppercase;
+}
+
+.label {
+  color: #555;
+  font-weight: bold;
+}
+
+.row {
+  padding: 15px 0;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba($color: grey, $alpha: 0.8);
+
+  &:last-child {
+    border: none;
+  }
+}
+
+.rowFlexColumn {
+  flex-direction: column;
+}
+
+.timeSettings {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.timeSettingsItem {
+  width: 27%;
+}
+
+.numberLabel {
+  margin-bottom: 5px;
+  color: gray;
+}
+
+.numberContainer {
+  width: 4rem;
+}
+
+.closeButton {
+  display: inline-flex;
+  font-size: 1.2rem;
+  color: gray;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    color: rgba($color: red, $alpha: 0.8);
+  }
+}

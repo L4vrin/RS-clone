@@ -1,4 +1,4 @@
-import classes from './modal.module.scss';
+import styles from './modal.module.scss';
 
 type ModalProps = {
   children: React.ReactNode;
@@ -7,13 +7,13 @@ type ModalProps = {
 };
 
 const Modal = ({ children, isVisible, setIsVisible }: ModalProps) => {
-  const rootClasses = [classes.modal];
-  if (isVisible) rootClasses.push(classes.active);
+  const rootClasses = [styles.modal];
+  if (isVisible) rootClasses.push(styles.active);
 
   return (
     <div className={rootClasses.join(' ')} onClick={() => setIsVisible(false)} role="presentation">
       <div
-        className={classes.modalContent}
+        className={styles.modalContent}
         onClick={(evt) => evt.stopPropagation()}
         role="presentation"
       >

@@ -1,8 +1,12 @@
+import { AiOutlineClose } from 'react-icons/ai';
 import useActions from '../../hooks/useActions';
 import useAppSelector from '../../hooks/useAppSelector';
 import Modal from '../Modal/Modal';
-import SelectInput from '../SelectInput/SelectInput';
-import Toggle from '../Switch';
+import NumberInput from '../NumberInput/NumberInput';
+import ToggleButton from '../ToggleButton';
+import styles from './timerSettings.module.scss';
+import timerSettings from './timerSettingsConstants';
+import TimeSettingsItem from './TimeSettingsItem';
 
 const TimerSettingsWidget = () => {
   const { isSettingsVisible } = useAppSelector((state) => state.widgets);
@@ -15,76 +19,73 @@ const TimerSettingsWidget = () => {
     autoRunBreak,
     offBreak,
   } = useAppSelector((state) => state.timerSettings);
-  const { setIsSettingsVisible, setWorkPeriod, setShortBreakPeriod, setTimerSettings } =
-    useActions();
-
-  const timeOptions = Array(120)
-    .fill(null)
-    .map((_, idx) => ({ value: idx + 1, name: `${idx + 1} Minutes` }));
+  const { setIsSettingsVisible, setTimerSettings } = useActions();
 
   return (
     <Modal isVisible={isSettingsVisible} setIsVisible={setIsSettingsVisible}>
-      <div>
-        <h3>Settings</h3>
-        <div>
-          <div>
-            <p>Pomodoro duration</p>
-            <SelectInput
-              options={timeOptions}
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <h3 className={styles.title}>Timer Settings</h3>
+          <button
+            className={styles.closeButton}
+            type="button"
+            aria-label="Close"
+            onClick={() => setIsSettingsVisible(false)}
+          >
+            <AiOutlineClose />
+          </button>
+        </div>
+
+        <div className={`${styles.row} ${styles.rowFlexColumn}`}>
+          <p className={styles.label}>Time (minutes)</p>
+          <div className={styles.timeSettings}>
+            <TimeSettingsItem
+              label="Pomodoro"
               value={workPeriodInMinutes}
-              onChange={setWorkPeriod}
+              onChange={(value) => setTimerSettings({ workPeriodInMinutes: value })}
             />
-          </div>
-          <div>
-            <p>Short break</p>
-            <input
-              type="number"
-              min={1}
+            <TimeSettingsItem
+              label="Short Break"
               value={shortBreakPeriodInMinutes}
-              onChange={(evt) => setShortBreakPeriod(evt.target.value)}
+              onChange={(value) => setTimerSettings({ shortBreakPeriodInMinutes: value })}
             />
-          </div>
-          <div>
-            <p>Long break</p>
-            <input
-              type="number"
-              min={1}
+            <TimeSettingsItem
+              label="Long Break"
               value={longBreakPeriodInMinutes}
-              onChange={(evt) =>
-                setTimerSettings({ longBreakPeriodInMinutes: Number(evt.target.value) })
-              }
-            />
-          </div>
-          <div>
-            <p>Long break interval</p>
-            <input
-              type="number"
-              min={1}
-              value={longBreakInterval}
-              onChange={(evt) => setTimerSettings({ longBreakInterval: Number(evt.target.value) })}
+              onChange={(value) => setTimerSettings({ longBreakPeriodInMinutes: value })}
             />
           </div>
         </div>
-        <div>
-          <div>
-            <p>Auto run pomodoro</p>
-            <Toggle
-              checked={autoRunWork}
-              onChange={(evt) => setTimerSettings({ autoRunWork: evt.target.checked })}
-            />
-          </div>
-          <div>
-            <p>Auto run break</p>
-            <Toggle
-              checked={autoRunBreak}
-              onChange={(evt) => setTimerSettings({ autoRunBreak: evt.target.checked })}
-            />
-          </div>
-          <div>
-            <p>Disable break</p>
-            <Toggle
-              checked={offBreak}
-              onChange={(evt) => setTimerSettings({ offBreak: evt.target.checked })}
+
+        <div className={styles.row}>
+          <p className={styles.label}>Auto start Breaks?</p>
+          <ToggleButton
+            checked={autoRunWork}
+            onChange={(value) => setTimerSettings({ autoRunWork: value })}
+          />
+        </div>
+        <div className={styles.row}>
+          <p className={styles.label}>Auto start Pomodoros?</p>
+          <ToggleButton
+            checked={autoRunBreak}
+            onChange={(value) => setTimerSettings({ autoRunBreak: value })}
+          />
+        </div>
+        <div className={styles.row}>
+          <p className={styles.label}>Disable Break?</p>
+          <ToggleButton
+            checked={offBreak}
+            onChange={(value) => setTimerSettings({ offBreak: value })}
+          />
+        </div>
+        <div className={styles.row}>
+          <p className={styles.label}>Long Break interval</p>
+          <div className={styles.numberContainer}>
+            <NumberInput
+              min={timerSettings.minLongBreakInterval}
+              max={timerSettings.maxLongBreakInterval}
+              value={longBreakInterval}
+              onChange={(value) => setTimerSettings({ longBreakInterval: value })}
             />
           </div>
         </div>
