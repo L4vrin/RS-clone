@@ -1,7 +1,7 @@
 import { BiPauseCircle, BiPlayCircle, BiStopCircle } from 'react-icons/bi';
 import { BsGearFill } from 'react-icons/bs';
 import React, { useEffect, useRef, useState } from 'react';
-import styles from './timer.module.scss';
+import styles from './Timer.module.scss';
 import getPadTime from './helpers/getPadTime';
 import useAppSelector from '../../hooks/useAppSelector';
 import useActions from '../../hooks/useActions';
