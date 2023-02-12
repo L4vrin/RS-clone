@@ -1,12 +1,12 @@
 import { AiOutlineClose } from 'react-icons/ai';
 import useActions from '../../hooks/useActions';
 import useAppSelector from '../../hooks/useAppSelector';
-import Modal from '../Modal/Modal';
-import NumberInput from '../NumberInput/NumberInput';
-import ToggleButton from '../ToggleButton';
-import styles from './timerSettings.module.scss';
+import Modal from '../Modal';
+import NumberInput from '../ui/NumberInput';
+import ToggleButton from '../ui/ToggleButton';
 import timerSettings from './timerSettingsConstants';
 import TimeSettingsItem from './TimeSettingsItem';
+import styles from './timerSettings.module.scss';
 
 const TimerSettingsWidget = () => {
   const { isSettingsVisible } = useAppSelector((state) => state.widgets);

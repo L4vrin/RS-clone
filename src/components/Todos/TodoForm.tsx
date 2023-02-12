@@ -3,7 +3,7 @@ import { FiPlus } from 'react-icons/fi';
 import { TodoEvent } from './types/data';
 import styles from './styles/TodoForm.module.scss';
 import useActions from '../../hooks/useActions';
-import PomodoroRange from '../PomodoroRange';
+import PomodoroRange from '../ui/PomodoroRange';
 import useAppSelector from '../../hooks/useAppSelector';
 
 const TodoForm = () => {

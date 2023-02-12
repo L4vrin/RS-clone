@@ -81,7 +81,7 @@ const Timer: React.FC = () => {
 
   useEffect(() => {
     updatePeriod(mode);
-  }, [workPeriodInMinutes, shortBreakPeriodInMinutes]);
+  }, [workPeriodInMinutes, shortBreakPeriodInMinutes, longBreakPeriodInMinutes]);
 
   const handleStart = () => {
     if (secondsLeft === 0) setSecondsLeft(totalSeconds.current);

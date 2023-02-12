@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import NumberInput from '../NumberInput/NumberInput';
+import NumberInput from '../ui/NumberInput/NumberInput';
 import styles from './timerSettings.module.scss';
 import timerSettings from './timerSettingsConstants';
 
