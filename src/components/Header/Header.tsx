@@ -1,4 +1,5 @@
 // import { useState } from 'react';
+import useActions from '../../hooks/useActions';
 import useAppSelector from '../../hooks/useAppSelector';
 import styles from './Header.module.scss';
 
@@ -6,9 +7,10 @@ const Header = () => {
   const user = useAppSelector((state) => state.user);
   // const [isLogin, setIsLogin] = useState(false)
   const isLogin = localStorage.getItem('user');
-
+  const { changeUserName } = useActions();
   const handlerLogoff = () => {
-    localStorage.removeItem('user')
+    changeUserName('Guest')
+    localStorage.removeItem('user');
   }
   return (
     <div className={styles.headerWrapper}>
