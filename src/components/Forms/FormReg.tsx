@@ -1,14 +1,17 @@
+import {useNavigate} from 'react-router-dom';
 import {useState} from 'react';
-import styles from './Forms.module.scss';
-import {useCreateUserMutation, useLoginUserMutation} from '../../store/auth/users.api';
+import {
+  useCreateUserMutation,
+  useLoginUserMutation,
+} from '../../store/auth/users.api';
 import {IUserCreate, IErrorValidation} from './types/data';
 import useActions from '../../hooks/useActions';
+import styles from './Forms.module.scss';
 
 // interface IError {
 //   status: string,
 //   data: string[]
 // }
-
 
 const FormReg = () => {
   const [userNameReg, setUserNameReg] = useState('');
@@ -17,8 +20,8 @@ const FormReg = () => {
   const [errorReg, setErrorReg] = useState<any>({status: '0', data: []});
   const [addNewUser, {isLoading, isError, isSuccess}] = useCreateUserMutation();
   const [loginUser] = useLoginUserMutation();
-
-  const { changeUserName, switchRegistred } = useActions();
+  const navigate = useNavigate();
+  const {changeUserName, switchRegistred} = useActions();
 
   const formData = {
     fullName: userNameReg,
@@ -32,6 +35,7 @@ const FormReg = () => {
       const userData = await loginUser(data).unwrap();
       changeUserName(userData.fullName);
       switchRegistred(true);
+      navigate('today')
     } catch (err) {
       setErrorReg(err);
     }

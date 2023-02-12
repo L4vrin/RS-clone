@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './Forms.module.scss';
 import {useLoginUserMutation} from '../../store/auth/users.api';
 import {IErrorValidation} from './types/data';
@@ -20,9 +21,9 @@ const FormLog = () => {
   const [errorLog, setErrorLog] = useState<any>({status: 0, data: []});
   const [loginUser, {isLoading, isError, isSuccess}] = useLoginUserMutation();
 
+  const {changeUserName} = useActions();
+  const navigate = useNavigate()
 
-  const { changeUserName } = useActions();
-  
   const formData = {
     email: emailLog,
     password: passwordLog,
@@ -31,9 +32,10 @@ const FormLog = () => {
   const handleLoginUser = async (data: IUserLogin) => {
     try {
       const userData = await loginUser(data).unwrap();
-      changeUserName(userData.fullName)
+      changeUserName(userData.fullName);
+      navigate('today')
     } catch (err) {
-        setErrorLog(err);
+      setErrorLog(err);
     }
   };
 
