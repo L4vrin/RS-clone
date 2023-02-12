@@ -34,14 +34,15 @@
 }
 
 .rsSchoolLink {
-
+  width: 100px;
+  height: 70px;
 }
 
 .rsSchoolLogo {
   background: url(../../assets/rs_school_logo.svg) no-repeat;
   background-size: 100% 100%;
   width: 70px;
-  height: 70px;
+  height: 60px;
   cursor: pointer;
   
   transition: .2s ease-in;
