@@ -1,34 +1,46 @@
-// import { useState } from 'react';
+import {useNavigate} from 'react-router-dom';
 import useActions from '../../hooks/useActions';
 import useAppSelector from '../../hooks/useAppSelector';
 import styles from './Header.module.scss';
 
 const Header = () => {
   const user = useAppSelector((state) => state.user);
-  // const [isLogin, setIsLogin] = useState(false)
   const isLogin = localStorage.getItem('user');
-  const { changeUserName, switchRegistred } = useActions();
+  const navigate = useNavigate();
+  const {changeUserName, switchRegistred} = useActions();
   const handlerLogoff = () => {
     changeUserName('Guest');
-    switchRegistred(false)
+    switchRegistred(false);
     localStorage.removeItem('user');
-  }
+    navigate('/');
+  };
+
+  const handlerLogin = () => {
+    switchRegistred(true);
+  };
+
   return (
     <div className={styles.headerWrapper}>
       <div className={styles.headerContainer}>
-        {/* <nav className={styles.nav}>
-        <Link to="/">First Page</Link>
-        <Link to="/second">Second Page</Link>
-        <Link to="/third">Third Page</Link>
-      </nav> */}
-        {}
         <div className={styles.userContainer}>
           {isLogin ? user.fullName : 'Guest'}
         </div>
         <div className={styles.buttonsContainer}>
-          {isLogin && (
-            <button className={styles.button} type="button" onClick = {() => handlerLogoff()}>
+          {isLogin ? (
+            <button
+              className={styles.button}
+              type="button"
+              onClick={() => handlerLogoff()}
+            >
               Logoff
+            </button>
+          ) : (
+            <button
+              className={styles.button}
+              type="button"
+              onClick={() => handlerLogin()}
+            >
+              Login
             </button>
           )}
         </div>
