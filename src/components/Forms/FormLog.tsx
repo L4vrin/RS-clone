@@ -41,7 +41,6 @@ const FormLog = () => {
 
   return (
     <div className={styles.formWrapper}>
-      <h2 className={styles.formTitle}>Login Form</h2>
       <form className={styles.form}>
         <input
           className={styles.input}
@@ -65,7 +64,7 @@ const FormLog = () => {
             handleLoginUser(formData);
           }}
         >
-          Confirm
+          Login
         </button>
       </form>
       <div className={styles.serverAnswer}>

@@ -54,7 +54,7 @@ const Header = () => {
                 type="button"
                 onClick={() => handlerRegistration()}
               >
-                Sign in
+                Registration
               </button>
             </>
           )}

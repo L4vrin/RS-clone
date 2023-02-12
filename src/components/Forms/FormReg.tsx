@@ -43,7 +43,6 @@ const FormReg = () => {
 
   return (
     <div className={styles.formWrapper}>
-      <h2 className={styles.formTitle}>Registration Form</h2>
       <form className={styles.form}>
         <input
           className={styles.input}
@@ -74,7 +73,7 @@ const FormReg = () => {
             handleAddNewUser(formData);
           }}
         >
-          Confirm
+          Create new account
         </button>
       </form>
       <div className={styles.serverAnswer}>
