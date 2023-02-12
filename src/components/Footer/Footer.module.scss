@@ -1,0 +1,52 @@
+.footerWrapper {
+  background: rgb(193, 193, 193);
+}
+
+.footerContainer {
+  max-width: 1240px;
+  height: 70px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.teamText {
+  margin: 10px;
+  display: flex;
+  align-items: center;
+}
+.githubContainer {
+  display: flex;
+}
+
+.githubIcon {
+  fill: blue;
+}
+
+.githubLink {
+  margin: 5px;
+  cursor: pointer;
+  transition: .2s ease-in;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.rsSchoolLink {
+  width: 100px;
+  height: 70px;
+}
+
+.rsSchoolLogo {
+  background: url(../../assets/rs_school_logo.svg) no-repeat;
+  background-size: 100% 100%;
+  width: 70px;
+  height: 60px;
+  cursor: pointer;
+  
+  transition: .2s ease-in;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
