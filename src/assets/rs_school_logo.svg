@@ -1,4 +1,4 @@
-<svg id="Layer_1" fill="#da9e1d" xmlns="http://www.w3.org/2000/svg"
+<svg id="Layer_1" fill="#000" xmlns="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 552.8 205.3">
   <style>
     .st0{fill:#fff}.st5,.st7{fill:#fff;stroke:#000;stroke-width:4;stroke-miterlimit:10}.st7{fill:#eee}</style>
@@ -28,7 +28,7 @@
       <clipPath id="SVGID_4_">
         <use xlink:href="#SVGID_3_" overflow="visible" />
       </clipPath>
-      <g id="Layer_1-2" fill="#da9e1d" style="clip-path:url(#SVGID_4_)">
+      <g id="Layer_1-2" fill="#000" style="clip-path:url(#SVGID_4_)">
         <ellipse transform="rotate(-37.001 420.46 67.88)" class="st0" cx="420.5" cy="67.9" rx="63"
           ry="51.8" />
         <defs>
