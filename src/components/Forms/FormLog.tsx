@@ -30,12 +30,10 @@ const FormLog = () => {
 
   const handleLoginUser = async (data: IUserLogin) => {
     try {
-      const a = await loginUser(data).unwrap();
-      changeUserName(a.fullName)
+      const userData = await loginUser(data).unwrap();
+      changeUserName(userData.fullName)
     } catch (err) {
-      if (err instanceof Error) {
         setErrorLog(err);
-    }
     }
   };
 

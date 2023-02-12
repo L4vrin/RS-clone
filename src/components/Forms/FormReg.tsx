@@ -29,8 +29,8 @@ const FormReg = () => {
   const handleAddNewUser = async (data: IUserCreate) => {
     try {
       await addNewUser(data).unwrap();
-      const a = await loginUser(data).unwrap();
-      changeUserName(a.fullName)
+      const userData = await loginUser(data).unwrap();
+      changeUserName(userData.fullName)
     } catch (err) {
       setErrorReg(err);
     }
