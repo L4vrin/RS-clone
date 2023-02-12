@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+const LS_TIMER_SETTINGS_KEY = 'timer_settings';
+
 interface TimerSettingsState {
   workPeriodInMinutes: number;
   shortBreakPeriodInMinutes: number;
@@ -10,7 +12,9 @@ interface TimerSettingsState {
   offBreak: boolean;
 }
 
-const initialState: TimerSettingsState = {
+const initialState: TimerSettingsState = JSON.parse(
+  localStorage.getItem(LS_TIMER_SETTINGS_KEY)  || 'null'
+) ?? {
   workPeriodInMinutes: 2,
   shortBreakPeriodInMinutes: 1,
   longBreakPeriodInMinutes: 3,
@@ -24,15 +28,8 @@ export const timerSettingsSlice = createSlice({
   name: 'timerSettings',
   initialState,
   reducers: {
-    setWorkPeriod(state, action: PayloadAction<number | string>) {
-      state.workPeriodInMinutes = Number(action.payload);
-    },
-
-    setShortBreakPeriod(state, action: PayloadAction<number | string>) {
-      state.shortBreakPeriodInMinutes = Number(action.payload);
-    },
-
     setTimerSettings(state, action: PayloadAction<Partial<TimerSettingsState>>) {
+      localStorage.setItem(LS_TIMER_SETTINGS_KEY, JSON.stringify({ ...state, ...action.payload }));
       return { ...state, ...action.payload };
     },
   },
