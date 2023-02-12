@@ -17,6 +17,12 @@ const Header = () => {
 
   const handlerLogin = () => {
     switchRegistred(true);
+    navigate('/');
+  };
+
+  const handlerRegistration = () => {
+    switchRegistred(false);
+    navigate('/');
   };
 
   return (
@@ -35,13 +41,22 @@ const Header = () => {
               Logoff
             </button>
           ) : (
-            <button
-              className={styles.button}
-              type="button"
-              onClick={() => handlerLogin()}
-            >
-              Login
-            </button>
+            <>
+              <button
+                className={styles.button}
+                type="button"
+                onClick={() => handlerLogin()}
+              >
+                Login
+              </button>
+              <button
+                className={styles.button}
+                type="button"
+                onClick={() => handlerRegistration()}
+              >
+                Sign in
+              </button>
+            </>
           )}
         </div>
       </div>
