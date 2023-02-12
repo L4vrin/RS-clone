@@ -1,36 +1,43 @@
-import { useState} from 'react';
+import {useState} from 'react';
 import styles from './Forms.module.scss';
-import {useCreateUserMutation} from '../../store/auth/usersApi';
-import {IErrorValidation } from './types/data';
+import {useLoginUserMutation} from '../../store/auth/users.api';
+import {IErrorValidation} from './types/data';
+import useActions from '../../hooks/useActions';
+
 // interface IError {
-//   status: string, 
+//   status: string,
 //   data: string[]
 // }
 
 interface IUserLogin {
-  email: string,
-	password: string,
+  email: string;
+  password: string;
 }
 
 const FormLog = () => {
   const [emailLog, setEmailLog] = useState('');
   const [passwordLog, setPasswordLog] = useState('');
+  const [errorLog, setErrorLog] = useState<any>({status: 0, data: []});
+  const [loginUser, {isLoading, isError, isSuccess}] = useLoginUserMutation();
 
-  const [error, setError] = useState<any>({})
-  const [addNewUser, {isLoading, isError, isSuccess}] = useCreateUserMutation();
 
+  const { changeUserName } = useActions();
+  
   const formData = {
     email: emailLog,
     password: passwordLog,
   };
 
-  const handleAddNewUser = async (data: IUserLogin) => {
+  const handleLoginUser = async (data: IUserLogin) => {
     try {
-      await addNewUser(data).unwrap();
+      const a = await loginUser(data).unwrap();
+      changeUserName(a.fullName)
     } catch (err) {
-        setError(err)
+      if (err instanceof Error) {
+        setErrorLog(err);
+    }
+    }
   };
-}
 
   return (
     <div className={styles.formWrapper}>
@@ -55,22 +62,29 @@ const FormLog = () => {
           type="submit"
           onClick={(e) => {
             e.preventDefault();
-            handleAddNewUser(formData);
+            handleLoginUser(formData);
           }}
         >
           Confirm
         </button>
       </form>
       <div className={styles.serverAnswer}>
-        {isLoading && <div className={styles.loading}> <div className={styles.loader}/> </div>}
+        {isLoading && (
+          <div className={styles.loading}>
+            {' '}
+            <div className={styles.loader} />{' '}
+          </div>
+        )}
         {isError && (
           <ul className={styles.errorsList}>
-            {error.data.map((errorObj: IErrorValidation) => (
-              <li key={errorObj.param}>{errorObj.msg}</li>
+            {errorLog.data.map((errorObj: IErrorValidation) => (
+              <li key={errorObj.msg}>{errorObj.msg}</li>
             ))}
           </ul>
         )}
-        {isSuccess && <div className={styles.success}> User created! </div>}
+        {isSuccess && (
+          <div className={styles.success}> User successful login </div>
+        )}
       </div>
     </div>
   );

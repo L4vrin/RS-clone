@@ -1,19 +1,24 @@
 import {useState} from 'react';
 import styles from './Forms.module.scss';
-import {useCreateUserMutation} from '../../store/auth/usersApi';
+import {useCreateUserMutation, useLoginUserMutation} from '../../store/auth/users.api';
 import {IUserCreate, IErrorValidation} from './types/data';
+import useActions from '../../hooks/useActions';
+
 // interface IError {
 //   status: string,
 //   data: string[]
 // }
 
+
 const FormReg = () => {
   const [userNameReg, setUserNameReg] = useState('');
   const [emailReg, setEmailReg] = useState('');
   const [passwordReg, setPasswordReg] = useState('');
-
-  const [error, setError] = useState<any>({status: 0, data: []});
+  const [errorReg, setErrorReg] = useState<any>({status: '0', data: []});
   const [addNewUser, {isLoading, isError, isSuccess}] = useCreateUserMutation();
+  const [loginUser] = useLoginUserMutation();
+
+  const { changeUserName } = useActions();
 
   const formData = {
     fullName: userNameReg,
@@ -24,8 +29,10 @@ const FormReg = () => {
   const handleAddNewUser = async (data: IUserCreate) => {
     try {
       await addNewUser(data).unwrap();
+      const a = await loginUser(data).unwrap();
+      changeUserName(a.fullName)
     } catch (err) {
-      setError(err);
+      setErrorReg(err);
     }
   };
 
@@ -66,11 +73,16 @@ const FormReg = () => {
         </button>
       </form>
       <div className={styles.serverAnswer}>
-        {isLoading && <div className={styles.loading}> <div className={styles.loader}/> </div>}
+        {isLoading && (
+          <div className={styles.loading}>
+            {' '}
+            <div className={styles.loader} />{' '}
+          </div>
+        )}
         {isError && (
           <ul className={styles.errorsList}>
-            {error.data.map((errorObj: IErrorValidation) => (
-              <li key={errorObj.param}>{errorObj.msg}</li>
+            {errorReg.data.map((errorObj: IErrorValidation) => (
+              <li key={errorObj.msg}>{errorObj.msg}</li>
             ))}
           </ul>
         )}

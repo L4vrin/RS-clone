@@ -10,3 +10,7 @@ export interface ITask {
   pomodoroTime: number; // time in minutes
   completedPomodors: number;
 }
+
+export interface IUser {
+  fullName: string,
+}

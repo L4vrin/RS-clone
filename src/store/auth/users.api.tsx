@@ -22,6 +22,14 @@ export const usersApi = createApi({
           }),
         //   invalidatesTags: [{type: 'Products', id: 'LIST'}]
       }),
+      loginUser: build.mutation({
+        query: (body) => ({
+            url: 'auth/login',
+            method: 'POST',
+            body,
+        }),
+      //   invalidatesTags: [{type: 'Products', id: 'LIST'}]
+    }),
     //   deleteProduct: build.mutation({
     //       query: (id) => ({
     //           url: `goods/${id}`,
@@ -32,4 +40,4 @@ export const usersApi = createApi({
   })
 });
 
-export const {useCreateUserMutation} = usersApi;
+export const {useCreateUserMutation, useLoginUserMutation} = usersApi;

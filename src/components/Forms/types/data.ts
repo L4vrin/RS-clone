@@ -5,8 +5,8 @@ export interface IUserCreate {
 }
 
 export interface IErrorValidation {
-  location: string;
+  location?: string;
   msg: string;
-  param: string;
-  value: string;
+  param?: string;
+  value?: string;
 }

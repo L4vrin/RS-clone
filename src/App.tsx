@@ -5,6 +5,7 @@ import RegistrationPage from './pages/RegistrationPage';
 // import Today from './pages/Today';
 
 const App: React.FC = () => {
+
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
