@@ -7,9 +7,10 @@ const Header = () => {
   const user = useAppSelector((state) => state.user);
   // const [isLogin, setIsLogin] = useState(false)
   const isLogin = localStorage.getItem('user');
-  const { changeUserName } = useActions();
+  const { changeUserName, switchRegistred } = useActions();
   const handlerLogoff = () => {
-    changeUserName('Guest')
+    changeUserName('Guest');
+    switchRegistred(false)
     localStorage.removeItem('user');
   }
   return (

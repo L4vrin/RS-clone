@@ -13,4 +13,5 @@ export interface ITask {
 
 export interface IUser {
   fullName: string,
+  isRegistred: boolean
 }

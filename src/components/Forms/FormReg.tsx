@@ -18,7 +18,7 @@ const FormReg = () => {
   const [addNewUser, {isLoading, isError, isSuccess}] = useCreateUserMutation();
   const [loginUser] = useLoginUserMutation();
 
-  const { changeUserName } = useActions();
+  const { changeUserName, switchRegistred } = useActions();
 
   const formData = {
     fullName: userNameReg,
@@ -30,7 +30,8 @@ const FormReg = () => {
     try {
       await addNewUser(data).unwrap();
       const userData = await loginUser(data).unwrap();
-      changeUserName(userData.fullName)
+      changeUserName(userData.fullName);
+      switchRegistred(true);
     } catch (err) {
       setErrorReg(err);
     }
