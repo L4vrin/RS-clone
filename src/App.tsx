@@ -1,13 +1,20 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import {useEffect} from 'react'
 import Layout from './components/Layout';
 import Notfound from './pages/Notfound';
 import RegistrationPage from './pages/RegistrationPage';
 import Today from './pages/Today';
-
 // import Today from './pages/Today';
 
 const App: React.FC = () => {
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if(localStorage.getItem('token')) {
+     navigate('today')
+    }
+  },[navigate])
+  
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
