@@ -131,7 +131,7 @@ const Timer: React.FC = () => {
       if (currentMode === MODES.work) pomodoroCount.current += 1;
       updatePeriod(nextMode);
 
-      if (currentTask && currentMode === MODES.work) setCompletedPomodoro(currentTask.id);
+      if (currentTask && currentMode === MODES.work) setCompletedPomodoro(currentTask._id);
     }
   }, [secondsLeft, autoRunWork, autoRunBreak, offBreak]);
 

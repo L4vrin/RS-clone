@@ -18,8 +18,8 @@ const Todo = ({ todo }: { todo: ITask }) => {
           <BiCircle
             className={styles.todoCircleIcon}
             onClick={() => {
-              toggleComplete(todo.id);
-              removeTaskFromTimer(todo.id);
+              toggleComplete(todo._id);
+              removeTaskFromTimer(todo._id);
             }}
           />
           <button
@@ -28,14 +28,14 @@ const Todo = ({ todo }: { todo: ITask }) => {
             aria-label="Add task to timer"
             onClick={() => addTaskToTimer(todo)}
           >
-            {taskInTimer?.id === todo.id ? <SlClock /> : <BsPlayCircle />}
+            {taskInTimer?._id === todo._id ? <SlClock /> : <BsPlayCircle />}
           </button>
         </>
       ) : (
         <BiCheckCircle
           className={styles.todoCheckedCircleIcon}
           onClick={() => {
-            toggleComplete(todo.id);
+            toggleComplete(todo._id);
           }}
         />
       )}
@@ -52,8 +52,8 @@ const Todo = ({ todo }: { todo: ITask }) => {
       <RiDeleteBin2Line
         className={styles.todoDeleteIcon}
         onClick={() => {
-          deleteTask(todo.id);
-          removeTaskFromTimer(todo.id);
+          deleteTask(todo._id);
+          removeTaskFromTimer(todo._id);
         }}
       />
     </div>

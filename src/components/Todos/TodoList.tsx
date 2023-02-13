@@ -1,14 +1,17 @@
 import Todo from './Todo';
 import styles from './styles/TodoList.module.scss';
-import { ITask } from '../../models';
+import {ITask} from '../../models';
+import {useGetAllTasksQuery} from '../../store/tasks/tasksApi';
 
-const TodoList = ({ todos }: { todos: ITask[] }) => {
-  const notCompletedTodos = todos.filter((todo) => !todo.isCompleted);
+const TodoList = () => {
+  const {data = []} = useGetAllTasksQuery();
+  const notCompletedArray = data.filter((task: ITask) => !task.isCompleted);
+
   return (
     <div className={styles.todoList}>
-      {!!notCompletedTodos.length && <h2>Todo list</h2>}
-      {notCompletedTodos.map((todo) => {
-        return <Todo key={todo.id} todo={todo} />;
+      {!!notCompletedArray && <h2>Todo list</h2>}
+      {notCompletedArray.map((todo: ITask) => {
+        return <Todo key={todo._id} todo={todo} />;
       })}
     </div>
   );

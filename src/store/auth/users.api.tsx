@@ -2,18 +2,18 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const usersApi = createApi({
   reducerPath: 'usersApi',
-//   tagTypes: ['Products'],
+  tagTypes: ['Products'],
   baseQuery: fetchBaseQuery({baseUrl: 'https://rs-clone-tody.up.railway.app/'}),
   endpoints: (build) => ({
-    //   getGoods: build.query({
-    //       query: (limit = '') => `goods?${limit && `_limit=${limit}`}`,
-    //       providesTags: (result) => result
-    //         ? [
-    //             ...result.map(({ id }) => ({ type: 'Products', id })),
-    //             { type: 'Products', id: 'LIST' },
-    //           ]
-    //         : [{ type: 'Products', id: 'LIST' }],
-    //   }),
+      // getGoods: build.query({
+      //     query: (limit = '') => `goods?${limit && `_limit=${limit}`}`,
+      //     providesTags: (result) => result
+      //       ? [
+      //           ...result.map(({ id }) => ({ type: 'Products', id })),
+      //           { type: 'Products', id: 'LIST' },
+      //         ]
+      //       : [{ type: 'Products', id: 'LIST' }],
+      // }),
       createUser: build.mutation({
           query: (body) => ({
               url: 'auth/register',

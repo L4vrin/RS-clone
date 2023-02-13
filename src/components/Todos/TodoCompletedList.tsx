@@ -8,7 +8,7 @@ const TodoCompletedList = ({ todos }: { todos: ITask[] }) => {
     <div className={styles.todoCompletedList}>
       {!!completedTodos.length && <h2>Completed Todo list</h2>}
       {completedTodos.map((todo) => {
-        return <Todo key={todo.id} todo={todo} />;
+        return <Todo key={todo._id} todo={todo} />;
       })}
     </div>
   );
