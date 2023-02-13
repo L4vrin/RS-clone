@@ -9,13 +9,13 @@ const Layout = () => {
   return (
     <>
       <Header/>
-      <div className={styles.layoutContainer}>
+      <div className={styles.layoutContainer} />
       <Outlet />
       <Timer />
       <TimerSettingsWidget />
       <Footer />
     </>
-  );
-};
+  )
+}
 
 export default Layout;
