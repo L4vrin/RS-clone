@@ -35,6 +35,7 @@ const FormReg = () => {
       const userData = await loginUser(data).unwrap();
       changeUserName(userData.fullName);
       switchRegistred(true);
+      localStorage.setItem('token', userData.token)
       navigate('today')
     } catch (err) {
       setErrorReg(err);
