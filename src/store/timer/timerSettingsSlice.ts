@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { alarmSounds, ambientSounds } from '../../settings/timerSettings';
 
 const LS_TIMER_SETTINGS_KEY = 'timer_settings';
 
@@ -10,10 +11,12 @@ interface TimerSettingsState {
   autoRunWork: boolean;
   autoRunBreak: boolean;
   offBreak: boolean;
+  alarmSoundPath: string | null;
+  ambientSoundPath: string | null;
 }
 
 const initialState: TimerSettingsState = JSON.parse(
-  localStorage.getItem(LS_TIMER_SETTINGS_KEY)  || 'null'
+  localStorage.getItem(LS_TIMER_SETTINGS_KEY) || 'null'
 ) ?? {
   workPeriodInMinutes: 2,
   shortBreakPeriodInMinutes: 1,
@@ -22,6 +25,8 @@ const initialState: TimerSettingsState = JSON.parse(
   autoRunWork: true,
   autoRunBreak: true,
   offBreak: false,
+  alarmSoundPath: alarmSounds[0].path,
+  ambientSoundPath: ambientSounds[0].path,
 };
 
 export const timerSettingsSlice = createSlice({

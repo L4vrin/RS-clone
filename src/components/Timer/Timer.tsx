@@ -22,18 +22,23 @@ const Timer: React.FC = () => {
     offBreak,
     longBreakPeriodInMinutes,
     longBreakInterval,
+    alarmSoundPath,
+    ambientSoundPath,
   } = useAppSelector((store) => store.timerSettings);
 
   const { currentTask, isRunning } = useAppSelector((store) => store.timer);
   const { setCompletedPomodoro, setIsRunning, setIsSettingsVisible } = useActions();
 
-  const [mode, setMode] = useState(MODES.work);
+  const [currentMode, setCurrentMode] = useState(MODES.work);
   const totalSeconds = useRef(workPeriodInMinutes * 60);
   const [secondsLeft, setSecondsLeft] = useState(totalSeconds.current);
   const pomodoroCount = useRef(0);
 
-  const updatePeriod = (newMode: string) => {
-    switch (newMode) {
+  const alarmAudio = useRef(new Audio());
+  const ambientAudio = useRef(new Audio());
+
+  const updatePeriod = (mode: string) => {
+    switch (mode) {
       case MODES.work:
         totalSeconds.current = workPeriodInMinutes * 60;
         break;
@@ -51,7 +56,54 @@ const Timer: React.FC = () => {
     setSecondsLeft(totalSeconds.current);
   };
 
+  const start = () => {
+    if (secondsLeft === 0) setSecondsLeft(totalSeconds.current);
+    setIsRunning(true);
+  };
+
+  const pause = () => {
+    setIsRunning(false);
+  };
+
+  const reset = () => {
+    setIsRunning(false);
+    setCurrentMode(MODES.work);
+    pomodoroCount.current = 0;
+    setSecondsLeft(workPeriodInMinutes * 60);
+  };
+
   useEffect(() => {
+    if (alarmSoundPath) alarmAudio.current = new Audio(alarmSoundPath);
+
+    return () => {
+      ambientAudio.current.pause();
+      reset();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (alarmSoundPath) {
+      alarmAudio.current.src = alarmSoundPath;
+    }
+  }, [alarmSoundPath]);
+
+  useEffect(() => {
+    if (ambientSoundPath) {
+      ambientAudio.current.src = ambientSoundPath;
+      ambientAudio.current.loop = true;
+      if (isRunning) ambientAudio.current.play();
+    } else {
+      ambientAudio.current.pause();
+    }
+  }, [ambientSoundPath]);
+
+  useEffect(() => {
+    if (isRunning && ambientSoundPath) {
+      ambientAudio.current.play();
+    } else {
+      ambientAudio.current.pause();
+    }
+
     const interval = setInterval(() => {
       if (isRunning) setSecondsLeft((prev) => (prev >= 0.1 ? prev - 0.1 : 0));
     }, 100);
@@ -63,40 +115,29 @@ const Timer: React.FC = () => {
 
   useEffect(() => {
     if (secondsLeft === 0) {
-      let nextMode = mode;
+      if (alarmSoundPath) alarmAudio.current.play();
+      let nextMode = currentMode;
 
       if (!offBreak) {
-        nextMode = mode === MODES.work ? MODES.break : MODES.work;
-        setMode(() => nextMode);
+        nextMode = currentMode === MODES.work ? MODES.break : MODES.work;
+      } else {
+        nextMode = MODES.work;
       }
+
+      setCurrentMode(nextMode);
 
       if (!autoRunWork && nextMode === MODES.work) setIsRunning(false);
       if (!autoRunBreak && nextMode === MODES.break) setIsRunning(false);
-      if (mode === MODES.work) pomodoroCount.current += 1;
+      if (currentMode === MODES.work) pomodoroCount.current += 1;
       updatePeriod(nextMode);
 
-      if (currentTask && mode === MODES.work) setCompletedPomodoro(currentTask.id);
+      if (currentTask && currentMode === MODES.work) setCompletedPomodoro(currentTask.id);
     }
-  }, [secondsLeft]);
+  }, [secondsLeft, autoRunWork, autoRunBreak, offBreak]);
 
   useEffect(() => {
-    updatePeriod(mode);
+    updatePeriod(currentMode);
   }, [workPeriodInMinutes, shortBreakPeriodInMinutes, longBreakPeriodInMinutes]);
-
-  const handleStart = () => {
-    if (secondsLeft === 0) setSecondsLeft(totalSeconds.current);
-    setIsRunning(true);
-  };
-
-  const handlePause = () => {
-    setIsRunning(false);
-  };
-
-  const handleReset = () => {
-    setIsRunning(false);
-    setMode(MODES.work);
-    setSecondsLeft(workPeriodInMinutes * 60);
-  };
 
   const minutes = Math.floor(secondsLeft / 60);
   const seconds = secondsLeft - minutes * 60;
@@ -112,7 +153,7 @@ const Timer: React.FC = () => {
           <circle className={styles.circleStatic} cx="40" cy="40" r="38.2" strokeDasharray="1" />
           <circle
             className={`${styles.circleActive} ${
-              mode === MODES.break ? styles.circleActiveBreak : ''
+              currentMode === MODES.break ? styles.circleActiveBreak : ''
             }`}
             cx="40"
             cy="40"
@@ -126,13 +167,13 @@ const Timer: React.FC = () => {
         </div>
       </div>
       <div className={styles.task}>{currentTask && currentTask.title}</div>
-      <div className={styles.buttons}>
+      <div className={styles.controls}>
         {isRunning ? (
           <button
             className={styles.timerButton}
             type="button"
             aria-label="Pause timer"
-            onClick={handlePause}
+            onClick={pause}
           >
             <BiPauseCircle />
           </button>
@@ -142,7 +183,7 @@ const Timer: React.FC = () => {
               className={styles.timerButton}
               type="button"
               aria-label="Start timer"
-              onClick={handleStart}
+              onClick={start}
             >
               <BiPlayCircle />
             </button>
@@ -150,7 +191,7 @@ const Timer: React.FC = () => {
               className={styles.timerButton}
               type="button"
               aria-label="Stop timer"
-              onClick={handleReset}
+              onClick={reset}
             >
               <BiStopCircle />
             </button>

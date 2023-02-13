@@ -24,6 +24,7 @@
   padding: 15px 0;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   border-bottom: 1px solid rgba($color: grey, $alpha: 0.8);
 
   &:last-child {
@@ -33,6 +34,7 @@
 
 .rowFlexColumn {
   flex-direction: column;
+  align-items: stretch;
 }
 
 .timeSettings {
@@ -61,8 +63,30 @@
   background: none;
   border: none;
   cursor: pointer;
+  transition: 0.3s;
 
   &:hover {
     color: rgba($color: red, $alpha: 0.8);
+  }
+}
+
+.selectSoundContainer {
+  width: 8rem;
+}
+
+.selectSound {
+  width: 100%;
+  padding: 0.625rem 0.325rem;
+  color: #555;
+  font-size: 1rem;
+  background-color: #efefef;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  box-shadow: none;
+  outline: none;
+  cursor: pointer;
+
+  &:focus {
+    border-color: #555;
   }
 }

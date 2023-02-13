@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import NumberInput from '../ui/NumberInput/NumberInput';
 import styles from './timerSettings.module.scss';
-import timerSettings from './timerSettingsConstants';
+import { minTimeInMinutes, maxTimeInMinutes } from '../../settings/timerSettings';
 
 interface TimeSettingProps {
   label: string;
@@ -15,8 +15,8 @@ const TimeSettingsItem: FC<TimeSettingProps> = ({ label, value, onChange }) => {
       <p className={styles.numberLabel}>{label}</p>
       <NumberInput
         value={value}
-        min={timerSettings.minTimeInMinutes}
-        max={timerSettings.maxTimeInMinutes}
+        min={minTimeInMinutes}
+        max={maxTimeInMinutes}
         onChange={onChange}
       />
     </div>
