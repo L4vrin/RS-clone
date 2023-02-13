@@ -5,6 +5,7 @@ import { timerReducer } from './timer/timerSlice';
 import { widgetsReducer } from './widgets/widgetsSlice';
 import { userReducer } from './auth/users.slice';
 import {usersApi} from './auth/users.api';
+import { tasksApi } from './tasks/tasksApi';
 
 export const store = configureStore({
   reducer: {
@@ -13,10 +14,12 @@ export const store = configureStore({
     widgets: widgetsReducer,
     timerSettings: timerSettingsReducer,
     [usersApi.reducerPath]: usersApi.reducer,
+    [tasksApi.reducerPath]: tasksApi.reducer,
+
     user: userReducer,
   },
   middleware: (getDefaultMiddlware) =>
-    getDefaultMiddlware().concat(usersApi.middleware),
+    getDefaultMiddlware().concat(usersApi.middleware, tasksApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
