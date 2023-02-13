@@ -5,19 +5,26 @@ import styles from './styles/TodoForm.module.scss';
 import useActions from '../../hooks/useActions';
 import PomodoroRange from '../ui/PomodoroRange';
 import useAppSelector from '../../hooks/useAppSelector';
+import { useCreateTaskMutation } from '../../store/tasks/tasksApi';
 
 const TodoForm = () => {
+  const [createTask] = useCreateTaskMutation();
   const { addNewTask } = useActions();
   const [title, setTitle] = useState('');
   const [pomodorosNumber, setPomodorosNumbers] = useState(0);
   const pomodoroTime = useAppSelector((state) => state.timerSettings.workPeriodInMinutes);
 
-  const onSubmitHandler = (e: TodoEvent) => {
+  const onSubmitHandler = async (e: TodoEvent) => {
     e.preventDefault();
 
     if (title) {
       addNewTask({ title, pomodorosNumber, pomodoroTime, deadlineId: 'today' });
+      try {
+      await createTask({title}).unwrap()
       setTitle('');
+      } catch(err) {
+        console.log(err)
+      }
     }
   };
 

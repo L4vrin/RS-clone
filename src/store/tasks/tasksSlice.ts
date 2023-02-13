@@ -23,6 +23,7 @@ export const tasksSlice = createSlice({
         state.list.push(action.payload);
         localStorage.setItem(LS_TASKS_KEY, JSON.stringify(state.list));
       },
+      
       prepare({ title, pomodorosNumber, pomodoroTime, deadlineId }: NewTaskPayload) {
         const currentDate = new Date();
         const newTask: ITask = {
