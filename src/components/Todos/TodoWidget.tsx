@@ -3,6 +3,8 @@ import TodoList from './TodoList';
 import TodoCompletedList from './TodoCompletedList';
 import useAppSelector from '../../hooks/useAppSelector';
 import StatsWidget from '../StatsWidget';
+import Timer from '../Timer/Timer';
+import TimerSettingsWidget from '../TimerSettingsWidget/TimerSettingsWidget';
 
 const TodoWidget = () => {
   const todos = useAppSelector((state) => state.tasks.list);
@@ -13,6 +15,8 @@ const TodoWidget = () => {
       <TodoForm />
       <TodoList todos={todos} />
       <TodoCompletedList todos={todos} />
+      <Timer />
+      <TimerSettingsWidget />
     </>
   );
 };
