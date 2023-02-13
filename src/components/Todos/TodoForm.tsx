@@ -18,9 +18,10 @@ const TodoForm = () => {
     e.preventDefault();
 
     if (title) {
-      addNewTask({ title, pomodorosNumber, pomodoroTime, deadlineId: 'today' });
+      const newTaskData = addNewTask({ title, pomodorosNumber, pomodoroTime, deadlineId: 'today' });
+      console.log(newTaskData)
       try {
-      await createTask({title}).unwrap()
+      await createTask(newTaskData.payload).unwrap()
       setTitle('');
       } catch(err) {
         console.log(err)

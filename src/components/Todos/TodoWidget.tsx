@@ -8,12 +8,11 @@ import TimerSettingsWidget from '../TimerSettingsWidget';
 
 const TodoWidget = () => {
   const todos = useAppSelector((state) => state.tasks.list);
-
   return (
     <>
       <StatsWidget tasks={todos} />
       <TodoForm />
-      <TodoList todos={todos} />
+      <TodoList />
       <TodoCompletedList todos={todos} />
       <Timer />
       <TimerSettingsWidget />
