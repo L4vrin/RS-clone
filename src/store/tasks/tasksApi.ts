@@ -28,7 +28,19 @@ export const tasksApi = createApi({
           ? [...result.map(({_id}) => ({type: 'Tasks' as const, _id})), 'Tasks']
           : ['Tasks'],
     }),
+    updateTodo: build.mutation({
+      query: (todo) => ({
+        url: `todos/${todo._id}`,
+        method: 'PATCH',
+        body: todo,
+      }),
+      transformResponse: (response: { data: ITask }) => response.data,
+      transformErrorResponse: (
+        response: { status: string | number },
+      ) => response.status,
+      invalidatesTags: ['Tasks'],
+    }),
   }),
 });
 
-export const {useCreateTaskMutation, useGetAllTasksQuery} = tasksApi;
+export const {useCreateTaskMutation, useGetAllTasksQuery, useUpdateTodoMutation} = tasksApi;
