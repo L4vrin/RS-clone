@@ -6,6 +6,8 @@
   gap: 100px;
   height: calc(100vh - 71px);
   // background-image: url('./../../assets/img/calendar-bg.png');
+  background-repeat: no-repeat;
+  background-position: right 10px bottom 30px;
 }
 
 .leftContainer {
@@ -43,4 +45,8 @@
   text-decoration: underline;
   color: #ff0000;
   cursor: pointer;
+}
+
+a {
+  color: #ff0000;
 }
