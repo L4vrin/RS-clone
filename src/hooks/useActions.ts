@@ -3,11 +3,13 @@ import { useDispatch } from 'react-redux';
 import { timerSettingsActions } from '../store/timer/timerSettingsSlice';
 import { tasksActions } from '../store/tasks/tasksSlice';
 import { timerActions } from '../store/timer/timerSlice';
+import { widgetsActions } from '../store/widgets/widgetsSlice';
 import { userActions } from '../store/auth/users.slice';
 
 const actions = {
   ...tasksActions,
   ...timerActions,
+  ...widgetsActions,
   ...timerSettingsActions,
   ...userActions
 };

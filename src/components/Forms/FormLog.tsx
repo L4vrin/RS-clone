@@ -33,7 +33,10 @@ const FormLog = () => {
     try {
       const userData = await loginUser(data).unwrap();
       changeUserName(userData.fullName);
-      navigate('today');
+
+      localStorage.setItem('token', userData.token)
+      navigate('today')
+
     } catch (err) {
       setErrorLog(err);
     }

@@ -1,25 +1,41 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { alarmSounds, ambientSounds } from '../../settings/timerSettings';
+
+const LS_TIMER_SETTINGS_KEY = 'timer_settings';
 
 interface TimerSettingsState {
   workPeriodInMinutes: number;
-  breakPeriodInMinutes: number;
+  shortBreakPeriodInMinutes: number;
+  longBreakPeriodInMinutes: number;
+  longBreakInterval: number;
+  autoRunWork: boolean;
+  autoRunBreak: boolean;
+  offBreak: boolean;
+  alarmSoundPath: string | null;
+  ambientSoundPath: string | null;
 }
 
-const initialState: TimerSettingsState = {
+const initialState: TimerSettingsState = JSON.parse(
+  localStorage.getItem(LS_TIMER_SETTINGS_KEY) || 'null'
+) ?? {
   workPeriodInMinutes: 2,
-  breakPeriodInMinutes: 1,
+  shortBreakPeriodInMinutes: 1,
+  longBreakPeriodInMinutes: 3,
+  longBreakInterval: 4,
+  autoRunWork: true,
+  autoRunBreak: true,
+  offBreak: false,
+  alarmSoundPath: alarmSounds[0].path,
+  ambientSoundPath: ambientSounds[0].path,
 };
 
 export const timerSettingsSlice = createSlice({
   name: 'timerSettings',
   initialState,
   reducers: {
-    setWorkPeriod(state, action: PayloadAction<number>) {
-      state.workPeriodInMinutes = action.payload;
-    },
-
-    setRestPeriod(state, action: PayloadAction<number>) {
-      state.breakPeriodInMinutes = action.payload;
+    setTimerSettings(state, action: PayloadAction<Partial<TimerSettingsState>>) {
+      localStorage.setItem(LS_TIMER_SETTINGS_KEY, JSON.stringify({ ...state, ...action.payload }));
+      return { ...state, ...action.payload };
     },
   },
 });
