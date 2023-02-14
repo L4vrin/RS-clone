@@ -11,6 +11,14 @@ const Todo = ({ todo }: { todo: ITask }) => {
   const { toggleComplete, deleteTask, addTaskToTimer, removeTaskFromTimer } = useActions();
   const taskInTimer = useAppSelector((state) => state.timer.currentTask);
 
+  // const toggledTask = state.list.find(
+  //   (task) => task._id === action.payload
+  // );
+  // if (toggledTask) {
+  //   toggledTask.isCompleted = !toggledTask.isCompleted;
+  //   localStorage.setItem(LS_TASKS_KEY, JSON.stringify(state.list));
+  // }
+
   return (
     <div className={styles.todo}>
       {!todo.isCompleted ? (

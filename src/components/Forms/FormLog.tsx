@@ -72,8 +72,7 @@ const FormLog = () => {
       <div className={styles.serverAnswer}>
         {isLoading && (
           <div className={styles.loading}>
-            {' '}
-            <div className={styles.loader} />{' '}
+            <div className={styles.loader} />
           </div>
         )}
         {isError && (

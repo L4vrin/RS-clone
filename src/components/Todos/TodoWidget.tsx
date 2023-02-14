@@ -13,7 +13,7 @@ const TodoWidget = () => {
       <StatsWidget tasks={todos} />
       <TodoForm />
       <TodoList />
-      <TodoCompletedList todos={todos} />
+      <TodoCompletedList />
       <Timer />
       <TimerSettingsWidget />
     </>
