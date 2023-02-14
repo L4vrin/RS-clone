@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import styles from './Forms.module.scss';
-import { useLoginUserMutation } from '../../store/auth/users.api';
-import { IErrorValidation } from './types/data';
+import {useLoginUserMutation} from '../../store/auth/users.api';
+import {IErrorValidation} from './types/data';
 import useActions from '../../hooks/useActions';
 
 // interface IError {
@@ -18,10 +18,9 @@ interface IUserLogin {
 const FormLog = () => {
   const [emailLog, setEmailLog] = useState('');
   const [passwordLog, setPasswordLog] = useState('');
-  const [errorLog, setErrorLog] = useState<any>({ status: 0, data: [] });
-  const [loginUser, { isLoading, isError, isSuccess }] = useLoginUserMutation();
-
-  const { changeUserName } = useActions();
+  const [errorLog, setErrorLog] = useState<any>({status: 0, data: []});
+  const [loginUser, {isLoading, isError, isSuccess}] = useLoginUserMutation();
+  const {changeUserName, switchRegistred} = useActions();
   const navigate = useNavigate();
 
   const formData = {
@@ -33,10 +32,8 @@ const FormLog = () => {
     try {
       const userData = await loginUser(data).unwrap();
       changeUserName(userData.fullName);
-
-      localStorage.setItem('token', userData.token)
-      navigate('today')
-
+      localStorage.setItem('token', userData.token);
+      navigate('today');
     } catch (err) {
       setErrorLog(err);
     }
@@ -71,11 +68,21 @@ const FormLog = () => {
           Login
         </button>
       </form>
+      <p>
+        Already registered?
+        <button
+          type="button"
+          className={styles.linkButton}
+          onClick={() => switchRegistred(false)}
+        >
+          Click here
+        </button>
+        to log in
+      </p>
       <div className={styles.serverAnswer}>
         {isLoading && (
           <div className={styles.loading}>
-            {' '}
-            <div className={styles.loader} />{' '}
+            <div className={styles.loader} />
           </div>
         )}
         {isError && (

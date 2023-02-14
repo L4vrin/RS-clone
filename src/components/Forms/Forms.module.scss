@@ -45,6 +45,16 @@ h2 {
   }
 }
 
+.linkButton {
+  display: inline;
+  border: 0px;
+  background-color: transparent;
+  font-size: 15px;
+  text-decoration: underline;
+  color: #ff0000;
+  cursor: pointer;
+}
+
 .success {
   margin: 10px;
 }
