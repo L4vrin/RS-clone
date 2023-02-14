@@ -73,7 +73,7 @@ const FormLog = () => {
         <button
           type="button"
           className={styles.linkButton}
-          onClick={() => switchRegistred(false)}
+          onClick={() => switchRegistred(true)}
         >
           Click here
         </button>

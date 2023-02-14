@@ -33,7 +33,7 @@ const Header = () => {
           {isLogin ? user.fullName : 'Guest'}
         </div>
         <div className={styles.buttonsContainer}>
-          {isLogin ? (
+          {isLogin && (
             <button
               className={styles.button}
               type="button"
@@ -41,23 +41,6 @@ const Header = () => {
             >
               Logoff
             </button>
-          ) : (
-            <>
-              <button
-                className={styles.button}
-                type="button"
-                onClick={() => handlerLogin()}
-              >
-                Login
-              </button>
-              <button
-                className={styles.button}
-                type="button"
-                onClick={() => handlerRegistration()}
-              >
-                Registration
-              </button>
-            </>
           )}
         </div>
       </div>

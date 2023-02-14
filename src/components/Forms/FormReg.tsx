@@ -84,7 +84,7 @@ const FormReg = () => {
         <button
           type="button"
           className={styles.linkButton}
-          onClick={() => switchRegistred(true)}
+          onClick={() => switchRegistred(false)}
         >
           Click here
         </button>

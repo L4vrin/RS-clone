@@ -20,10 +20,10 @@ const WelcomePage = () => {
             <p>
               The aim of this app is to help you focus on any task you are
               working on, such as study, writing, or coding. This app is
-              inspired by{' '}
+              inspired by
               <a href="https://en.wikipedia.org/wiki/Pomodoro_Technique">
                 Pomodoro Technique
-              </a>{' '}
+              </a>
               which is a time management method developed by Francesco Cirillo.
             </p>
           </div>
@@ -38,7 +38,7 @@ const WelcomePage = () => {
         </div>
         <div className={styles.rightContainer}>
           <div className={styles.formContainer}>
-            {isReg ? <FormLog /> : <FormReg />}
+            {!isReg ? <FormLog /> : <FormReg />}
           </div>
         </div>
       </div>
