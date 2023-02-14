@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
 import styles from './styles/WelcomePage.module.scss';
 import logo from '../assets/img/logo.png';
 import bgCalendar from '../assets/img/calendar-bg.png';
