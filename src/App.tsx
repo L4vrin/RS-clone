@@ -2,7 +2,6 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import Layout from './components/Layout';
 import Notfound from './pages/Notfound';
-import RegistrationPage from './pages/RegistrationPage';
 import Today from './pages/Today';
 import WelcomePage from './pages/WelcomePage';
 
@@ -15,13 +14,11 @@ const App: React.FC = () => {
     if (localStorage.getItem('token')) {
       navigate('today');
     }
-  }, [navigate]);
-
+  },[navigate])
   return (
     <Routes>
-      <Route path="welcome" element={<WelcomePage />} />
       <Route path="/" element={<Layout />}>
-        <Route index element={<RegistrationPage />} />
+        <Route index element={<WelcomePage />} />
         <Route path="today" element={<Today />} />
         {/* <Route index element={<Today />} /> */}
         {

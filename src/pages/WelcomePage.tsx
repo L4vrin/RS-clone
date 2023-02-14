@@ -3,34 +3,36 @@ import { useState } from 'react';
 import styles from './styles/WelcomePage.module.scss';
 import logo from '../assets/img/logo.png';
 import bgCalendar from '../assets/img/calendar-bg.png';
-import Footer from '../components/Footer/Footer';
 import FormReg from '../components/Forms/FormReg';
 import FormLog from '../components/Forms/FormLog';
 
 const WelcomePage = () => {
+  const isReg = localStorage.getItem('isReg')
+
+
   const logFormDescription = (
     <p>
-      Already registered?{' '}
+      Already registered?
       <button
         type="button"
         className={styles.linkButton}
         onClick={changeToLoginHandler}
       >
         Click here
-      </button>{' '}
+      </button>
       to log in
     </p>
   );
   const regFormDescription = (
     <p>
-      Dont have an account?{' '}
+      Dont have an account?
       <button
         type="button"
         className={styles.linkButton}
         onClick={changeToLoginHandler}
       >
         Click here
-      </button>{' '}
+      </button>
       to register
     </p>
   );
@@ -54,7 +56,6 @@ const WelcomePage = () => {
   }
 
   return (
-    <>
       <div
         className={styles.wrapper}
         style={{ backgroundImage: `url(${bgCalendar})` }}
@@ -89,8 +90,6 @@ const WelcomePage = () => {
           </div>
         </div>
       </div>
-      <Footer />
-    </>
   );
 };
 
