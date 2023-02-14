@@ -5,7 +5,10 @@ import {useGetAllTasksQuery} from '../../store/tasks/tasksApi';
 
 const TodoList = () => {
   const {data = []} = useGetAllTasksQuery();
-  const notCompletedArray = data.filter((task: ITask) => !task.isCompleted);
+  const notCompletedArray = data.filter(
+    (task: ITask) =>
+      !task.isCompleted && task.user?.email === localStorage.getItem('email')
+  );
 
   return (
     <div className={styles.todoList}>
@@ -18,3 +21,11 @@ const TodoList = () => {
 };
 
 export default TodoList;
+
+// const notCompletedArray = data.filter(
+//   (task: ITask) =>
+//     !task.isCompleted && task.user?.fullName === localStorage.getItem('user')
+
+// );
+// console.log('localStorage', localStorage.getItem('user'));
+// console.log('server', data[0])
