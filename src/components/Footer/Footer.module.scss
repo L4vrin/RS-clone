@@ -1,5 +1,5 @@
 .footerWrapper {
-  background: rgb(193, 193, 193);
+  border-top: 1px solid #d7d7d7;
 }
 
 .footerContainer {
@@ -21,13 +21,13 @@
 }
 
 .githubIcon {
-  fill: blue;
+  fill: #7e0000;
 }
 
 .githubLink {
   margin: 5px;
   cursor: pointer;
-  transition: .2s ease-in;
+  transition: 0.2s ease-in;
   &:hover {
     transform: scale(1.1);
   }
@@ -44,8 +44,8 @@
   width: 70px;
   height: 60px;
   cursor: pointer;
-  
-  transition: .2s ease-in;
+
+  transition: 0.2s ease-in;
   &:hover {
     transform: scale(1.1);
   }

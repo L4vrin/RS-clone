@@ -1,0 +1,46 @@
+// @import url('./../../assets/img/calendar-bg.png');
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+  height: calc(100vh - 71px);
+  // background-image: url('./../../assets/img/calendar-bg.png');
+}
+
+.leftContainer {
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.rightContainer {
+  background-color: white;
+  padding: 20px;
+  border-radius: 17px;
+  transition: box-shadow 0.2s ease-in;
+}
+.rightContainer:hover {
+  box-shadow: 0px 8px 17px 4px rgb(145 145 145 / 20%);
+}
+
+.leftContainer,
+.rightContainer {
+  height: fit-content;
+  align-self: center;
+}
+
+.logo {
+  width: fit-content;
+}
+
+.linkButton {
+  display: inline;
+  border: 0px;
+  background-color: transparent;
+  font-size: 15px;
+  text-decoration: underline;
+  color: #ff0000;
+  cursor: pointer;
+}

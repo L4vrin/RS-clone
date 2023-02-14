@@ -1,8 +1,8 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Forms.module.scss';
-import {useLoginUserMutation} from '../../store/auth/users.api';
-import {IErrorValidation} from './types/data';
+import { useLoginUserMutation } from '../../store/auth/users.api';
+import { IErrorValidation } from './types/data';
 import useActions from '../../hooks/useActions';
 
 // interface IError {
@@ -18,11 +18,11 @@ interface IUserLogin {
 const FormLog = () => {
   const [emailLog, setEmailLog] = useState('');
   const [passwordLog, setPasswordLog] = useState('');
-  const [errorLog, setErrorLog] = useState<any>({status: 0, data: []});
-  const [loginUser, {isLoading, isError, isSuccess}] = useLoginUserMutation();
+  const [errorLog, setErrorLog] = useState<any>({ status: 0, data: [] });
+  const [loginUser, { isLoading, isError, isSuccess }] = useLoginUserMutation();
 
-  const {changeUserName} = useActions();
-  const navigate = useNavigate()
+  const { changeUserName } = useActions();
+  const navigate = useNavigate();
 
   const formData = {
     email: emailLog,
@@ -33,7 +33,7 @@ const FormLog = () => {
     try {
       const userData = await loginUser(data).unwrap();
       changeUserName(userData.fullName);
-      navigate('today')
+      navigate('today');
     } catch (err) {
       setErrorLog(err);
     }
@@ -41,6 +41,7 @@ const FormLog = () => {
 
   return (
     <div className={styles.formWrapper}>
+      <h2>Sign in</h2>
       <form className={styles.form}>
         <input
           className={styles.input}

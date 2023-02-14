@@ -1,10 +1,10 @@
-import {useNavigate} from 'react-router-dom';
-import {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import {
   useCreateUserMutation,
   useLoginUserMutation,
 } from '../../store/auth/users.api';
-import {IUserCreate, IErrorValidation} from './types/data';
+import { IUserCreate, IErrorValidation } from './types/data';
 import useActions from '../../hooks/useActions';
 import styles from './Forms.module.scss';
 
@@ -17,11 +17,12 @@ const FormReg = () => {
   const [userNameReg, setUserNameReg] = useState('');
   const [emailReg, setEmailReg] = useState('');
   const [passwordReg, setPasswordReg] = useState('');
-  const [errorReg, setErrorReg] = useState<any>({status: '0', data: []});
-  const [addNewUser, {isLoading, isError, isSuccess}] = useCreateUserMutation();
+  const [errorReg, setErrorReg] = useState<any>({ status: '0', data: [] });
+  const [addNewUser, { isLoading, isError, isSuccess }] =
+    useCreateUserMutation();
   const [loginUser] = useLoginUserMutation();
   const navigate = useNavigate();
-  const {changeUserName, switchRegistred} = useActions();
+  const { changeUserName, switchRegistred } = useActions();
 
   const formData = {
     fullName: userNameReg,
@@ -35,7 +36,7 @@ const FormReg = () => {
       const userData = await loginUser(data).unwrap();
       changeUserName(userData.fullName);
       switchRegistred(true);
-      navigate('today')
+      navigate('today');
     } catch (err) {
       setErrorReg(err);
     }
@@ -43,6 +44,7 @@ const FormReg = () => {
 
   return (
     <div className={styles.formWrapper}>
+      <h2>Register</h2>
       <form className={styles.form}>
         <input
           className={styles.input}
