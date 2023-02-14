@@ -13,6 +13,7 @@ const Header = () => {
     switchRegistred(false);
     localStorage.removeItem('user');
     localStorage.removeItem('token');
+    localStorage.removeItem('email');
     navigate('/');
   };
 
