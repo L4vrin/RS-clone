@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import styles from './numberInput.module.scss';
 
 interface NumberInputProps {
@@ -9,12 +9,9 @@ interface NumberInputProps {
 }
 
 const NumberInput: FC<NumberInputProps> = ({ value, min, max, onChange }) => {
-  const [currentValue, setCurrentValue] = useState(value);
-
   const handleChange = (newValue: number) => {
     if (min && newValue < min) newValue = min;
     if (max && newValue > max) newValue = max;
-    setCurrentValue(newValue);
     onChange(newValue);
   };
 
@@ -24,7 +21,7 @@ const NumberInput: FC<NumberInputProps> = ({ value, min, max, onChange }) => {
       type="number"
       min={min}
       max={max}
-      value={currentValue}
+      value={value}
       onChange={(evt) => handleChange(Number(evt.target.value))}
     />
   );

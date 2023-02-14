@@ -3,8 +3,8 @@ import TodoList from './TodoList';
 import TodoCompletedList from './TodoCompletedList';
 import useAppSelector from '../../hooks/useAppSelector';
 import StatsWidget from '../StatsWidget';
-import Timer from '../Timer/Timer';
-import TimerSettingsWidget from '../TimerSettingsWidget/TimerSettingsWidget';
+import Timer from '../Timer';
+import TimerSettingsWidget from '../TimerSettingsWidget';
 
 const TodoWidget = () => {
   const todos = useAppSelector((state) => state.tasks.list);

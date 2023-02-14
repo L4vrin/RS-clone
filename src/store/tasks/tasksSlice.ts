@@ -8,11 +8,16 @@ interface TasksState {
   list: ITask[];
 }
 
+type NewTaskPayload = Pick<ITask, 'title' | 'pomodorosNumber' | 'pomodoroTime' | 'deadlineId'>;
+
+type EditTaskPayload = {
+  id: string;
+  data: Pick<ITask, 'title' | 'pomodorosNumber' | 'note'>;
+};
+
 const initialState: TasksState = {
   list: JSON.parse(localStorage.getItem(LS_TASKS_KEY) ?? '[]'),
 };
-
-type NewTaskPayload = Pick<ITask, 'title' | 'pomodorosNumber' | 'pomodoroTime' | 'deadlineId'>;
 
 export const tasksSlice = createSlice({
   name: 'tasks',
@@ -53,13 +58,24 @@ export const tasksSlice = createSlice({
       const targetTask = state.list.find((task) => task.id === action.payload);
       if (targetTask) {
         targetTask.completedPomodors += 1;
+        localStorage.setItem(LS_TASKS_KEY, JSON.stringify(state.list));
       }
-      localStorage.setItem(LS_TASKS_KEY, JSON.stringify(state.list));
     },
 
     deleteTask(state, action: PayloadAction<string>) {
       state.list = state.list.filter((task) => task.id !== action.payload);
       localStorage.setItem(LS_TASKS_KEY, JSON.stringify(state.list));
+    },
+
+    editTask(state, action: PayloadAction<EditTaskPayload>) {
+      const targetTask = state.list.find((task) => task.id === action.payload.id);
+      if (targetTask) {
+        const { title, pomodorosNumber, note } = action.payload.data;
+        targetTask.title = title;
+        targetTask.pomodorosNumber = pomodorosNumber;
+        targetTask.note = note;
+        localStorage.setItem(LS_TASKS_KEY, JSON.stringify(state.list));
+      }
     },
   },
 });

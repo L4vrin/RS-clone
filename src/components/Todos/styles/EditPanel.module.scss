@@ -1,0 +1,132 @@
+.body {
+  padding: 30px 30px 15px;
+}
+
+.item {
+  margin-bottom: 15px;
+}
+
+.flexRow {
+  display: flex;
+  align-items: flex-end;
+}
+
+.subtitle {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.inputText {
+  width: 100%;
+  padding: 0.625rem;
+  color: #555;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background-color: #efefef;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  box-shadow: none;
+  outline: none;
+
+  &::placeholder {
+    color: rgba($color: #555, $alpha: 0.5);
+    font-weight: normal;
+  }
+}
+
+.pomodoroControls {
+  display: flex;
+  margin-left: 10px;
+}
+
+.numberWrapper {
+  width: 5rem;
+  input {
+    font-weight: bold;
+  }
+}
+
+.numberSeparator {
+  margin: 0 10px;
+  transform: translateY(-50%);
+}
+
+.numberLabel {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  color: gray;
+}
+
+.readOnlyNumber {
+  display: block;
+  padding: 0.625rem;
+  color: rgba($color: #555, $alpha: 0.75);
+  font-size: 1rem;
+  background: #efefef;
+  border: 1px solid transparent;
+  border-radius: 5px;
+}
+
+.footer {
+  display: flex;
+  padding: 15px 30px;
+  background: #efefef;
+}
+
+.deleteButton,
+.cancelButton,
+.saveButton {
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  font-weight: bolder;
+  color: gray;
+  border: none;
+  background: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.deleteButton {
+  margin-right: auto;
+  &:hover {
+    color: red;
+  }
+}
+
+.cancelButton {
+  margin-right: 10px;
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.saveButton {
+  color: white;
+  background: #1e1e1e;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.numberBtn {
+  margin: 0 3px;
+  width: 40px;
+  height: 40px;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #555;
+  border-radius: 5px;
+  box-shadow: rgb(0 0 0 / 20%) 0px 2px 2px;
+  cursor: pointer;
+
+  &:active {
+    box-shadow: none;
+    transform: translateY(2px);
+  }
+}
