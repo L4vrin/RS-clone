@@ -1,28 +1,32 @@
 .formWrapper {
   display: flex;
   flex-direction: column;
-  max-width: 400px;
-  margin: 0px auto;
+  min-width: 350px;
+  background-color: white;
+}
+
+h2 {
+  margin-bottom: 20px;
 }
 
 .form {
-  background-color: bisque;
-  margin: 100px 0 30px;
+  background-color: white;
   border-radius: 10px;
-  box-shadow: 0px 2px 4px 1px rgb(174, 156, 134);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #dfdbd8;
 }
 
-
-.input{
+.input {
   border-radius: 10px;
   height: 30px;
-  margin: 10px auto;
-  width: 80%;
+  margin: 10px 10px;
   padding: 15px;
-  border: 1px solid rgb(174, 156, 134);
-  &:first-child {
-    margin-top: 30px;
-  }
+  border: 1px solid #dfdbd8;
+  width: 100%;
 }
 
 .submitBtn {
@@ -31,18 +35,14 @@
   border-radius: 5px;
   border: none;
   padding: 10px;
-  background-color:rgb(200, 196, 99);
-  box-shadow: 0px 2px 4px 0px rgb(140, 138, 69);
+  background-color: #d22d2d;
+  color: white;
   cursor: pointer;
-  transition: 0.2s ease-in;
+  transition: 0.2s ease-out;
 
   &:hover {
-    background-color:rgb(254, 249, 126);
+    background-color: #f75353d0;
   }
-}
-
-.serverAnswer {
-  height: 50px;
 }
 
 .success {
@@ -70,6 +70,10 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
