@@ -1,60 +1,15 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { useState } from 'react';
 import styles from './styles/WelcomePage.module.scss';
 import logo from '../assets/img/logo.png';
 import bgCalendar from '../assets/img/calendar-bg.png';
-import Footer from '../components/Footer/Footer';
 import FormReg from '../components/Forms/FormReg';
 import FormLog from '../components/Forms/FormLog';
+import useAppSelector from '../hooks/useAppSelector';
 
 const WelcomePage = () => {
-  const logFormDescription = (
-    <p>
-      Already registered?{' '}
-      <button
-        type="button"
-        className={styles.linkButton}
-        onClick={changeToLoginHandler}
-      >
-        Click here
-      </button>{' '}
-      to log in
-    </p>
-  );
-  const regFormDescription = (
-    <p>
-      Dont have an account?{' '}
-      <button
-        type="button"
-        className={styles.linkButton}
-        onClick={changeToLoginHandler}
-      >
-        Click here
-      </button>{' '}
-      to register
-    </p>
-  );
-
-  const [visibleForm, setVisibleForm] = useState(<FormLog />);
-  const [formDescription, setFormDescription] = useState(regFormDescription);
-  let flag = 1;
-
-  function changeToLoginHandler() {
-    if (flag === 0) {
-      flag = 1;
-      setVisibleForm(<FormLog />);
-      setFormDescription(regFormDescription);
-      return;
-    }
-    if (flag === 1) {
-      flag = 0;
-      setVisibleForm(<FormReg />);
-      setFormDescription(logFormDescription);
-    }
-  }
+  const isReg = useAppSelector((state) => state.user.isRegistred);
 
   return (
-    <>
       <div
         className={styles.wrapper}
         style={{ backgroundImage: `url(${bgCalendar})` }}
@@ -84,13 +39,10 @@ const WelcomePage = () => {
         </div>
         <div className={styles.rightContainer}>
           <div className={styles.formContainer}>
-            {visibleForm}
-            {formDescription}
+            {isReg ? <FormLog /> : <FormReg />}
           </div>
         </div>
       </div>
-      <Footer />
-    </>
   );
 };
 

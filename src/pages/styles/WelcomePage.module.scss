@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center;
   gap: 100px;
-  height: calc(100vh - 71px);
+  height: calc(100vh - 141px);
   // background-image: url('./../../assets/img/calendar-bg.png');
   background-repeat: no-repeat;
   background-position: right 10px bottom 30px;
@@ -45,8 +45,4 @@
   text-decoration: underline;
   color: #ff0000;
   cursor: pointer;
-}
-
-a {
-  color: #ff0000;
 }
