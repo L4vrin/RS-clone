@@ -21,11 +21,3 @@ const TodoList = () => {
 };
 
 export default TodoList;
-
-// const notCompletedArray = data.filter(
-//   (task: ITask) =>
-//     !task.isCompleted && task.user?.fullName === localStorage.getItem('user')
-
-// );
-// console.log('localStorage', localStorage.getItem('user'));
-// console.log('server', data[0])
