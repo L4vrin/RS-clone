@@ -9,7 +9,6 @@ const TodoList = () => {
     (task: ITask) =>
       !task.isCompleted && task.user?.email === localStorage.getItem('email')
   );
-
   return (
     <div className={styles.todoList}>
       {!!notCompletedArray && <h2>Todo list</h2>}

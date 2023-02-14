@@ -5,19 +5,15 @@ import { SlClock } from 'react-icons/sl';
 import useActions from '../../hooks/useActions';
 import useAppSelector from '../../hooks/useAppSelector';
 import { ITask } from '../../models';
+import { useUpdateTodoMutation } from '../../store/tasks/tasksApi';
 import styles from './styles/Todo.module.scss';
 
 const Todo = ({ todo }: { todo: ITask }) => {
-  const { toggleComplete, deleteTask, addTaskToTimer, removeTaskFromTimer } = useActions();
+  const { deleteTask, addTaskToTimer, removeTaskFromTimer } = useActions();
   const taskInTimer = useAppSelector((state) => state.timer.currentTask);
+  // const [addNewUser, {isLoading, isError, isSuccess}] = useCreateUserMutation();
+  const [updateTodo] = useUpdateTodoMutation();
 
-  // const toggledTask = state.list.find(
-  //   (task) => task._id === action.payload
-  // );
-  // if (toggledTask) {
-  //   toggledTask.isCompleted = !toggledTask.isCompleted;
-  //   localStorage.setItem(LS_TASKS_KEY, JSON.stringify(state.list));
-  // }
 
   return (
     <div className={styles.todo}>
@@ -26,7 +22,7 @@ const Todo = ({ todo }: { todo: ITask }) => {
           <BiCircle
             className={styles.todoCircleIcon}
             onClick={() => {
-              toggleComplete(todo._id);
+              updateTodo({...todo, isCompleted: !todo.isCompleted})
               removeTaskFromTimer(todo._id);
             }}
           />
@@ -43,7 +39,7 @@ const Todo = ({ todo }: { todo: ITask }) => {
         <BiCheckCircle
           className={styles.todoCheckedCircleIcon}
           onClick={() => {
-            toggleComplete(todo._id);
+            updateTodo({...todo, isCompleted: !todo.isCompleted})
           }}
         />
       )}
