@@ -7,6 +7,10 @@ import useActions from '../../hooks/useActions';
 import useAppSelector from '../../hooks/useAppSelector';
 import { ITask } from '../../models';
 import EditPanel from './EditPanel';
+import {
+  useDeleteTodoMutation,
+  useUpdateTodoMutation,
+} from '../../store/tasks/tasksApi';
 import styles from './styles/Todo.module.scss';
 
 const Todo = ({ todo }: { todo: ITask }) => {
@@ -15,6 +19,8 @@ const Todo = ({ todo }: { todo: ITask }) => {
   const taskInTimer = useAppSelector((state) => state.timer.currentTask);
   // const [addNewUser, {isLoading, isError, isSuccess}] = useCreateUserMutation();
   const [updateTodo, {isLoading, isSuccess}] = useUpdateTodoMutation();
+  const [deleteTodo, {isLoading: isLoadingDelete, isSuccess: isSuccessDelete}] =
+    useDeleteTodoMutation();
 
   // const toggledTask = state.list.find(
   //   (task) => task._id === action.payload
@@ -71,8 +77,36 @@ const Todo = ({ todo }: { todo: ITask }) => {
           </div>
         </div>
       ) : (
-        <EditPanel task={todo} close={() => setIsEditState(false)} />
+        <div className={styles.wrapperBtn}>
+        {!isLoading && !isSuccess ? ( <BiCheckCircle
+          className={styles.todoCheckedCircleIcon}
+          onClick={() => {
+            updateTodo({...todo, isCompleted: !todo.isCompleted});
+          }}
+        />) : (<div className={styles.loader} />)}
+        </div>
       )}
+
+      <div
+        className={`${
+          todo.isCompleted ? styles.todoCompletedText : styles.todoText
+        }`}
+      >
+        <div className={styles.title}>{todo.title}</div>
+        <div>
+          <span className={styles.PomodoroIcon}>🍅</span>
+          <span>
+            {todo.completedPomodors}/{todo.pomodorosNumber}
+          </span>
+        </div>
+      </div>
+      <RiDeleteBin2Line
+        className={styles.todoDeleteIcon}
+        onClick={() => {
+          deleteTask(todo._id);
+          removeTaskFromTimer(todo._id);
+        }}
+      />
     </div>
   );
 };
