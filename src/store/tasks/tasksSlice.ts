@@ -11,7 +11,7 @@ interface TasksState {
 type NewTaskPayload = Pick<ITask, 'title' | 'pomodorosNumber' | 'pomodoroTime' | 'deadlineId'>;
 
 type EditTaskPayload = {
-  id: string;
+  _id: string;
   data: Pick<ITask, 'title' | 'pomodorosNumber' | 'note'>;
 };
 
@@ -77,7 +77,7 @@ export const tasksSlice = createSlice({
     },
 
     editTask(state, action: PayloadAction<EditTaskPayload>) {
-      const targetTask = state.list.find((task) => task.id === action.payload.id);
+      const targetTask = state.list.find((task) => task._id === action.payload._id);
       if (targetTask) {
         const { title, pomodorosNumber, note } = action.payload.data;
         targetTask.title = title;

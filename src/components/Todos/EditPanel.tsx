@@ -17,7 +17,7 @@ const EditPanel = ({ task, close }: EditPanelProps) => {
 
   const save = () => {
     if (!taskTitle) return;
-    editTask({ id: task.id, data: { title: taskTitle, pomodorosNumber } });
+    editTask({ _id: task._id, data: { title: taskTitle, pomodorosNumber } });
     close();
   };
 
@@ -75,8 +75,8 @@ const EditPanel = ({ task, close }: EditPanelProps) => {
           type="button"
           className={styles.deleteButton}
           onClick={() => {
-            deleteTask(task.id);
-            removeTaskFromTimer(task.id);
+            deleteTask(task._id);
+            removeTaskFromTimer(task._id);
           }}
         >
           Delete
