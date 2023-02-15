@@ -17,7 +17,8 @@ interface EditPanelProps {
 const EditPanel = ({task, close}: EditPanelProps) => {
   const [taskTitle, setTaskTitle] = useState(task.title);
   const [pomodorosNumber, setPomodorosNumber] = useState(task.pomodorosNumber);
-  const {deleteTask, removeTaskFromTimer, editTask} = useActions();
+  const {removeTaskFromTimer, editTask} = useActions();
+
   const [deleteTodo, {isLoading: isLoadingDelete, isSuccess: isSuccessDelete}] =
     useDeleteTodoMutation();
   const [updateTodo, {isLoading: isLoadingUpdate, isSuccess: isSuccessUpdate}] =
@@ -87,20 +88,37 @@ const EditPanel = ({task, close}: EditPanelProps) => {
           type="button"
           className={styles.deleteButton}
           onClick={() => {
-            deleteTask(task._id);
+            deleteTodo(task);
+            if (isSuccessDelete) {
+              close();
+            }
             removeTaskFromTimer(task._id);
           }}
         >
-          Delete
+          {!isLoadingDelete && !isSuccessDelete ? (
+            `Delete`
+          ) : (
+            <div className={styles.loader} />
+          )}
         </button>
-        <button type="button" className={styles.cancelButton} onClick={() => {
-          
-          close()
-        }}>
+        <button type="button" className={styles.cancelButton} onClick={close}>
           Cancel
         </button>
-        <button type="button" className={styles.saveButton} onClick={save}>
-          Save
+        <button
+          type="button"
+          className={styles.saveButton}
+          onClick={async () => {
+            await updateTodo({...task, title: taskTitle, pomodorosNumber});
+            if (!isSuccessUpdate) {
+              close();
+            }
+          }}
+        >
+          {!isLoadingUpdate && !isSuccessUpdate ? (
+            `Save`
+          ) : (
+            <div className={styles.loader} />
+          )}
         </button>
       </div>
     </div>
