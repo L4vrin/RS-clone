@@ -1,8 +1,8 @@
-import {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './Forms.module.scss';
-import {useLoginUserMutation} from '../../store/auth/users.api';
-import {IErrorValidation} from './types/data';
+import { useLoginUserMutation } from '../../store/auth/users.api';
+import { IErrorValidation } from './types/data';
 import useActions from '../../hooks/useActions';
 
 // interface IError {
@@ -18,9 +18,9 @@ interface IUserLogin {
 const FormLog = () => {
   const [emailLog, setEmailLog] = useState('');
   const [passwordLog, setPasswordLog] = useState('');
-  const [errorLog, setErrorLog] = useState<any>({status: 0, data: []});
-  const [loginUser, {isLoading, isError, isSuccess}] = useLoginUserMutation();
-  const {changeUserName, switchRegistred} = useActions();
+  const [errorLog, setErrorLog] = useState<any>({ status: 0, data: [] });
+  const [loginUser, { isLoading, isError, isSuccess }] = useLoginUserMutation();
+  const { changeUserName, switchRegistred } = useActions();
   const navigate = useNavigate();
 
   const formData = {
@@ -69,7 +69,7 @@ const FormLog = () => {
         </button>
       </form>
       <p>
-        Already registered?
+        Dont have an account?
         <button
           type="button"
           className={styles.linkButton}
@@ -77,7 +77,7 @@ const FormLog = () => {
         >
           Click here
         </button>
-        to log in
+        to register
       </p>
       <div className={styles.serverAnswer}>
         {isLoading && (

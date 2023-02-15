@@ -1,10 +1,10 @@
-import {useNavigate} from 'react-router-dom';
-import {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import {
   useCreateUserMutation,
   useLoginUserMutation,
 } from '../../store/auth/users.api';
-import {IUserCreate, IErrorValidation} from './types/data';
+import { IUserCreate, IErrorValidation } from './types/data';
 import useActions from '../../hooks/useActions';
 import styles from './Forms.module.scss';
 
@@ -17,11 +17,12 @@ const FormReg = () => {
   const [userNameReg, setUserNameReg] = useState('');
   const [emailReg, setEmailReg] = useState('');
   const [passwordReg, setPasswordReg] = useState('');
-  const [errorReg, setErrorReg] = useState<any>({status: '0', data: []});
-  const [addNewUser, {isLoading, isError, isSuccess}] = useCreateUserMutation();
+  const [errorReg, setErrorReg] = useState<any>({ status: '0', data: [] });
+  const [addNewUser, { isLoading, isError, isSuccess }] =
+    useCreateUserMutation();
   const [loginUser] = useLoginUserMutation();
   const navigate = useNavigate();
-  const {changeUserName, switchRegistred} = useActions();
+  const { changeUserName, switchRegistred } = useActions();
 
   const formData = {
     fullName: userNameReg,
@@ -80,15 +81,15 @@ const FormReg = () => {
         </button>
       </form>
       <p>
-        Dont have an account?
+        Already registered?{' '}
         <button
           type="button"
           className={styles.linkButton}
           onClick={() => switchRegistred(false)}
         >
           Click here
-        </button>
-        to register
+        </button>{' '}
+        to log in
       </p>
       <div className={styles.serverAnswer}>
         {isLoading && (
