@@ -19,12 +19,8 @@ const TodoForm = () => {
 
     if (title) {
       const newTaskData = addNewTask({ title, pomodorosNumber, pomodoroTime, deadlineId: 'today' });
-      try {
       await createTask(newTaskData.payload).unwrap()
       setTitle('');
-      } catch(err) {
-        console.log(err)
-      }
     }
   };
 
