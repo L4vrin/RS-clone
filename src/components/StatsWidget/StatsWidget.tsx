@@ -1,32 +1,38 @@
-import { ITask } from '../../models';
+import useAppSelector from '../../hooks/useAppSelector';
+import {ITask} from '../../models';
 import StatsItem from './StatsItem';
 import styles from './statsWidget.module.scss';
 import TimeStat from './TimeStat';
 
 type StatsWidgetProps = {
-  tasks: ITask[];
+  todos: ITask[];
+  isLoading: boolean;
 };
 
-const StatsWidget = ({ tasks }: StatsWidgetProps) => {
-  const inCompleteTasks = tasks.filter((task) => !task.isCompleted);
+const StatsWidget = ({todos, isLoading}: StatsWidgetProps) => {
+  const inCompletedTodos = todos.filter(
+    (todo) =>
+      !todo.isCompleted && todo.user?._id === localStorage.getItem('userId')
+  );
 
-  const estimatedTime = inCompleteTasks.reduce(
-    (acc, task) => acc + task.pomodoroTime * task.pomodorosNumber,
+  const estimatedTime = inCompletedTodos.reduce(
+    (acc, todo) => acc + todo.pomodoroTime * todo.pomodorosNumber,
     0
   );
-  const spentTime = tasks.reduce(
-    (acc, task) => acc + task.completedPomodors * task.pomodoroTime,
+  const spentTime = todos.reduce(
+    (acc, todo) => acc + todo.completedPomodors * todo.pomodoroTime,
     0
   );
-  const numberIncompleteTasks = inCompleteTasks.length;
-  const numberCompletedTasks = tasks.length - numberIncompleteTasks;
+
+  const numberIncompleteTodos = inCompletedTodos.length;
+  const numberCompletedTodos = todos.length - numberIncompleteTodos;
 
   return (
     <div className={`container ${styles.container}`}>
       <StatsItem stat={<TimeStat time={estimatedTime} />} description="Estimated time" />
-      <StatsItem stat={numberIncompleteTasks} description="Incomplete tasks" />
+      <StatsItem stat={numberIncompleteTodos} description="Incomplete tasks" />
       <StatsItem stat={<TimeStat time={spentTime} />} description="Spent time" />
-      <StatsItem stat={numberCompletedTasks} description="Completed tasks" />
+      <StatsItem stat={numberCompletedTodos} description="Completed tasks" />
     </div>
   );
 };

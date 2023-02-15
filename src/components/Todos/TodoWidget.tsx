@@ -1,16 +1,17 @@
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 import TodoCompletedList from './TodoCompletedList';
-import useAppSelector from '../../hooks/useAppSelector';
 import StatsWidget from '../StatsWidget';
 import Timer from '../Timer';
 import TimerSettingsWidget from '../TimerSettingsWidget';
+import { useGetAllTasksQuery } from '../../store/tasks/tasksApi';
 
 const TodoWidget = () => {
-  const todos = useAppSelector((state) => state.tasks.list);
+  const {data = [], isLoading} = useGetAllTasksQuery();
+
   return (
     <>
-      <StatsWidget tasks={todos} />
+      <StatsWidget todos={data} isLoading = {isLoading} />
       <TodoForm />
       <TodoList />
       <TodoCompletedList />
