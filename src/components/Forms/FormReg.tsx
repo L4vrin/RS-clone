@@ -37,7 +37,11 @@ const FormReg = () => {
       changeUserName(userData.fullName);
       switchRegistred(true);
       localStorage.setItem('token', userData.token)
+<<<<<<< HEAD
       localStorage.setItem('userId', userData._id)
+=======
+      localStorage.setItem('email', userData.email)
+>>>>>>> addTodoToServer
       navigate('today')
     } catch (err) {
       setErrorReg(err);

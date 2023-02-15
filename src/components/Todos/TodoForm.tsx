@@ -5,11 +5,19 @@ import styles from './styles/TodoForm.module.scss';
 import useActions from '../../hooks/useActions';
 import PomodoroRange from '../ui/PomodoroRange';
 import useAppSelector from '../../hooks/useAppSelector';
+<<<<<<< HEAD
 import {useCreateTaskMutation} from '../../store/tasks/tasksApi';
 
 const TodoForm = () => {
   const [createTask, {isLoading}] = useCreateTaskMutation();
   const {addNewTask} = useActions();
+=======
+import { useCreateTaskMutation } from '../../store/tasks/tasksApi';
+
+const TodoForm = () => {
+  const [createTask] = useCreateTaskMutation();
+  const { addNewTask } = useActions();
+>>>>>>> addTodoToServer
   const [title, setTitle] = useState('');
   const [pomodorosNumber, setPomodorosNumbers] = useState(0);
   const pomodoroTime = useAppSelector(
@@ -20,6 +28,7 @@ const TodoForm = () => {
     e.preventDefault();
 
     if (title) {
+<<<<<<< HEAD
       const newTaskData = addNewTask({
         title,
         pomodorosNumber,
@@ -27,7 +36,16 @@ const TodoForm = () => {
         deadlineId: 'today',
       });
       await createTask(newTaskData.payload).unwrap();
+=======
+      const newTaskData = addNewTask({ title, pomodorosNumber, pomodoroTime, deadlineId: 'today' });
+      console.log(newTaskData)
+      try {
+      await createTask(newTaskData.payload).unwrap()
+>>>>>>> addTodoToServer
       setTitle('');
+      } catch(err) {
+        console.log(err)
+      }
     }
   };
 

@@ -34,7 +34,11 @@ const FormLog = () => {
       const userData = await loginUser(data).unwrap();
       changeUserName(userData.fullName);
       localStorage.setItem('token', userData.token)
+<<<<<<< HEAD
       localStorage.setItem('userId', userData._id)
+=======
+      localStorage.setItem('email', userData.email)
+>>>>>>> addTodoToServer
       navigate('today')
     } catch (err) {
       setErrorLog(err);
