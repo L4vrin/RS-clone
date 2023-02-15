@@ -28,7 +28,6 @@ export const tasksApi = createApi({
           ? [...result.map(({_id}) => ({type: 'Tasks' as const, _id})), 'Tasks']
           : ['Tasks'],
     }),
-<<<<<<< HEAD
     updateTodo: build.mutation({
       query: (todo) => ({
         url: `todos/${todo._id}`,
@@ -56,9 +55,3 @@ export const tasksApi = createApi({
 });
 
 export const {useCreateTaskMutation, useGetAllTasksQuery, useUpdateTodoMutation, useDeleteTodoMutation} = tasksApi;
-=======
-  }),
-});
-
-export const {useCreateTaskMutation, useGetAllTasksQuery} = tasksApi;
->>>>>>> addTodoToServer

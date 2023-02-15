@@ -12,12 +12,8 @@ const Header = () => {
     changeUserName('Guest');
     switchRegistred(false);
     localStorage.removeItem('token');
-<<<<<<< HEAD
     localStorage.removeItem('userId');
     localStorage.removeItem('user');
-=======
-    localStorage.removeItem('email');
->>>>>>> addTodoToServer
     navigate('/');
   };
 

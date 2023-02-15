@@ -7,11 +7,7 @@ const TodoCompletedList = () => {
   const {data = [], isLoading} = useGetAllTasksQuery();
   const completedArray = data.filter(
     (task: ITask) =>
-<<<<<<< HEAD
       task.isCompleted && task.user?._id === localStorage.getItem('userId')
-=======
-      task.isCompleted && task.user?.email === localStorage.getItem('email')
->>>>>>> addTodoToServer
   );
   return (
     <div className={styles.todoCompletedList}>

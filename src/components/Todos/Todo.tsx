@@ -30,7 +30,6 @@ const Todo = ({todo}: {todo: ITask}) => {
   return (
     <div className={styles.todo}>
       {!todo.isCompleted ? (
-<<<<<<< HEAD
         <div className={styles.wrapperBtn}>
           {!isLoadingUpdate && !isSuccessUpdate ? (
             <BiCircle
@@ -44,16 +43,6 @@ const Todo = ({todo}: {todo: ITask}) => {
             <div className={styles.loader} />
           )}
 
-=======
-        <>
-          <BiCircle
-            className={styles.todoCircleIcon}
-            onClick={() => {
-              toggleComplete(todo._id);
-              removeTaskFromTimer(todo._id);
-            }}
-          />
->>>>>>> addTodoToServer
           <button
             className={styles.todoAddToTimerBtn}
             type="button"
@@ -64,7 +53,6 @@ const Todo = ({todo}: {todo: ITask}) => {
           </button>
         </div>
       ) : (
-<<<<<<< HEAD
         <div className={styles.wrapperBtn}>
           {!isLoadingUpdate && !isSuccessUpdate ? (
             <BiCheckCircle
@@ -77,14 +65,6 @@ const Todo = ({todo}: {todo: ITask}) => {
             <div className={styles.loader} />
           )}
         </div>
-=======
-        <BiCheckCircle
-          className={styles.todoCheckedCircleIcon}
-          onClick={() => {
-            toggleComplete(todo._id);
-          }}
-        />
->>>>>>> addTodoToServer
       )}
       <div
         className={`${
@@ -99,7 +79,6 @@ const Todo = ({todo}: {todo: ITask}) => {
           </span>
         </div>
       </div>
-<<<<<<< HEAD
       {!isLoadingDelete && !isSuccessDelete ? (
         <RiDeleteBin2Line
           className={styles.todoDeleteIcon}
@@ -109,15 +88,6 @@ const Todo = ({todo}: {todo: ITask}) => {
           }}
         />
       ) : <div className={styles.loaderDelete} />}
-=======
-      <RiDeleteBin2Line
-        className={styles.todoDeleteIcon}
-        onClick={() => {
-          deleteTask(todo._id);
-          removeTaskFromTimer(todo._id);
-        }}
-      />
->>>>>>> addTodoToServer
     </div>
   );
 };
