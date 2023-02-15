@@ -18,7 +18,7 @@ const Todo = ({ todo }: { todo: ITask }) => {
   const { toggleComplete, addTaskToTimer, removeTaskFromTimer } = useActions();
   const taskInTimer = useAppSelector((state) => state.timer.currentTask);
   // const [addNewUser, {isLoading, isError, isSuccess}] = useCreateUserMutation();
-  const [updateTodo, {isLoading, isSuccess}] = useUpdateTodoMutation();
+  const [updateTodo, {isLoading: isLoadingUpdate, isSuccess: isSuccessUpdate}] = useUpdateTodoMutation();
   const [deleteTodo, {isLoading: isLoadingDelete, isSuccess: isSuccessDelete}] =
     useDeleteTodoMutation();
 
