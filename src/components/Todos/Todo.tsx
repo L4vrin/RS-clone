@@ -5,7 +5,10 @@ import {SlClock} from 'react-icons/sl';
 import useActions from '../../hooks/useActions';
 import useAppSelector from '../../hooks/useAppSelector';
 import {ITask} from '../../models';
-import {useUpdateTodoMutation} from '../../store/tasks/tasksApi';
+import {
+  useDeleteTodoMutation,
+  useUpdateTodoMutation,
+} from '../../store/tasks/tasksApi';
 import styles from './styles/Todo.module.scss';
 
 const Todo = ({todo}: {todo: ITask}) => {
@@ -13,6 +16,8 @@ const Todo = ({todo}: {todo: ITask}) => {
   const taskInTimer = useAppSelector((state) => state.timer.currentTask);
   // const [addNewUser, {isLoading, isError, isSuccess}] = useCreateUserMutation();
   const [updateTodo, {isLoading, isSuccess}] = useUpdateTodoMutation();
+  const [deleteTodo, {isLoading: isLoadingDelete, isSuccess: isSuccessDelete}] =
+    useDeleteTodoMutation();
 
   return (
     <div className={styles.todo}>
@@ -41,15 +46,18 @@ const Todo = ({todo}: {todo: ITask}) => {
         </div>
       ) : (
         <div className={styles.wrapperBtn}>
-        {!isLoading && !isSuccess ? ( <BiCheckCircle
-          className={styles.todoCheckedCircleIcon}
-          onClick={() => {
-            updateTodo({...todo, isCompleted: !todo.isCompleted});
-          }}
-        />) : (<div className={styles.loader} />)}
+          {!isLoading && !isSuccess ? (
+            <BiCheckCircle
+              className={styles.todoCheckedCircleIcon}
+              onClick={() => {
+                updateTodo({...todo, isCompleted: !todo.isCompleted});
+              }}
+            />
+          ) : (
+            <div className={styles.loader} />
+          )}
         </div>
       )}
-
       <div
         className={`${
           todo.isCompleted ? styles.todoCompletedText : styles.todoText
@@ -63,13 +71,17 @@ const Todo = ({todo}: {todo: ITask}) => {
           </span>
         </div>
       </div>
-      <RiDeleteBin2Line
-        className={styles.todoDeleteIcon}
-        onClick={() => {
-          deleteTask(todo._id);
-          removeTaskFromTimer(todo._id);
-        }}
-      />
+      {!isLoadingDelete && !isSuccessDelete ? (
+        <div className={styles.wrapperSvg}>
+        <RiDeleteBin2Line
+          className={styles.todoDeleteIcon}
+          onClick={() => {
+            deleteTodo(todo);
+            removeTaskFromTimer(todo._id);
+          }}
+        />
+        </div>
+      ) : <div className={styles.loader} />}
     </div>
   );
 };

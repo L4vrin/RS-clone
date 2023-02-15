@@ -40,7 +40,18 @@ export const tasksApi = createApi({
       ) => response.status,
       invalidatesTags: ['Tasks'],
     }),
+    deleteTodo: build.mutation({
+      query: (todo) => ({
+        url: `todos/${todo._id}`,
+        method: 'DELETE',
+      }),
+      transformResponse: (response: { data: ITask }) => response.data,
+      transformErrorResponse: (
+        response: { status: string | number },
+      ) => response.status,
+      invalidatesTags: ['Tasks'],
+    }),
   }),
 });
 
-export const {useCreateTaskMutation, useGetAllTasksQuery, useUpdateTodoMutation} = tasksApi;
+export const {useCreateTaskMutation, useGetAllTasksQuery, useUpdateTodoMutation, useDeleteTodoMutation} = tasksApi;
