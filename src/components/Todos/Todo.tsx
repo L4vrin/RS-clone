@@ -15,7 +15,7 @@ const Todo = ({todo}: {todo: ITask}) => {
   const {deleteTask, addTaskToTimer, removeTaskFromTimer} = useActions();
   const taskInTimer = useAppSelector((state) => state.timer.currentTask);
   // const [addNewUser, {isLoading, isError, isSuccess}] = useCreateUserMutation();
-  const [updateTodo, {isLoading, isSuccess}] = useUpdateTodoMutation();
+  const [updateTodo, {isLoading: isLoadingUpdate, isSuccess: isSuccessUpdate}] = useUpdateTodoMutation();
   const [deleteTodo, {isLoading: isLoadingDelete, isSuccess: isSuccessDelete}] =
     useDeleteTodoMutation();
 
@@ -23,7 +23,7 @@ const Todo = ({todo}: {todo: ITask}) => {
     <div className={styles.todo}>
       {!todo.isCompleted ? (
         <div className={styles.wrapperBtn}>
-          {!isLoading && !isSuccess ? (
+          {!isLoadingUpdate && !isSuccessUpdate ? (
             <BiCircle
               className={styles.todoCircleIcon}
               onClick={() => {
@@ -46,7 +46,7 @@ const Todo = ({todo}: {todo: ITask}) => {
         </div>
       ) : (
         <div className={styles.wrapperBtn}>
-          {!isLoading && !isSuccess ? (
+          {!isLoadingUpdate && !isSuccessUpdate ? (
             <BiCheckCircle
               className={styles.todoCheckedCircleIcon}
               onClick={() => {
@@ -72,7 +72,6 @@ const Todo = ({todo}: {todo: ITask}) => {
         </div>
       </div>
       {!isLoadingDelete && !isSuccessDelete ? (
-        <div className={styles.wrapperSvg}>
         <RiDeleteBin2Line
           className={styles.todoDeleteIcon}
           onClick={() => {
@@ -80,8 +79,7 @@ const Todo = ({todo}: {todo: ITask}) => {
             removeTaskFromTimer(todo._id);
           }}
         />
-        </div>
-      ) : <div className={styles.loader} />}
+      ) : <div className={styles.loaderDelete} />}
     </div>
   );
 };
