@@ -30,33 +30,33 @@ const TodoForm = () => {
       setTitle('');
     }
   };
+    const handleRangeChange = (value: number) => {
+      setPomodorosNumbers(value);
+    };
 
-  const handleRangeChange = (value: number) => {
-    setPomodorosNumbers(value);
-  };
+    return (
+      <div className={styles.newTask}>
+        <form className={styles.form} onSubmit={onSubmitHandler}>
+          <div className={styles.inputWrapper}>
+            {!isLoading ? (
+              <FiPlus className={styles.inputAdd} onClick={onSubmitHandler} />
+            ) : (
+              <div className={styles.loader} />
+            )}
 
-  return (
-    <div className={styles.newTask}>
-      <form className={styles.form} onSubmit={onSubmitHandler}>
-        <div className={styles.inputWrapper}>
-          {!isLoading ? (
-            <FiPlus className={styles.inputAdd} onClick={onSubmitHandler} />
-          ) : <div className={styles.loader} />}
-
-          <input
-            className={styles.input}
-            type="text"
-            placeholder='Adding task in "Todo list". Press Enter for save'
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
+            <input
+              className={styles.input}
+              type="text"
+              placeholder='Adding task in "Todo list". Press Enter for save'
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+        </form>
+        <div className={styles.pomodoroRange}>
+          <PomodoroRange onChange={handleRangeChange} />
         </div>
-      </form>
-      <div className={styles.pomodoroRange}>
-        <PomodoroRange onChange={handleRangeChange} />
       </div>
-    </div>
-  );
+    );
 };
-
 export default TodoForm;
