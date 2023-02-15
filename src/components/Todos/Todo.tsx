@@ -12,7 +12,7 @@ import {
 import styles from './styles/Todo.module.scss';
 
 const Todo = ({todo}: {todo: ITask}) => {
-  const {deleteTask, addTaskToTimer, removeTaskFromTimer} = useActions();
+  const {addTaskToTimer, removeTaskFromTimer} = useActions();
   const taskInTimer = useAppSelector((state) => state.timer.currentTask);
   // const [addNewUser, {isLoading, isError, isSuccess}] = useCreateUserMutation();
   const [updateTodo, {isLoading: isLoadingUpdate, isSuccess: isSuccessUpdate}] = useUpdateTodoMutation();
