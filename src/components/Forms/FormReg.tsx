@@ -1,28 +1,22 @@
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import {useNavigate} from 'react-router-dom';
+import {useState} from 'react';
 import {
   useCreateUserMutation,
   useLoginUserMutation,
 } from '../../store/auth/users.api';
-import { IUserCreate, IErrorValidation } from './types/data';
+import {IUserCreate, IError} from './types/data';
 import useActions from '../../hooks/useActions';
 import styles from './Forms.module.scss';
-
-// interface IError {
-//   status: string,
-//   data: string[]
-// }
 
 const FormReg = () => {
   const [userNameReg, setUserNameReg] = useState('');
   const [emailReg, setEmailReg] = useState('');
   const [passwordReg, setPasswordReg] = useState('');
-  const [errorReg, setErrorReg] = useState<any>({ status: '0', data: [] });
-  const [addNewUser, { isLoading, isError, isSuccess }] =
-    useCreateUserMutation();
+  const [errorReg, setErrorReg] = useState<IError>({status: '0', data: []});
+  const [addNewUser, {isLoading, isError, isSuccess}] = useCreateUserMutation();
   const [loginUser] = useLoginUserMutation();
   const navigate = useNavigate();
-  const { changeUserName, switchRegistred } = useActions();
+  const {changeUserName, switchRegistred} = useActions();
 
   const formData = {
     fullName: userNameReg,
@@ -36,11 +30,12 @@ const FormReg = () => {
       const userData = await loginUser(data).unwrap();
       changeUserName(userData.fullName);
       switchRegistred(true);
-      localStorage.setItem('token', userData.token)
-      localStorage.setItem('userId', userData._id)
-      navigate('today')
+      localStorage.setItem('token', userData.token);
+      localStorage.setItem('userId', userData._id);
+      navigate('today');
     } catch (err) {
-      setErrorReg(err);
+      const error = err as IError;
+      setErrorReg(error);
     }
   };
 
@@ -99,7 +94,7 @@ const FormReg = () => {
         )}
         {isError && (
           <ul className={styles.errorsList}>
-            {errorReg.data.map((errorObj: IErrorValidation) => (
+            {errorReg.data.map((errorObj) => (
               <li key={errorObj.msg}>{errorObj.msg}</li>
             ))}
           </ul>

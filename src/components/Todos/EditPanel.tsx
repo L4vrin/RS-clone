@@ -14,7 +14,7 @@ interface EditPanelProps {
   close: () => void;
 }
 
-const EditPanel = ({task, close}: EditPanelProps) => {
+const EditPanel: React.FC<EditPanelProps> = ({task, close}) => {
   const [taskTitle, setTaskTitle] = useState(task.title);
   const [pomodorosNumber, setPomodorosNumber] = useState(task.pomodorosNumber);
   const {removeTaskFromTimer, editTask} = useActions();
@@ -88,7 +88,7 @@ const EditPanel = ({task, close}: EditPanelProps) => {
           type="button"
           className={styles.deleteButton}
           onClick={() => {
-            deleteTodo(task);
+            deleteTodo(task).unwrap();
             if (isSuccessDelete) {
               close();
             }
@@ -108,17 +108,11 @@ const EditPanel = ({task, close}: EditPanelProps) => {
           type="button"
           className={styles.saveButton}
           onClick={async () => {
-            await updateTodo({...task, title: taskTitle, pomodorosNumber});
-            if (!isSuccessUpdate) {
-              close();
-            }
+            await updateTodo({...task, title: taskTitle, pomodorosNumber}).unwrap();
+            close();
           }}
         >
-          {!isLoadingUpdate && !isSuccessUpdate ? (
-            `Save`
-          ) : (
-            <div className={styles.loader} />
-          )}
+          {!isLoadingUpdate ? `Save` : <div className={styles.loader} />}
         </button>
       </div>
     </div>
