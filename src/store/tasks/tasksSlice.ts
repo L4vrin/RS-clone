@@ -8,7 +8,10 @@ interface TasksState {
   list: ITask[];
 }
 
-type NewTaskPayload = Pick<ITask, 'title' | 'pomodorosNumber' | 'pomodoroTime' | 'deadlineId'>;
+type NewTaskPayload = Pick<
+  ITask,
+  'title' | 'pomodorosNumber' | 'pomodoroTime' | 'deadlineId' | 'note'
+>;
 
 type EditTaskPayload = {
   id: string;
@@ -28,7 +31,7 @@ export const tasksSlice = createSlice({
         state.list.push(action.payload);
         localStorage.setItem(LS_TASKS_KEY, JSON.stringify(state.list));
       },
-      prepare({ title, pomodorosNumber, pomodoroTime, deadlineId }: NewTaskPayload) {
+      prepare({ title, pomodorosNumber, pomodoroTime, deadlineId, note }: NewTaskPayload) {
         const currentDate = new Date();
         const newTask: ITask = {
           id: uuidv4(),
@@ -40,6 +43,7 @@ export const tasksSlice = createSlice({
           title,
           pomodoroTime,
           pomodorosNumber,
+          note,
         };
 
         return { payload: newTask };
