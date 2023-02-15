@@ -1,6 +1,5 @@
 import {useState} from 'react';
 import {BiCircle, BiCheckCircle} from 'react-icons/bi';
-import {RiDeleteBin2Line} from 'react-icons/ri';
 import {BsPlayCircle} from 'react-icons/bs';
 import {GrMoreVertical} from 'react-icons/gr';
 import {SlClock} from 'react-icons/sl';
@@ -9,50 +8,62 @@ import useAppSelector from '../../hooks/useAppSelector';
 import {ITask} from '../../models';
 import EditPanel from './EditPanel';
 import {
-  useDeleteTodoMutation,
   useUpdateTodoMutation,
 } from '../../store/tasks/tasksApi';
 import styles from './styles/Todo.module.scss';
 
 const Todo = ({todo}: {todo: ITask}) => {
   const [isEditState, setIsEditState] = useState(false);
-  const {toggleComplete, addTaskToTimer, removeTaskFromTimer} = useActions();
+  const {addTaskToTimer, removeTaskFromTimer} = useActions();
   const taskInTimer = useAppSelector((state) => state.timer.currentTask);
-  // const [addNewUser, {isLoading, isError, isSuccess}] = useCreateUserMutation();
   const [updateTodo, {isLoading: isLoadingUpdate, isSuccess: isSuccessUpdate}] =
     useUpdateTodoMutation();
-  const [deleteTodo, {isLoading: isLoadingDelete, isSuccess: isSuccessDelete}] =
-    useDeleteTodoMutation();
 
   return (
     <div className={styles.todoWrapper}>
       {!isEditState ? (
         <div className={styles.todo}>
           {!todo.isCompleted ? (
-            <>
-              <BiCircle
-                className={styles.todoCircleIcon}
-                onClick={() => {
-                  toggleComplete(todo._id);
-                  removeTaskFromTimer(todo._id);
-                }}
-              />
-              <button
-                className={styles.todoAddToTimerBtn}
-                type="button"
-                aria-label="Add task to timer"
-                onClick={() => addTaskToTimer(todo)}
-              >
-                {taskInTimer?._id === todo._id ? <SlClock /> : <BsPlayCircle />}
-              </button>
-            </>
+            <div>
+              {!isLoadingUpdate && !isSuccessUpdate ? (
+                <div>
+                  <BiCircle
+                    className={styles.todoCircleIcon}
+                    onClick={() => {
+                      updateTodo({...todo, isCompleted: !todo.isCompleted});
+                      removeTaskFromTimer(todo._id);
+                    }}
+                  />
+                  <button
+                    className={styles.todoAddToTimerBtn}
+                    type="button"
+                    aria-label="Add task to timer"
+                    onClick={() => addTaskToTimer(todo)}
+                  >
+                    {taskInTimer?._id === todo._id ? (
+                      <SlClock />
+                    ) : (
+                      <BsPlayCircle />
+                    )}
+                  </button>{' '}
+                </div>
+              ) : (
+                <div className={styles.loader} />
+              )}
+            </div>
           ) : (
-            <BiCheckCircle
-              className={styles.todoCheckedCircleIcon}
-              onClick={() => {
-                toggleComplete(todo._id);
-              }}
-            />
+            <div>
+              {!isLoadingUpdate && !isSuccessUpdate ? (
+                <BiCheckCircle
+                  className={styles.todoCheckedCircleIcon}
+                  onClick={() => {
+                    updateTodo({...todo, isCompleted: !todo.isCompleted});
+                  }}
+                />
+              ) : (
+                <div className={styles.loader} />
+              )}
+            </div>
           )}
 
           <div

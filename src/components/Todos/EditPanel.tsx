@@ -1,7 +1,11 @@
-import { useState } from 'react';
-import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai';
+import {useState} from 'react';
+import {AiFillCaretDown, AiFillCaretUp} from 'react-icons/ai';
 import useActions from '../../hooks/useActions';
-import { ITask } from '../../models';
+import {ITask} from '../../models';
+import {
+  useDeleteTodoMutation,
+  useUpdateTodoMutation,
+} from '../../store/tasks/tasksApi';
 import NumberInput from '../ui/NumberInput';
 import styles from './styles/EditPanel.module.scss';
 
@@ -10,14 +14,18 @@ interface EditPanelProps {
   close: () => void;
 }
 
-const EditPanel = ({ task, close }: EditPanelProps) => {
+const EditPanel = ({task, close}: EditPanelProps) => {
   const [taskTitle, setTaskTitle] = useState(task.title);
   const [pomodorosNumber, setPomodorosNumber] = useState(task.pomodorosNumber);
-  const { deleteTask, removeTaskFromTimer, editTask } = useActions();
+  const {deleteTask, removeTaskFromTimer, editTask} = useActions();
+  const [deleteTodo, {isLoading: isLoadingDelete, isSuccess: isSuccessDelete}] =
+    useDeleteTodoMutation();
+  const [updateTodo, {isLoading: isLoadingUpdate, isSuccess: isSuccessUpdate}] =
+    useUpdateTodoMutation();
 
   const save = () => {
     if (!taskTitle) return;
-    editTask({ _id: task._id, data: { title: taskTitle, pomodorosNumber } });
+    editTask({_id: task._id, data: {title: taskTitle, pomodorosNumber}});
     close();
   };
 
@@ -38,7 +46,9 @@ const EditPanel = ({ task, close }: EditPanelProps) => {
           <div className={styles.flexRow}>
             <div className={styles.numberWrapper}>
               <span className={styles.numberLabel}>Complete</span>
-              <span className={styles.readOnlyNumber}>{task.completedPomodors}</span>
+              <span className={styles.readOnlyNumber}>
+                {task.completedPomodors}
+              </span>
             </div>
             <span className={styles.numberSeparator}>/</span>
             <div className={styles.numberWrapper}>
@@ -53,7 +63,9 @@ const EditPanel = ({ task, close }: EditPanelProps) => {
               <button
                 className={styles.numberBtn}
                 type="button"
-                onClick={() => setPomodorosNumber((prev) => (prev - 1 < 0 ? 0 : prev - 1))}
+                onClick={() =>
+                  setPomodorosNumber((prev) => (prev - 1 < 0 ? 0 : prev - 1))
+                }
                 aria-label="Less pomodoros"
               >
                 <AiFillCaretDown />
@@ -81,7 +93,10 @@ const EditPanel = ({ task, close }: EditPanelProps) => {
         >
           Delete
         </button>
-        <button type="button" className={styles.cancelButton} onClick={close}>
+        <button type="button" className={styles.cancelButton} onClick={() => {
+          
+          close()
+        }}>
           Cancel
         </button>
         <button type="button" className={styles.saveButton} onClick={save}>
