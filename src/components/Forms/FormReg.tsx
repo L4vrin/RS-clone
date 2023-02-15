@@ -33,7 +33,6 @@ const FormReg = () => {
     try {
       await addNewUser(data).unwrap();
       const userData = await loginUser(data).unwrap();
-      console.log(userData)
       changeUserName(userData.fullName);
       switchRegistred(true);
       localStorage.setItem('token', userData.token)
