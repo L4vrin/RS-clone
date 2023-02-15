@@ -33,10 +33,11 @@ const FormReg = () => {
     try {
       await addNewUser(data).unwrap();
       const userData = await loginUser(data).unwrap();
+      console.log(userData)
       changeUserName(userData.fullName);
       switchRegistred(true);
       localStorage.setItem('token', userData.token)
-      localStorage.setItem('email', userData.email)
+      localStorage.setItem('userId', userData._id)
       navigate('today')
     } catch (err) {
       setErrorReg(err);

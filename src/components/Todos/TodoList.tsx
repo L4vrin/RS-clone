@@ -7,7 +7,7 @@ const TodoList = () => {
   const {data = [], isLoading} = useGetAllTasksQuery();
   const notCompletedArray = data.filter(
     (task: ITask) =>
-      !task.isCompleted && task.user?.email === localStorage.getItem('email')
+      !task.isCompleted && task.user?._id === localStorage.getItem('userId')
   );
   return (
     <div className={styles.todoList}>
