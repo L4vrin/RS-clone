@@ -69,14 +69,14 @@ const FormLog = () => {
         </button>
       </form>
       <p>
-        Dont have an account?
+        Dont have an account?{' '}
         <button
           type="button"
           className={styles.linkButton}
           onClick={() => switchRegistred(true)}
         >
           Click here
-        </button>
+        </button>{' '}
         to register
       </p>
       <div className={styles.serverAnswer}>
