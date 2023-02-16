@@ -32,7 +32,7 @@ const FormReg = () => {
       switchRegistred(true);
       localStorage.setItem('token', userData.token);
       localStorage.setItem('userId', userData._id);
-      navigate('today');
+      navigate('tasks/today');
     } catch (err) {
       const error = err as IError;
       setErrorReg(error);

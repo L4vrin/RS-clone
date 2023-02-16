@@ -17,16 +17,6 @@ const Header = () => {
     navigate('/');
   };
 
-  const handlerLogin = () => {
-    switchRegistred(true);
-    navigate('/');
-  };
-
-  const handlerRegistration = () => {
-    switchRegistred(false);
-    navigate('/');
-  };
-
   return (
     <div className={styles.headerWrapper}>
       <div className={styles.headerContainer}>
