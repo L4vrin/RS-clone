@@ -5,17 +5,17 @@ function checkDeadline(deadlineAt: number, deadlineId: string): boolean {
   const endToday = now.setHours(23, 59, 59, 999);
   const endTodayDate = new Date(endToday);
   const deadlineDate = new Date(deadlineAt);
-  console.log('Deadline: ', deadlineDate);
-  console.log('Tomorrow: ', new Date(new Date(endToday).setDate(new Date().getDate() + 1)));
-  console.log(
-    'End Weeek:',
-    new Date(endTodayDate.setDate(endTodayDate.getDate() - endTodayDate.getDay() + 7))
-  );
-  console.log('7 days:', new Date(endTodayDate.setDate(now.getDate() + 7)));
+  // console.log('Deadline: ', deadlineDate);
+  // console.log('Tomorrow: ', new Date(new Date(endToday).setDate(new Date().getDate() + 1)));
+  // console.log(
+  //   'End Weeek:',
+  //   new Date(endTodayDate.setDate(endTodayDate.getDate() - endTodayDate.getDay() + 7))
+  // );
+  // console.log('7 days:', new Date(endTodayDate.setDate(now.getDate() + 7)));
 
-  console.log(
-    deadlineAt <= endTodayDate.setDate(endTodayDate.getDate() - endTodayDate.getDay() + 7)
-  );
+  // console.log(
+  //   deadlineAt <= endTodayDate.setDate(endTodayDate.getDate() - endTodayDate.getDay() + 7)
+  // );
 
   switch (deadlineId) {
     case 'today':

@@ -66,7 +66,7 @@ const EditPanel: FC<EditPanelProps> = ({task, onClose, isAdd}) => {
         note: taskNote,
         pomodorosNumber,
         pomodoroTime,
-        // deadlineAt: deadlineDate,
+        deadlineDate,
       };
       await createTask(newTaskData).unwrap();
       setTaskTitle('');
@@ -81,7 +81,7 @@ const EditPanel: FC<EditPanelProps> = ({task, onClose, isAdd}) => {
       pomodorosNumber,
       pomodoroTime,
       note: taskNote,
-      // deadlineAt: deadlineDate,
+      deadlineDate,
     }).unwrap();
     onClose();
   };
@@ -96,8 +96,9 @@ const EditPanel: FC<EditPanelProps> = ({task, onClose, isAdd}) => {
   const changeDateHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const newDate = evt.target.value;
     setDeadlineDate(newDate);
-    const timestampDate = new Date(newDate).setHours(23, 59, 59, 999);
-    console.log(new Date(timestampDate));
+    console.log(deadlineDate)
+    // const timestampDate = new Date(newDate).setHours(23, 59, 59, 999);
+    // console.log(new Date(timestampDate));
   };
 
   return (
@@ -169,7 +170,7 @@ const EditPanel: FC<EditPanelProps> = ({task, onClose, isAdd}) => {
           <span>Deadline: </span>
           <input
             type="date"
-            value={deadlineDate}
+            value={task?.deadlineDate ? task?.deadlineDate : deadlineDate}
             onChange={changeDateHandler}
           />
         </div>
