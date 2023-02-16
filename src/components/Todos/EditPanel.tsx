@@ -96,7 +96,7 @@ const EditPanel: FC<EditPanelProps> = ({task, onClose, isAdd}) => {
   const changeDateHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const newDate = evt.target.value;
     setDeadlineDate(newDate);
-    console.log(deadlineDate)
+    // console.log(deadlineDate)
     // const timestampDate = new Date(newDate).setHours(23, 59, 59, 999);
     // console.log(new Date(timestampDate));
   };

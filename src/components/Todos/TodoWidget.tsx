@@ -17,7 +17,7 @@ const TodoWidget = ({ deadline }: { deadline: string }) => {
     (todo: ITask) => todo.user?._id === localStorage.getItem('userId')
     );
   const filteredTodos = filterTasksByDeadline(userTodos, deadline);
-  console.log(todos)
+
   return (
     <>
       <h1>{deadline}</h1>
