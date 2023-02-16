@@ -7,9 +7,7 @@ import useActions from '../../hooks/useActions';
 import useAppSelector from '../../hooks/useAppSelector';
 import {ITask} from '../../models';
 import EditPanel from './EditPanel';
-import {
-  useUpdateTodoMutation,
-} from '../../store/tasks/tasksApi';
+import {useUpdateTodoMutation} from '../../store/tasks/tasksApi';
 import styles from './styles/Todo.module.scss';
 
 const Todo = ({todo}: {todo: ITask}) => {

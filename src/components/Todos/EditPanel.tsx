@@ -21,8 +21,7 @@ const EditPanel: React.FC<EditPanelProps> = ({task, close}) => {
 
   const [deleteTodo, {isLoading: isLoadingDelete, isSuccess: isSuccessDelete}] =
     useDeleteTodoMutation();
-  const [updateTodo, {isLoading: isLoadingUpdate, isSuccess: isSuccessUpdate}] =
-    useUpdateTodoMutation();
+  const [updateTodo, {isLoading: isLoadingUpdate}] = useUpdateTodoMutation();
 
   const save = () => {
     if (!taskTitle) return;
@@ -108,7 +107,11 @@ const EditPanel: React.FC<EditPanelProps> = ({task, close}) => {
           type="button"
           className={styles.saveButton}
           onClick={async () => {
-            await updateTodo({...task, title: taskTitle, pomodorosNumber}).unwrap();
+            await updateTodo({
+              ...task,
+              title: taskTitle,
+              pomodorosNumber,
+            }).unwrap();
             close();
           }}
         >

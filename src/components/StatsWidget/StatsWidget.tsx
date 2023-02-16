@@ -1,4 +1,3 @@
-import useAppSelector from '../../hooks/useAppSelector';
 import {ITask} from '../../models';
 import StatsItem from './StatsItem';
 import styles from './statsWidget.module.scss';
@@ -6,10 +5,9 @@ import TimeStat from './TimeStat';
 
 type StatsWidgetProps = {
   todos: ITask[];
-  isLoading: boolean;
 };
 
-const StatsWidget = ({todos, isLoading}: StatsWidgetProps) => {
+const StatsWidget = ({todos}: StatsWidgetProps) => {
   const inCompletedTodos = todos.filter(
     (todo) =>
       !todo.isCompleted && todo.user?._id === localStorage.getItem('userId')

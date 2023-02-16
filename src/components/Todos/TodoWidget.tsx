@@ -4,17 +4,20 @@ import TodoCompletedList from './TodoCompletedList';
 import StatsWidget from '../StatsWidget';
 import Timer from '../Timer';
 import TimerSettingsWidget from '../TimerSettingsWidget';
-import { useGetAllTasksQuery } from '../../store/tasks/tasksApi';
+import {useGetAllTasksQuery} from '../../store/tasks/tasksApi';
+import {ITask} from '../../models';
 
 const TodoWidget = () => {
-  const {data = [], isLoading} = useGetAllTasksQuery();
-
+  const {data: todos = [], isLoading} = useGetAllTasksQuery();
+  const userTodos = todos.filter(
+    (todo: ITask) => todo.user?._id === localStorage.getItem('userId')
+  );
   return (
     <>
-      <StatsWidget todos={data} isLoading = {isLoading} />
+      <StatsWidget todos={userTodos} />
       <TodoForm />
-      <TodoList />
-      <TodoCompletedList />
+      <TodoList todos={userTodos} isLoading={isLoading} />
+      <TodoCompletedList todos={userTodos} isLoading={isLoading} />
       <Timer />
       <TimerSettingsWidget />
     </>

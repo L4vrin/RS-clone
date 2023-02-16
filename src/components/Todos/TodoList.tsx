@@ -1,14 +1,14 @@
 import Todo from './Todo';
 import styles from './styles/TodoList.module.scss';
 import {ITask} from '../../models';
-import {useGetAllTasksQuery} from '../../store/tasks/tasksApi';
 
-const TodoList = () => {
-  const {data = [], isLoading} = useGetAllTasksQuery();
-  const notCompletedArray = data.filter(
-    (task: ITask) =>
-      !task.isCompleted && task.user?._id === localStorage.getItem('userId')
-  );
+type TodoListProps = {
+  todos: ITask[];
+  isLoading: boolean;
+};
+
+const TodoList = ({todos, isLoading}: TodoListProps) => {
+  const notCompletedArray = todos.filter((task: ITask) => !task.isCompleted);
   return (
     <div className={styles.todoList}>
       {!!notCompletedArray && <h2>Todo list</h2>}
