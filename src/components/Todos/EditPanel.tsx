@@ -17,7 +17,9 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose }) => {
   const [pomodorosNumber, setPomodorosNumber] = useState(task ? task.pomodorosNumber : 0);
   const [note, setNote] = useState(task ? task.note : '');
   const [deadlineDate, setDeadlineDate] = useState(
-    task ? new Date(task.deadlineAt).toISOString() : new Date().toISOString()
+    task
+      ? new Date(task.deadlineAt).toISOString().split('T')[0]
+      : new Date().toISOString().split('T')[0]
   );
   const { deleteTask, removeTaskFromTimer, addNewTask, editTask } = useActions();
   const pomodoroTime = useAppSelector((state) => state.timerSettings.workPeriodInMinutes);
