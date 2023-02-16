@@ -6,6 +6,7 @@ function checkDeadline(deadlineAt: number, deadlineId: string): boolean {
   const endTodayDate = new Date(endToday);
   const deadlineDate = new Date(deadlineAt);
   console.log('Deadline: ', deadlineDate);
+  console.log('Today: ', endTodayDate);
   console.log('Tomorrow: ', new Date(new Date(endToday).setDate(new Date().getDate() + 1)));
   console.log(
     'End Weeek:',
