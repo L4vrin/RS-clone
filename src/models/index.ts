@@ -5,6 +5,7 @@ export interface ITask {
   note?: string;
   createdAt: number; // timestamp
   deadlineAt: number; // timestamp
+  deadlineDate: string;
   isCompleted: boolean;
   pomodorosNumber: number;
   pomodoroTime: number; // time in minutes

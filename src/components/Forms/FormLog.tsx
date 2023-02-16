@@ -23,7 +23,7 @@ const FormLog = () => {
       changeUserName(userData.fullName);
       localStorage.setItem('token', userData.token);
       localStorage.setItem('userId', userData._id);
-      navigate('today');
+      navigate('tasks/today');
     } catch (err) {
       const error = err as IError;
       setErrorLog(error);

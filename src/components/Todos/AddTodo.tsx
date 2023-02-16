@@ -5,13 +5,16 @@ import styles from './styles/AddTodo.module.scss';
 
 const AddTodo = () => {
   const [isCreateMode, setIsCreateMode] = useState(false);
-
+  const [isAddTask, setIsAddTask] = useState(false);
   return (
     <div className={`container ${styles.container}`}>
       {isCreateMode ? (
-        <EditPanel onClose={() => setIsCreateMode(false)} />
+        <EditPanel onClose={() => setIsCreateMode(false)} isAdd = {isAddTask}/>
       ) : (
-        <button type="button" className={styles.addButton} onClick={() => setIsCreateMode(true)}>
+        <button type="button" className={styles.addButton} onClick={() => {
+          setIsCreateMode(true)
+          setIsAddTask(true)
+        }}>
           <span className={styles.buttonIcon}>
             <HiPlusCircle />
           </span>
