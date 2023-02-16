@@ -1,4 +1,4 @@
-// import TodoForm from './TodoForm';
+import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 import TodoCompletedList from './TodoCompletedList';
 import StatsWidget from '../StatsWidget';
@@ -22,7 +22,7 @@ const TodoWidget = ({ deadline }: { deadline: string }) => {
     <>
       <h1>{deadline}</h1>
       <StatsWidget todos={filteredTodos} />
-      {/* <TodoForm /> */}
+      <TodoForm />
       <AddTodo />
       <TodoList todos={filteredTodos} isLoading = {isLoading}/>
       <TodoCompletedList todos={filteredTodos} isLoading = {isLoading}/>

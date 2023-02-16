@@ -38,7 +38,6 @@ export const tasksSlice = createSlice({
           _id: uuidv4(),
           createdAt: currentDate.getTime(),
           deadlineAt,
-          deadlineId: '',
           isCompleted: false,
           completedPomodors: 0,
           title,

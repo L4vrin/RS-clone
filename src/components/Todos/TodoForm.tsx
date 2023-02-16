@@ -17,22 +17,22 @@ const TodoForm = () => {
   );
 
   const onSubmitHandler = async (e: TodoEvent) => {
-  //   e.preventDefault();
+    e.preventDefault();
 
-  //   if (title) {
-  //     const newTaskData = addNewTask({
-  //       title,
-  //       pomodorosNumber,
-  //       pomodoroTime,
-  //       deadlineId: 'today',
-  //     });
-  //     await createTask(newTaskData.payload).unwrap();
+    if (title) {
+      const newTaskData = addNewTask({
+        title,
+        pomodorosNumber,
+        pomodoroTime,
+        deadlineAt: 0
+      });
+      await createTask(newTaskData.payload).unwrap();
 
-  //     setTitle('');
-  //   }
-  // };
-  //   const handleRangeChange = (value: number) => {
-  //     setPomodorosNumbers(value);
+      setTitle('');
+    }
+  };
+    const handleRangeChange = (value: number) => {
+      setPomodorosNumbers(value);
     };
 
     return (
@@ -55,7 +55,7 @@ const TodoForm = () => {
           </div>
         </form>
         <div className={styles.pomodoroRange}>
-          {/* <PomodoroRange onChange={handleRangeChange} /> */}
+          <PomodoroRange onChange={handleRangeChange} />
         </div>
       </div>
     );
