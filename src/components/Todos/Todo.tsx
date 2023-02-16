@@ -17,51 +17,58 @@ const Todo = ({ todo }: { todo: ITask }) => {
   return (
     <div className={styles.todoWrapper}>
       {!isEditState ? (
-        <div className={styles.todo}>
-          {!todo.isCompleted ? (
-            <>
-              <BiCircle
-                className={styles.todoCircleIcon}
+        <div>
+          <div className={styles.todo}>
+            {!todo.isCompleted ? (
+              <>
+                <BiCircle
+                  className={styles.todoCircleIcon}
+                  onClick={() => {
+                    toggleComplete(todo.id);
+                    removeTaskFromTimer(todo.id);
+                  }}
+                />
+                <button
+                  className={styles.todoAddToTimerBtn}
+                  type="button"
+                  aria-label="Add task to timer"
+                  onClick={() => addTaskToTimer(todo)}
+                >
+                  {taskInTimer?.id === todo.id ? <SlClock /> : <BsPlayCircle />}
+                </button>
+              </>
+            ) : (
+              <BiCheckCircle
+                className={styles.todoCheckedCircleIcon}
                 onClick={() => {
                   toggleComplete(todo.id);
-                  removeTaskFromTimer(todo.id);
                 }}
               />
-              <button
-                className={styles.todoAddToTimerBtn}
-                type="button"
-                aria-label="Add task to timer"
-                onClick={() => addTaskToTimer(todo)}
-              >
-                {taskInTimer?.id === todo.id ? <SlClock /> : <BsPlayCircle />}
-              </button>
-            </>
-          ) : (
-            <BiCheckCircle
-              className={styles.todoCheckedCircleIcon}
-              onClick={() => {
-                toggleComplete(todo.id);
-              }}
-            />
-          )}
+            )}
 
-          <div className={`${todo.isCompleted ? styles.todoCompletedText : styles.todoText}`}>
-            <div className={styles.title}>{todo.title}</div>
+            <div className={`${todo.isCompleted ? styles.todoCompletedText : styles.todoText}`}>
+              <div className={styles.title}>{todo.title}</div>
+            </div>
+            <div>
+              <span className={styles.PomodoroIcon}>🍅</span>
+              <span>
+                {todo.completedPomodors}/{todo.pomodorosNumber}
+              </span>
+            </div>
+            <div>
+              <button type="button" className={styles.editBtn} onClick={() => setIsEditState(true)}>
+                <GrMoreVertical />
+              </button>
+            </div>
           </div>
-          <div>
-            <span className={styles.PomodoroIcon}>🍅</span>
-            <span>
-              {todo.completedPomodors}/{todo.pomodorosNumber}
-            </span>
-          </div>
-          <div>
-            <button type="button" className={styles.editBtn} onClick={() => setIsEditState(true)}>
-              <GrMoreVertical />
-            </button>
-          </div>
+          {todo.note && (
+            <div className={styles.noteContainer}>
+              <p className={styles.noteText}>{todo.note}</p>
+            </div>
+          )}
         </div>
       ) : (
-        <EditPanel task={todo} close={() => setIsEditState(false)} />
+        <EditPanel task={todo} onClose={() => setIsEditState(false)} />
       )}
     </div>
   );

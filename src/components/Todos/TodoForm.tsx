@@ -16,7 +16,7 @@ const TodoForm = () => {
     e.preventDefault();
 
     if (title) {
-      addNewTask({ title, pomodorosNumber, pomodoroTime, deadlineId: 'today' });
+      // addNewTask({ title, pomodorosNumber, pomodoroTime });
       setTitle('');
     }
   };
