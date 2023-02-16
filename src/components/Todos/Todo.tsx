@@ -101,7 +101,7 @@ const Todo = ({todo}: {todo: ITask}) => {
           )}
         </div>
       ) : (
-        <EditPanel task={todo} onClose={() => setIsEditState(false)} />
+        <EditPanel task={todo} onClose={() => setIsEditState(false)} isAdd = {false}/>
       )}
     </div>
   );

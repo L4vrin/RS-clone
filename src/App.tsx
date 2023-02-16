@@ -1,22 +1,12 @@
-import { Routes, Route, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Notfound from './pages/Notfound';
-import Today from './pages/Today';
 import WelcomePage from './pages/WelcomePage';
 import TasksPage from './pages/TasksPage';
 import TodoWidget from './components/Todos/TodoWidget';
 
-// import Today from './pages/Today';
-
 const App: React.FC = () => {
-  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (localStorage.getItem('token')) {
-  //     navigate('tasks/');
-  //   }
-  // }, [navigate]);
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
