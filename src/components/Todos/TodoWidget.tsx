@@ -11,21 +11,21 @@ import {useGetAllTasksQuery} from '../../store/tasks/tasksApi';
 import {ITask} from '../../models';
 
 const TodoWidget = ({ deadline }: { deadline: string }) => {
-  const todos = useAppSelector((state) => state.tasks.list);
-  const filteredTodos = filterTasksByDeadline(todos, deadline);
-  console.log(filteredTodos);
+  // const todos = useAppSelector((state) => state.tasks.list);
   const {data: todos = [], isLoading} = useGetAllTasksQuery();
   const userTodos = todos.filter(
     (todo: ITask) => todo.user?._id === localStorage.getItem('userId')
-  );
+    );
+  const filteredTodos = filterTasksByDeadline(userTodos, deadline);
+  console.log(filteredTodos);
   return (
     <>
       <h1>{deadline}</h1>
-      <StatsWidget tasks={filteredTodos} />
+      <StatsWidget todos={filteredTodos} />
       {/* <TodoForm /> */}
       <AddTodo />
-      <TodoList todos={filteredTodos} />
-      <TodoCompletedList todos={filteredTodos} />
+      <TodoList todos={filteredTodos} isLoading = {isLoading}/>
+      <TodoCompletedList todos={filteredTodos} isLoading = {isLoading}/>
       <Timer />
       <TimerSettingsWidget />
     </>

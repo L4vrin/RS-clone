@@ -1,6 +1,7 @@
-import {useState} from 'react';
+import {useState, useRef, FC} from 'react';
 import {AiFillCaretDown, AiFillCaretUp} from 'react-icons/ai';
 import useActions from '../../hooks/useActions';
+import useAppSelector from '../../hooks/useAppSelector';
 import {ITask} from '../../models';
 import {
   useDeleteTodoMutation,
@@ -37,7 +38,7 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose }) => {
       const deadlineAt = new Date(deadlineDate).setHours(23, 59, 59, 999);
 
       if (task) {
-        editTask({ id: task.id, data: { title: taskTitle, deadlineAt, pomodorosNumber, note } });
+        editTask({ id: task._id, data: { title: taskTitle, deadlineAt, pomodorosNumber, note } });
       } else {
         addNewTask({ title: taskTitle, deadlineAt, pomodorosNumber, pomodoroTime, note });
       }
@@ -132,16 +133,16 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose }) => {
         </div>
       </div>
       <div className={styles.footer}>
-
-        <button
+      {task?._id && <button
           type="button"
           className={styles.deleteButton}
           onClick={() => {
             deleteTodo(task).unwrap();
             if (isSuccessDelete) {
-              close();
+              onClose();
             }
-            removeTaskFromTimer(task._id);
+            
+            removeTaskFromTimer(task?._id);
           }}
         >
           {!isLoadingDelete && !isSuccessDelete ? (
@@ -149,8 +150,9 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose }) => {
           ) : (
             <div className={styles.loader} />
           )}
-        </button>
-        <button type="button" className={styles.cancelButton} onClick={close}>
+        </button>}
+
+        <button type="button" className={styles.cancelButton} onClick={onClose}>
           Cancel
         </button>
         <button
@@ -162,7 +164,7 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose }) => {
               title: taskTitle,
               pomodorosNumber,
             }).unwrap();
-            close();
+            onClose();
           }}
         >
           {!isLoadingUpdate ? `Save` : <div className={styles.loader} />}

@@ -35,9 +35,10 @@ export const tasksSlice = createSlice({
       prepare({ title, pomodorosNumber, pomodoroTime, note, deadlineAt }: NewTaskPayload) {
         const currentDate = new Date();
         const newTask: ITask = {
-          id: uuidv4(),
+          _id: uuidv4(),
           createdAt: currentDate.getTime(),
           deadlineAt,
+          deadlineId: '',
           isCompleted: false,
           completedPomodors: 0,
           title,
@@ -75,7 +76,7 @@ export const tasksSlice = createSlice({
     },
 
     editTask(state, action: PayloadAction<EditTaskPayload>) {
-      const targetTask = state.list.find((task) => task._id === action.payload._id);
+      const targetTask = state.list.find((task) => task._id === action.payload.id);
       if (targetTask) {
         const { title, pomodorosNumber, note, deadlineAt } = action.payload.data;
         targetTask.title = title;
