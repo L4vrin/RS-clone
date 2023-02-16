@@ -6,32 +6,65 @@ import {
   useDeleteTodoMutation,
   useUpdateTodoMutation,
 } from '../../store/tasks/tasksApi';
+
 import NumberInput from '../ui/NumberInput';
 import styles from './styles/EditPanel.module.scss';
 
 interface EditPanelProps {
-  task: ITask;
-  close: () => void;
+  task?: ITask;
+  onClose: () => void;
 }
 
-const EditPanel: React.FC<EditPanelProps> = ({task, close}) => {
-  const [taskTitle, setTaskTitle] = useState(task.title);
-  const [pomodorosNumber, setPomodorosNumber] = useState(task.pomodorosNumber);
-  const {removeTaskFromTimer, editTask} = useActions();
 
+const EditPanel: FC<EditPanelProps> = ({ task, onClose }) => {
   const [deleteTodo, {isLoading: isLoadingDelete, isSuccess: isSuccessDelete}] =
     useDeleteTodoMutation();
   const [updateTodo, {isLoading: isLoadingUpdate}] = useUpdateTodoMutation();
+  const titleInput = useRef<HTMLInputElement>(null);
+  const [taskTitle, setTaskTitle] = useState(task ? task.title : '');
+  const [pomodorosNumber, setPomodorosNumber] = useState(task ? task.pomodorosNumber : 0);
+  const [note, setNote] = useState(task ? task.note : '');
+  const [deadlineDate, setDeadlineDate] = useState(
+    task
+      ? new Date(task.deadlineAt).toISOString().split('T')[0]
+      : new Date().toISOString().split('T')[0]
+  );
+  const { deleteTask, removeTaskFromTimer, addNewTask, editTask } = useActions();
+  const pomodoroTime = useAppSelector((state) => state.timerSettings.workPeriodInMinutes);
 
-  const save = () => {
-    if (!taskTitle) return;
-    editTask({_id: task._id, data: {title: taskTitle, pomodorosNumber}});
-    close();
+  const saveHandler = () => {
+    if (taskTitle) {
+      const deadlineAt = new Date(deadlineDate).setHours(23, 59, 59, 999);
+
+      if (task) {
+        editTask({ id: task.id, data: { title: taskTitle, deadlineAt, pomodorosNumber, note } });
+      } else {
+        addNewTask({ title: taskTitle, deadlineAt, pomodorosNumber, pomodoroTime, note });
+      }
+      onClose();
+    } else {
+      titleInput.current?.focus();
+    }
+  };
+
+  const changeNoteHandler = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const minHeight = 60;
+    const textarea = evt.target;
+    textarea.style.height = `${Math.max(minHeight, textarea.scrollHeight)}px`;
+    setNote(evt.target.value);
+  };
+
+  const changeDateHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    const newDate = evt.target.value;
+    setDeadlineDate(newDate);
+    const timestampDate = new Date(newDate).setHours(23, 59, 59, 999);
+    console.log(new Date(timestampDate));
+
   };
 
   return (
     <div className={styles.container}>
-      <div className={styles.body}>
+      <div className={styles.content}>
         <div className={styles.item}>
           <input
             className={styles.inputText}
@@ -39,18 +72,22 @@ const EditPanel: React.FC<EditPanelProps> = ({task, close}) => {
             placeholder="What are you working on?"
             value={taskTitle}
             onChange={(evt) => setTaskTitle(evt.target.value)}
+            ref={titleInput}
           />
         </div>
         <div className={styles.item}>
           <p className={styles.subtitle}>Pomodoros</p>
           <div className={styles.flexRow}>
-            <div className={styles.numberWrapper}>
-              <span className={styles.numberLabel}>Complete</span>
-              <span className={styles.readOnlyNumber}>
-                {task.completedPomodors}
-              </span>
-            </div>
-            <span className={styles.numberSeparator}>/</span>
+
+            {task && (
+              <>
+                <div className={styles.numberWrapper}>
+                  <span className={styles.numberLabel}>Complete</span>
+                  <span className={styles.readOnlyNumber}>{task.completedPomodors}</span>
+                </div>
+                <span className={styles.numberSeparator}>/</span>
+              </>
+            )}
             <div className={styles.numberWrapper}>
               <span className={styles.numberLabel}>Total</span>
               <NumberInput
@@ -81,8 +118,21 @@ const EditPanel: React.FC<EditPanelProps> = ({task, close}) => {
             </div>
           </div>
         </div>
+        <div className={styles.item}>
+          <textarea
+            className={`${styles.inputText} ${styles.note}`}
+            placeholder="Some notes"
+            value={note}
+            onChange={changeNoteHandler}
+          />
+        </div>
+        <div className={styles.item}>
+          <span>Deadline: </span>
+          <input type="date" value={deadlineDate} onChange={changeDateHandler} />
+        </div>
       </div>
       <div className={styles.footer}>
+
         <button
           type="button"
           className={styles.deleteButton}
@@ -116,10 +166,15 @@ const EditPanel: React.FC<EditPanelProps> = ({task, close}) => {
           }}
         >
           {!isLoadingUpdate ? `Save` : <div className={styles.loader} />}
+
         </button>
       </div>
     </div>
   );
+};
+
+EditPanel.defaultProps = {
+  task: undefined,
 };
 
 export default EditPanel;

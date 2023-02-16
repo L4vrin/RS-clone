@@ -27,6 +27,7 @@ const TodoForm = () => {
         deadlineId: 'today',
       });
       await createTask(newTaskData.payload).unwrap();
+
       setTitle('');
     }
   };

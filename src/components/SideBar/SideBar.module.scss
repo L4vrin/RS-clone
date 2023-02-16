@@ -1,0 +1,13 @@
+.link {
+  color: black;
+}
+
+.item {
+  .active {
+    color: red;
+  }
+}
+
+.link.active {
+  color: red;
+}

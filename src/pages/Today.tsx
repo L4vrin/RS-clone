@@ -1,7 +1,7 @@
-import TodoWidget from '../components/Todos/TodoWidget';
+import TodoWidget from '../components/Todos';
 
 const Today = () => {
-  return <TodoWidget />;
+  return <TodoWidget deadline="today" />;
 };
 
 export default Today;

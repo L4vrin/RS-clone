@@ -94,9 +94,14 @@ const Todo = ({todo}: {todo: ITask}) => {
               <GrMoreVertical />
             </button>
           </div>
+          {todo.note && (
+            <div className={styles.noteContainer}>
+              <p className={styles.noteText}>{todo.note}</p>
+            </div>
+          )}
         </div>
       ) : (
-        <EditPanel task={todo} close={() => setIsEditState(false)} />
+        <EditPanel task={todo} onClose={() => setIsEditState(false)} />
       )}
     </div>
   );

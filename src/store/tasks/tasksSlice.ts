@@ -8,11 +8,14 @@ interface TasksState {
   list: ITask[];
 }
 
-type NewTaskPayload = Pick<ITask, 'title' | 'pomodorosNumber' | 'pomodoroTime' | 'deadlineId'>;
+type NewTaskPayload = Pick<
+  ITask,
+  'title' | 'pomodorosNumber' | 'pomodoroTime' | 'deadlineAt' | 'note'
+>;
 
 type EditTaskPayload = {
-  _id: string;
-  data: Pick<ITask, 'title' | 'pomodorosNumber' | 'note'>;
+  id: string;
+  data: Pick<ITask, 'title' | 'deadlineAt' | 'pomodorosNumber' | 'note'>;
 };
 
 const initialState: TasksState = {
@@ -29,24 +32,19 @@ export const tasksSlice = createSlice({
         localStorage.setItem(LS_TASKS_KEY, JSON.stringify(state.list));
       },
 
-      prepare({
-        title,
-        pomodorosNumber,
-        pomodoroTime,
-        deadlineId,
-      }: NewTaskPayload) {
+      prepare({ title, pomodorosNumber, pomodoroTime, note, deadlineAt }: NewTaskPayload) {
         const currentDate = new Date();
         const newTask: ITask = {
-          _id: uuidv4(),
-          createdAt: Number(currentDate.getTime()),
-          deadlineAt: Number(currentDate.setHours(23, 59, 59, 999)),
+          id: uuidv4(),
+          createdAt: currentDate.getTime(),
+          deadlineAt,
           isCompleted: false,
           completedPomodors: 0,
-          deadlineId,
           title,
           pomodoroTime,
           pomodorosNumber,
           __v: 0,
+          note,
         };
 
         return {payload: newTask};
@@ -79,10 +77,11 @@ export const tasksSlice = createSlice({
     editTask(state, action: PayloadAction<EditTaskPayload>) {
       const targetTask = state.list.find((task) => task._id === action.payload._id);
       if (targetTask) {
-        const { title, pomodorosNumber, note } = action.payload.data;
+        const { title, pomodorosNumber, note, deadlineAt } = action.payload.data;
         targetTask.title = title;
         targetTask.pomodorosNumber = pomodorosNumber;
         targetTask.note = note;
+        targetTask.deadlineAt = deadlineAt;
         localStorage.setItem(LS_TASKS_KEY, JSON.stringify(state.list));
       }
     },

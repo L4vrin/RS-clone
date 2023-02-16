@@ -112,3 +112,18 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.noteContainer {
+  padding: 0 15px 15px 30px;
+}
+
+.noteText {
+  padding: 10px 15px;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  background-color: #fbf7f4;
+  box-shadow: rgb(0 0 0 / 10%) 0px 1px 0px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
