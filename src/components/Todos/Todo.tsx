@@ -17,6 +17,14 @@ const Todo = ({todo}: {todo: ITask}) => {
   const [updateTodo, {isLoading: isLoadingUpdate, isSuccess: isSuccessUpdate}] =
     useUpdateTodoMutation();
 
+  // const toggledTask = state.list.find(
+  //   (task) => task._id === action.payload
+  // );
+  // if (toggledTask) {
+  //   toggledTask.isCompleted = !toggledTask.isCompleted;
+  //   localStorage.setItem(LS_TASKS_KEY, JSON.stringify(state.list));
+  // }
+
   return (
     <div className={styles.todoWrapper}>
       {!isEditState ? (
