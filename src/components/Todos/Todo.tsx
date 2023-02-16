@@ -51,7 +51,7 @@ const Todo = ({todo}: {todo: ITask}) => {
                     ) : (
                       <BsPlayCircle />
                     )}
-                  </button>{' '}
+                  </button>
                 </div>
               ) : (
                 <div className={styles.loader} />

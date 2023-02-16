@@ -59,6 +59,33 @@ const EditPanel: FC<EditPanelProps> = ({task, onClose, isAdd}) => {
   //   }
   // };
 
+  const handlerCreateTask = async () => {
+    if (taskTitle) {
+      const newTaskData = {
+        title: taskTitle,
+        note: taskNote,
+        pomodorosNumber,
+        pomodoroTime,
+        // deadlineAt: deadlineDate,
+      };
+      await createTask(newTaskData).unwrap();
+      setTaskTitle('');
+      onClose();
+    }
+  };
+
+  const handlerUpdateTask = async () => {
+    await updateTodo({
+      ...task,
+      title: taskTitle,
+      pomodorosNumber,
+      pomodoroTime,
+      note: taskNote,
+      // deadlineAt: deadlineDate,
+    }).unwrap();
+    onClose();
+  };
+
   const changeNoteHandler = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
     const minHeight = 60;
     const textarea = evt.target;
@@ -176,16 +203,7 @@ const EditPanel: FC<EditPanelProps> = ({task, onClose, isAdd}) => {
           <button
             type="button"
             className={styles.saveButton}
-            onClick={async () => {
-              await updateTodo({
-                ...task,
-                title: taskTitle,
-                pomodorosNumber,
-                note: taskNote,
-                // deadlineAt: deadlineDate,
-              }).unwrap();
-              onClose();
-            }}
+            onClick={async () => handlerUpdateTask()}
           >
             {!isLoadingUpdate ? `Save` : <div className={styles.loader} />}
           </button>
@@ -193,20 +211,7 @@ const EditPanel: FC<EditPanelProps> = ({task, onClose, isAdd}) => {
           <button
             type="button"
             className={styles.saveButton}
-            onClick={async () => {
-              if (taskTitle) {
-                const newTaskData = {
-                  title: taskTitle,
-                  note: taskNote,
-                  pomodorosNumber,
-                  pomodoroTime,
-                  // deadlineAt: deadlineDate,
-                };
-                await createTask(newTaskData).unwrap();
-                setTaskTitle('');
-                onClose();
-              }
-            }}
+            onClick={async () => handlerCreateTask()}
           >
             {!isLoadingCreate ? `Create` : <div className={styles.loader} />}
           </button>
