@@ -4,7 +4,17 @@ export interface IUserCreate {
   fullName: string;
 }
 
-export interface IErrorValidation {
+export interface IUserLogin {
+  email: string;
+  password: string;
+}
+
+export type IError = {
+  status: string,
+  data: IErrorValidation[]
+}
+
+interface IErrorValidation {
   location?: string;
   msg: string;
   param?: string;

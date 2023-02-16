@@ -11,8 +11,9 @@ const Header = () => {
   const handlerLogoff = () => {
     changeUserName('Guest');
     switchRegistred(false);
-    localStorage.removeItem('user');
     localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('user');
     navigate('/');
   };
 

@@ -1,28 +1,17 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import styles from './Forms.module.scss';
-import { useLoginUserMutation } from '../../store/auth/users.api';
-import { IErrorValidation } from './types/data';
+import {useLoginUserMutation} from '../../store/auth/users.api';
+import {IError, IUserLogin} from './types/data';
 import useActions from '../../hooks/useActions';
-
-// interface IError {
-//   status: string,
-//   data: string[]
-// }
-
-interface IUserLogin {
-  email: string;
-  password: string;
-}
 
 const FormLog = () => {
   const [emailLog, setEmailLog] = useState('');
   const [passwordLog, setPasswordLog] = useState('');
-  const [errorLog, setErrorLog] = useState<any>({ status: 0, data: [] });
-  const [loginUser, { isLoading, isError, isSuccess }] = useLoginUserMutation();
-  const { changeUserName, switchRegistred } = useActions();
+  const [errorLog, setErrorLog] = useState<IError>({status: '0', data: []});
+  const [loginUser, {isLoading, isError, isSuccess}] = useLoginUserMutation();
+  const {changeUserName, switchRegistred} = useActions();
   const navigate = useNavigate();
-
   const formData = {
     email: emailLog,
     password: passwordLog,
@@ -33,9 +22,11 @@ const FormLog = () => {
       const userData = await loginUser(data).unwrap();
       changeUserName(userData.fullName);
       localStorage.setItem('token', userData.token);
+      localStorage.setItem('userId', userData._id);
       navigate('today');
     } catch (err) {
-      setErrorLog(err);
+      const error = err as IError;
+      setErrorLog(error);
     }
   };
 
@@ -87,7 +78,7 @@ const FormLog = () => {
         )}
         {isError && (
           <ul className={styles.errorsList}>
-            {errorLog.data.map((errorObj: IErrorValidation) => (
+            {errorLog.data.map((errorObj) => (
               <li key={errorObj.msg}>{errorObj.msg}</li>
             ))}
           </ul>

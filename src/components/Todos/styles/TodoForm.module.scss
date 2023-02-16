@@ -41,3 +41,18 @@
   top: 50%;
   transform: translateY(-50%);
 }
+
+.loader{
+  border: 5px solid #000000;
+  border-top: 5px solid rgb(119, 128, 192);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 0.5s linear infinite;
+  margin: 0 15px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
