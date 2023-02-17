@@ -32,5 +32,22 @@
   "ThisWeek": "Эта неделя",
   "ThisMonth": "Этот месяц",
   "ThisYear": "Этот год",
-  "AllTime": "За все время"
+  "AllTime": "За все время",
+
+  "AddTask": "Добавить задачу",
+  "TaskList": "Список задач",
+  "CompletedTaskList": "Список выполненных задач",
+
+  "WhatWorking": "Над чем ты работаешь?",
+  "Pomodoros": "«Помодоры»",
+  "Complete": "Завершено",
+  "Total": "Всего",
+  "LessPomodoros": "Меньше «помодоров»",
+  "MorePomodoros": "Больше «помодоров»",
+  "SomeNotes": "Возможные заметки",
+  "Deadline": "Предельный срок:",
+  "Delete": "Удалить",
+  "Save": "Сохранить",
+  "Create": "Создать",
+  "Cancel": "Отменить"
 }

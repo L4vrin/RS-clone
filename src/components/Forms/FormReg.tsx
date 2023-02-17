@@ -94,7 +94,7 @@ const FormReg = () => {
             ))}
           </ul>
         )}
-        {isSuccess && <div className={styles.success}> {t("UserCreated")} </div>}
+        {isSuccess && <div className={styles.success}> {t('UserCreated')} </div>}
       </div>
     </div>
   );

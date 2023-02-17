@@ -12,8 +12,7 @@ const StatsWidget = ({ todos }: StatsWidgetProps) => {
   const { t } = useTranslation();
 
   const inCompletedTodos = todos.filter(
-    (todo) =>
-      !todo.isCompleted && todo.user?._id === localStorage.getItem('userId')
+    (todo) => !todo.isCompleted && todo.user?._id === localStorage.getItem('userId')
   );
 
   const estimatedTime = inCompletedTodos.reduce(
@@ -30,16 +29,10 @@ const StatsWidget = ({ todos }: StatsWidgetProps) => {
 
   return (
     <div className={`container ${styles.container}`}>
-      <StatsItem
-        stat={<TimeStat time={estimatedTime} />}
-        description={ t("EstimatedTime")}
-      />
-      <StatsItem stat={numberIncompleteTodos} description={t("IncompletedTasks") } />
-      <StatsItem
-        stat={<TimeStat time={spentTime} />}
-        description={ t("SpentTime")}
-      />
-      <StatsItem stat={numberCompletedTodos} description={t("СompletedTasks") } />
+      <StatsItem stat={<TimeStat time={estimatedTime} />} description={t('EstimatedTime')} />
+      <StatsItem stat={numberIncompleteTodos} description={t('IncompletedTasks')} />
+      <StatsItem stat={<TimeStat time={spentTime} />} description={t('SpentTime')} />
+      <StatsItem stat={numberCompletedTodos} description={t('СompletedTasks')} />
     </div>
   );
 };

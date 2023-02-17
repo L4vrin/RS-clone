@@ -22,16 +22,32 @@
   "WhatIsPomodoro": "What is Pomodoro Technique?",
   "ThePomodoroTechnique": "The Pomodoro Technique is created for a more productive way to work and study. It uses atimer to break down work into intervals, traditionally 25 minutes in length, separatedby short breaks.",
 
-  "EstimatedTime" : "Estimated Time",
-  "SpentTime": "SpentTime",
-  "IncompletedTasks": "Incompleted Tasks",
-  "СompletedTasks": "Сompleted Tasks",
+  "EstimatedTime": "Estimated time",
+  "SpentTime": "Spent time",
+  "IncompletedTasks": "Incompleted tasks",
+  "СompletedTasks": "Сompleted tasks",
 
-  "Today" : "Today",
+  "Today": "Today",
   "Tomorrow": "Tomorrow",
   "ThisWeek": "This week",
   "ThisMonth": "This month",
   "ThisYear": "This year",
-  "AllTime": "All the time"
+  "AllTime": "All the time",
 
+  "AddTask": "Add task",
+  "TaskList": "Task list",
+  "CompletedTaskList": "Completed Task list",
+
+  "WhatWorking": "What are you working on?",
+  "Pomodoros": "Pomodoros",
+  "Complete": "Complete",
+  "Total": "Total",
+  "LessPomodoros": "Less pomodoros",
+  "MorePomodoros": "More pomodoros",
+  "SomeNotes": "Some notes",
+  "Deadline": "Deadline:",
+  "Delete": "Delete",
+  "Save": "Save",
+  "Create": "Create",
+  "Cancel": "Cancel"
 }

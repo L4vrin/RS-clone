@@ -35,19 +35,19 @@ const FormLog = () => {
 
   return (
     <div className={styles.formWrapper}>
-      <h2>{t("SignIn")}</h2>
+      <h2>{t('SignIn')}</h2>
       <form className={styles.form}>
         <input
           className={styles.input}
           type="email"
-          placeholder={t("Email")}
+          placeholder={t('Email')}
           value={emailLog}
           onChange={(e) => setEmailLog(e.target.value)}
         />
         <input
           className={styles.input}
           type="password"
-          placeholder={t("Password")}
+          placeholder={t('Password')}
           value={passwordLog}
           onChange={(e) => setPasswordLog(e.target.value)}
         />
@@ -59,19 +59,15 @@ const FormLog = () => {
             handleLoginUser(formData);
           }}
         >
-          {t("Login")}
+          {t('Login')}
         </button>
       </form>
       <p>
-      {t("DontHaveAccount")}
-        <button
-          type="button"
-          className={styles.linkButton}
-          onClick={() => switchRegistred(true)}
-        >
-          {t("ClickHere")}
+        {t('DontHaveAccount')}
+        <button type="button" className={styles.linkButton} onClick={() => switchRegistred(true)}>
+          {t('ClickHere')}
         </button>
-        {t("ToRegister")}
+        {t('ToRegister')}
       </p>
       <div className={styles.serverAnswer}>
         {isLoading && (
@@ -86,9 +82,7 @@ const FormLog = () => {
             ))}
           </ul>
         )}
-        {isSuccess && (
-          <div className={styles.success}> User successful login </div>
-        )}
+        {isSuccess && <div className={styles.success}> User successful login </div>}
       </div>
     </div>
   );
