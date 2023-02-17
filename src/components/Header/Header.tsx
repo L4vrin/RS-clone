@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import useActions from '../../hooks/useActions';
 import useAppSelector from '../../hooks/useAppSelector';
@@ -8,6 +9,8 @@ const Header = () => {
   const isLogin = localStorage.getItem('user');
   const navigate = useNavigate();
   const { changeUserName, switchRegistred } = useActions();
+  const { t, i18n } = useTranslation();
+  
   const handlerLogoff = () => {
     changeUserName('Guest');
     switchRegistred(false);
@@ -16,6 +19,10 @@ const Header = () => {
     localStorage.removeItem('user');
     navigate('/');
   };
+
+  const changeLanguage = (language:any) => {
+    i18n.changeLanguage(language)
+  }
 
   return (
     <div className={styles.headerWrapper}>
@@ -33,6 +40,11 @@ const Header = () => {
               Logoff
             </button>
           )}
+        </div>
+        <div>{t("title")}</div>
+        <div>
+          <button type="button" onClick={() => changeLanguage('en')}>En</button>
+          <button type="button" onClick={() => changeLanguage('ru')}>Ru</button>
         </div>
       </div>
     </div>

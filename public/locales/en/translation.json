@@ -1,0 +1,10 @@
+{
+  "Register": "Register",
+  "CreateNewAccount": "Create new account",
+  "UserName": "User Name",
+  "Email" : "Email",
+  "Password" : "Password",
+  "AlreadyRegistered" : "Already registered?",
+  "ClickHere": "Click here",
+  "ToLogIn": "to log in" 
+}

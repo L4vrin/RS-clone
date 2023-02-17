@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import {
@@ -18,6 +19,7 @@ const FormReg = () => {
   const [loginUser] = useLoginUserMutation();
   const navigate = useNavigate();
   const { changeUserName, switchRegistred } = useActions();
+  const { t } = useTranslation();
 
   const formData = {
     fullName: userNameReg,
@@ -39,29 +41,29 @@ const FormReg = () => {
       setErrorReg(error);
     }
   };
-
+  
   return (
     <div className={styles.formWrapper}>
-      <h2>Register</h2>
+      <h2>{ t("Register")}</h2>
       <form className={styles.form}>
         <input
           className={styles.input}
           type="text"
-          placeholder="User Name"
+          placeholder={t("UserName")} 
           value={userNameReg}
           onChange={(e) => setUserNameReg(e.target.value)}
         />
         <input
           className={styles.input}
           type="email"
-          placeholder="Email"
+          placeholder={t("Email")} 
           value={emailReg}
           onChange={(e) => setEmailReg(e.target.value)}
         />
         <input
           className={styles.input}
           type="password"
-          placeholder="Password"
+          placeholder={t("Password")} 
           value={passwordReg}
           onChange={(e) => setPasswordReg(e.target.value)}
         />
@@ -73,19 +75,19 @@ const FormReg = () => {
             handleAddNewUser(formData);
           }}
         >
-          Create new account
+          { t("CreateNewAccount")}
         </button>
       </form>
       <p>
-        Already registered?{' '}
+        {t("AlreadyRegistered")} 
         <button
           type="button"
           className={styles.linkButton}
           onClick={() => switchRegistred(false)}
         >
-          Click here
-        </button>{' '}
-        to log in
+          {t("ClickHere")} 
+        </button>
+        {t("ToLogIn")}
       </p>
       <div className={styles.serverAnswer}>
         {isLoading && (
