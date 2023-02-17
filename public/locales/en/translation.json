@@ -4,7 +4,13 @@
   "UserName": "User Name",
   "Email" : "Email",
   "Password" : "Password",
-  "AlreadyRegistered" : "Already registered?",
+  "AlreadyRegistered" : "Already registred?",
   "ClickHere": "Click here",
-  "ToLogIn": "to log in" 
+  "ToLogIn": "to log in",
+  "UserCreated" : "User created!",
+
+  "SignIn" : "Sign in",
+  "Login" : "Login",
+  "DontHaveAccount" : "Dont have an account?",
+  "ToRegister" : "to register"
 }

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Forms.module.scss';
@@ -12,6 +13,8 @@ const FormLog = () => {
   const [loginUser, { isLoading, isError, isSuccess }] = useLoginUserMutation();
   const { changeUserName, switchRegistred } = useActions();
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
   const formData = {
     email: emailLog,
     password: passwordLog,
@@ -32,19 +35,19 @@ const FormLog = () => {
 
   return (
     <div className={styles.formWrapper}>
-      <h2>Sign in</h2>
+      <h2>{t("SignIn")}</h2>
       <form className={styles.form}>
         <input
           className={styles.input}
           type="email"
-          placeholder="Email"
+          placeholder={t("Email")}
           value={emailLog}
           onChange={(e) => setEmailLog(e.target.value)}
         />
         <input
           className={styles.input}
           type="password"
-          placeholder="Password"
+          placeholder={t("Password")}
           value={passwordLog}
           onChange={(e) => setPasswordLog(e.target.value)}
         />
@@ -56,19 +59,19 @@ const FormLog = () => {
             handleLoginUser(formData);
           }}
         >
-          Login
+          {t("Login")}
         </button>
       </form>
       <p>
-        Dont have an account?{' '}
+      {t("DontHaveAccount")}
         <button
           type="button"
           className={styles.linkButton}
           onClick={() => switchRegistred(true)}
         >
-          Click here
-        </button>{' '}
-        to register
+          {t("ClickHere")}
+        </button>
+        {t("ToRegister")}
       </p>
       <div className={styles.serverAnswer}>
         {isLoading && (
