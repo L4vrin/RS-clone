@@ -25,5 +25,13 @@
   "EstimatedTime" : "Estimated Time",
   "SpentTime": "SpentTime",
   "IncompletedTasks": "Incompleted Tasks",
-  "СompletedTasks": "Сompleted Tasks"
+  "СompletedTasks": "Сompleted Tasks",
+
+  "Today" : "Today",
+  "Tomorrow": "Tomorrow",
+  "ThisWeek": "This week",
+  "ThisMonth": "This month",
+  "ThisYear": "This year",
+  "AllTime": "All the time"
+
 }
