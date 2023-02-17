@@ -5,7 +5,7 @@ const SideBar = () => {
   return (
     <ul>
       <li className={styles.item}>
-        <NavLink to="" className={styles.link}>
+        <NavLink to="today" className={styles.link}>
           Today
         </NavLink>
       </li>

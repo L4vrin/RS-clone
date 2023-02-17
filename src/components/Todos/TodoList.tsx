@@ -1,14 +1,20 @@
 import Todo from './Todo';
 import styles from './styles/TodoList.module.scss';
-import { ITask } from '../../models';
+import {ITask} from '../../models';
 
-const TodoList = ({ todos }: { todos: ITask[] }) => {
-  const notCompletedTodos = todos.filter((todo) => !todo.isCompleted);
+type TodoListProps = {
+  todos: ITask[];
+  isLoading: boolean;
+};
+
+const TodoList = ({todos, isLoading}: TodoListProps) => {
+  const notCompletedArray = todos.filter((task: ITask) => !task.isCompleted);
   return (
     <div className={styles.todoList}>
-      {!!notCompletedTodos.length && <h2>Todo list</h2>}
-      {notCompletedTodos.map((todo) => {
-        return <Todo key={todo.id} todo={todo} />;
+      {!!notCompletedArray && <h2>Todo list</h2>}
+      {isLoading && <div className={styles.loader} />}
+      {notCompletedArray.map((todo: ITask) => {
+        return <Todo key={todo._id} todo={todo} />;
       })}
     </div>
   );

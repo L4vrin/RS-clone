@@ -22,7 +22,7 @@ export const timerSlice = createSlice({
 
     removeTaskFromTimer(state, action: PayloadAction<string>) {
       if (state.currentTask) {
-        if (action.payload !== state.currentTask.id) return;
+        if (action.payload !== state.currentTask._id) return;
       }
       state.currentTask = null;
     },

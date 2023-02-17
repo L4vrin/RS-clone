@@ -66,6 +66,13 @@
   border-radius: 50%;
   line-height: 1;
 }
+.wrapperBtn {
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 
 .editBtn {
   margin-left: 15px;
@@ -87,6 +94,25 @@
   }
 }
 
+.loader,
+.loaderDelete {
+  border: 5px solid #000000;
+  border-top: 5px solid rgb(119, 128, 192);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 0.5s linear infinite;
+}
+
+.loader {
+  margin: 3px 18px 0 11px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 .noteContainer {
   padding: 0 15px 15px 30px;
 }
@@ -100,3 +126,4 @@
   white-space: pre-wrap;
   word-break: break-word;
 }
+

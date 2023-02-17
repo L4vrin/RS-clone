@@ -4,20 +4,15 @@ import {
   useCreateUserMutation,
   useLoginUserMutation,
 } from '../../store/auth/users.api';
-import {IUserCreate, IErrorValidation} from './types/data';
+import {IUserCreate, IError} from './types/data';
 import useActions from '../../hooks/useActions';
 import styles from './Forms.module.scss';
-
-// interface IError {
-//   status: string,
-//   data: string[]
-// }
 
 const FormReg = () => {
   const [userNameReg, setUserNameReg] = useState('');
   const [emailReg, setEmailReg] = useState('');
   const [passwordReg, setPasswordReg] = useState('');
-  const [errorReg, setErrorReg] = useState<any>({status: '0', data: []});
+  const [errorReg, setErrorReg] = useState<IError>({status: '0', data: []});
   const [addNewUser, {isLoading, isError, isSuccess}] = useCreateUserMutation();
   const [loginUser] = useLoginUserMutation();
   const navigate = useNavigate();
@@ -35,11 +30,12 @@ const FormReg = () => {
       const userData = await loginUser(data).unwrap();
       changeUserName(userData.fullName);
       switchRegistred(true);
-
       localStorage.setItem('token', userData.token);
-      navigate('today');
+      localStorage.setItem('userId', userData._id);
+      navigate('tasks/today');
     } catch (err) {
-      setErrorReg(err);
+      const error = err as IError;
+      setErrorReg(error);
     }
   };
 
@@ -80,15 +76,15 @@ const FormReg = () => {
         </button>
       </form>
       <p>
-        Dont have an account?
+        Already registered?{' '}
         <button
           type="button"
           className={styles.linkButton}
           onClick={() => switchRegistred(false)}
         >
           Click here
-        </button>
-        to register
+        </button>{' '}
+        to log in
       </p>
       <div className={styles.serverAnswer}>
         {isLoading && (
@@ -98,7 +94,7 @@ const FormReg = () => {
         )}
         {isError && (
           <ul className={styles.errorsList}>
-            {errorReg.data.map((errorObj: IErrorValidation) => (
+            {errorReg.data.map((errorObj) => (
               <li key={errorObj.msg}>{errorObj.msg}</li>
             ))}
           </ul>
