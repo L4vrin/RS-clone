@@ -1,5 +1,5 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {IUser} from '../../models';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IUser } from '../../models';
 
 const LS_USER_KEY = 'user';
 const LS_ISREG_KEY = 'isReg';

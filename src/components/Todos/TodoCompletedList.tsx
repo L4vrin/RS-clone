@@ -1,13 +1,13 @@
 import Todo from './Todo';
 import styles from './styles/TodoCompletedList.module.scss';
-import {ITask} from '../../models';
+import { ITask } from '../../models';
 
 type TodoCompletedListProps = {
   todos: ITask[];
   isLoading: boolean;
 };
 
-const TodoCompletedList = ({todos, isLoading}: TodoCompletedListProps) => {
+const TodoCompletedList = ({ todos, isLoading }: TodoCompletedListProps) => {
   const completedArray = todos.filter((task: ITask) => task.isCompleted);
   return (
     <div className={styles.todoCompletedList}>

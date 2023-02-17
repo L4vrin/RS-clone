@@ -1,8 +1,10 @@
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const usersApi = createApi({
   reducerPath: 'usersApi',
-  baseQuery: fetchBaseQuery({baseUrl: 'https://rs-clone-tody.up.railway.app/'}),
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://rs-clone-tody.up.railway.app/',
+  }),
   endpoints: (build) => ({
     createUser: build.mutation({
       query: (body) => ({
@@ -21,4 +23,4 @@ export const usersApi = createApi({
   }),
 });
 
-export const {useCreateUserMutation, useLoginUserMutation} = usersApi;
+export const { useCreateUserMutation, useLoginUserMutation } = usersApi;

@@ -22,10 +22,16 @@ function checkDeadline(deadlineAt: number, deadlineId: string): boolean {
       return deadlineAt <= endToday;
 
     case 'tomorrow':
-      return deadlineAt > endToday && deadlineAt <= endTodayDate.setDate(now.getDate() + 1);
+      return (
+        deadlineAt > endToday &&
+        deadlineAt <= endTodayDate.setDate(now.getDate() + 1)
+      );
 
     case 'week':
-      return deadlineAt <= endTodayDate.setDate(endTodayDate.getDate() - endTodayDate.getDay() + 7);
+      return (
+        deadlineAt <=
+        endTodayDate.setDate(endTodayDate.getDate() - endTodayDate.getDay() + 7)
+      );
 
     case '7days':
       return deadlineAt <= endTodayDate.setDate(now.getDate() + 7);

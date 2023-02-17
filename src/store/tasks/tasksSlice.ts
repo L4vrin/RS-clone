@@ -1,6 +1,6 @@
-import {v4 as uuidv4} from 'uuid';
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {ITask} from '../../models';
+import { v4 as uuidv4 } from 'uuid';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ITask } from '../../models';
 
 const LS_TASKS_KEY = 'tasks';
 
@@ -32,7 +32,13 @@ export const tasksSlice = createSlice({
         localStorage.setItem(LS_TASKS_KEY, JSON.stringify(state.list));
       },
 
-      prepare({ title, pomodorosNumber, pomodoroTime, note, deadlineAt }: NewTaskPayload) {
+      prepare({
+        title,
+        pomodorosNumber,
+        pomodoroTime,
+        note,
+        deadlineAt,
+      }: NewTaskPayload) {
         const currentDate = new Date();
         const newTask: ITask = {
           _id: uuidv4(),
@@ -45,10 +51,10 @@ export const tasksSlice = createSlice({
           pomodorosNumber,
           __v: 0,
           note,
-          deadlineDate: new Date().toISOString().split('T')[0]
+          deadlineDate: new Date().toISOString().split('T')[0],
         };
 
-        return {payload: newTask};
+        return { payload: newTask };
       },
     },
 
@@ -76,9 +82,12 @@ export const tasksSlice = createSlice({
     },
 
     editTask(state, action: PayloadAction<EditTaskPayload>) {
-      const targetTask = state.list.find((task) => task._id === action.payload.id);
+      const targetTask = state.list.find(
+        (task) => task._id === action.payload.id
+      );
       if (targetTask) {
-        const { title, pomodorosNumber, note, deadlineAt } = action.payload.data;
+        const { title, pomodorosNumber, note, deadlineAt } =
+          action.payload.data;
         targetTask.title = title;
         targetTask.pomodorosNumber = pomodorosNumber;
         targetTask.note = note;

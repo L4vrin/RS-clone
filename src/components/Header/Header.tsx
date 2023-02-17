@@ -1,4 +1,4 @@
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useActions from '../../hooks/useActions';
 import useAppSelector from '../../hooks/useAppSelector';
 import styles from './Header.module.scss';
@@ -7,7 +7,7 @@ const Header = () => {
   const user = useAppSelector((state) => state.user);
   const isLogin = localStorage.getItem('user');
   const navigate = useNavigate();
-  const {changeUserName, switchRegistred} = useActions();
+  const { changeUserName, switchRegistred } = useActions();
   const handlerLogoff = () => {
     changeUserName('Guest');
     switchRegistred(false);

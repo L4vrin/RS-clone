@@ -1,21 +1,23 @@
-import {useState} from 'react';
-import {BiCircle, BiCheckCircle} from 'react-icons/bi';
-import {BsPlayCircle} from 'react-icons/bs';
-import {GrMoreVertical} from 'react-icons/gr';
-import {SlClock} from 'react-icons/sl';
+import { useState } from 'react';
+import { BiCircle, BiCheckCircle } from 'react-icons/bi';
+import { BsPlayCircle } from 'react-icons/bs';
+import { GrMoreVertical } from 'react-icons/gr';
+import { SlClock } from 'react-icons/sl';
 import useActions from '../../hooks/useActions';
 import useAppSelector from '../../hooks/useAppSelector';
-import {ITask} from '../../models';
+import { ITask } from '../../models';
 import EditPanel from './EditPanel';
-import {useUpdateTodoMutation} from '../../store/tasks/tasksApi';
+import { useUpdateTodoMutation } from '../../store/tasks/tasksApi';
 import styles from './styles/Todo.module.scss';
 
-const Todo = ({todo}: {todo: ITask}) => {
+const Todo = ({ todo }: { todo: ITask }) => {
   const [isEditState, setIsEditState] = useState(false);
-  const {addTaskToTimer, removeTaskFromTimer} = useActions();
+  const { addTaskToTimer, removeTaskFromTimer } = useActions();
   const taskInTimer = useAppSelector((state) => state.timer.currentTask);
-  const [updateTodo, {isLoading: isLoadingUpdate, isSuccess: isSuccessUpdate}] =
-    useUpdateTodoMutation();
+  const [
+    updateTodo,
+    { isLoading: isLoadingUpdate, isSuccess: isSuccessUpdate },
+  ] = useUpdateTodoMutation();
 
   // const toggledTask = state.list.find(
   //   (task) => task._id === action.payload
@@ -36,7 +38,7 @@ const Todo = ({todo}: {todo: ITask}) => {
                   <BiCircle
                     className={styles.todoCircleIcon}
                     onClick={() => {
-                      updateTodo({...todo, isCompleted: !todo.isCompleted});
+                      updateTodo({ ...todo, isCompleted: !todo.isCompleted });
                       removeTaskFromTimer(todo._id);
                     }}
                   />
@@ -63,7 +65,7 @@ const Todo = ({todo}: {todo: ITask}) => {
                 <BiCheckCircle
                   className={styles.todoCheckedCircleIcon}
                   onClick={() => {
-                    updateTodo({...todo, isCompleted: !todo.isCompleted});
+                    updateTodo({ ...todo, isCompleted: !todo.isCompleted });
                   }}
                 />
               ) : (
@@ -101,7 +103,11 @@ const Todo = ({todo}: {todo: ITask}) => {
           )}
         </div>
       ) : (
-        <EditPanel task={todo} onClose={() => setIsEditState(false)} isAdd = {false}/>
+        <EditPanel
+          task={todo}
+          onClose={() => setIsEditState(false)}
+          isAdd={false}
+        />
       )}
     </div>
   );

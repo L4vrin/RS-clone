@@ -11,7 +11,7 @@ const actions = {
   ...timerActions,
   ...widgetsActions,
   ...timerSettingsActions,
-  ...userActions
+  ...userActions,
 };
 
 const useActions = () => {

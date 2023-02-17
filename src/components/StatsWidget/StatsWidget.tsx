@@ -1,4 +1,4 @@
-import {ITask} from '../../models';
+import { ITask } from '../../models';
 import StatsItem from './StatsItem';
 import styles from './statsWidget.module.scss';
 import TimeStat from './TimeStat';
@@ -7,7 +7,7 @@ type StatsWidgetProps = {
   todos: ITask[];
 };
 
-const StatsWidget = ({todos}: StatsWidgetProps) => {
+const StatsWidget = ({ todos }: StatsWidgetProps) => {
   const inCompletedTodos = todos.filter(
     (todo) =>
       !todo.isCompleted && todo.user?._id === localStorage.getItem('userId')
@@ -27,9 +27,15 @@ const StatsWidget = ({todos}: StatsWidgetProps) => {
 
   return (
     <div className={`container ${styles.container}`}>
-      <StatsItem stat={<TimeStat time={estimatedTime} />} description="Estimated time" />
+      <StatsItem
+        stat={<TimeStat time={estimatedTime} />}
+        description="Estimated time"
+      />
       <StatsItem stat={numberIncompleteTodos} description="Incomplete tasks" />
-      <StatsItem stat={<TimeStat time={spentTime} />} description="Spent time" />
+      <StatsItem
+        stat={<TimeStat time={spentTime} />}
+        description="Spent time"
+      />
       <StatsItem stat={numberCompletedTodos} description="Completed tasks" />
     </div>
   );
