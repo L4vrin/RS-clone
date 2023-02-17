@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import useActions from '../../hooks/useActions';
@@ -7,6 +8,7 @@ import styles from './Header.module.scss';
 const Header = () => {
   const user = useAppSelector((state) => state.user);
   const isLogin = localStorage.getItem('user');
+  const [isEnglish, setIsEnglish] = useState(false);
   const navigate = useNavigate();
   const { changeUserName, switchRegistred } = useActions();
   const { t, i18n } = useTranslation();
@@ -22,6 +24,7 @@ const Header = () => {
 
   const changeLanguage = (language: any) => {
     i18n.changeLanguage(language);
+    setIsEnglish(!isEnglish);
   };
 
   return (
@@ -36,12 +39,12 @@ const Header = () => {
           )}
         </div>
         <div>
-          <button type="button" onClick={() => changeLanguage('en')}>
-            En
-          </button>
-          <button type="button" onClick={() => changeLanguage('ru')}>
-            Ru
-          </button>
+          <button
+            type="button"
+            className={!isEnglish ? styles.english : styles.russian}
+            aria-label="change Language"
+            onClick={() => changeLanguage(isEnglish ? 'en' : 'ru')}
+          />
         </div>
       </div>
     </div>
