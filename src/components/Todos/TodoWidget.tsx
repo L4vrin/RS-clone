@@ -17,11 +17,10 @@ const TodoWidget = ({ deadline }: { deadline: string }) => {
 
   return (
     <>
-      <h1>{deadline}</h1>
       <StatsWidget todos={filteredTodos} />
-      <AddTodo />
-      <TodoList todos={filteredTodos} isLoading={isLoading} />
-      <TodoCompletedList todos={filteredTodos} isLoading={isLoading} />
+      <AddTodo deadline={deadline} />
+      <TodoList todos={filteredTodos} isLoading={isLoading} deadline={deadline} />
+      <TodoCompletedList todos={filteredTodos} isLoading={isLoading} deadline={deadline} />
       <Timer />
       <TimerSettingsWidget />
     </>

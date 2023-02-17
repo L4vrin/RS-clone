@@ -8,94 +8,79 @@ import useAppSelector from '../../hooks/useAppSelector';
 import { ITask } from '../../models';
 import EditPanel from './EditPanel';
 import { useUpdateTodoMutation } from '../../store/tasks/tasksApi';
+import formatDeadlineDate from './helpers/formatDeadlineDate';
 import styles from './styles/Todo.module.scss';
 
-const Todo = ({ todo }: { todo: ITask }) => {
+const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
   const [isEditState, setIsEditState] = useState(false);
   const { addTaskToTimer, removeTaskFromTimer } = useActions();
   const taskInTimer = useAppSelector((state) => state.timer.currentTask);
-  const [
-    updateTodo,
-    { isLoading: isLoadingUpdate, isSuccess: isSuccessUpdate },
-  ] = useUpdateTodoMutation();
+  const [updateTodo, { isLoading: isLoadingUpdate, isSuccess: isSuccessUpdate }] =
+    useUpdateTodoMutation();
 
-  // const toggledTask = state.list.find(
-  //   (task) => task._id === action.payload
-  // );
-  // if (toggledTask) {
-  //   toggledTask.isCompleted = !toggledTask.isCompleted;
-  //   localStorage.setItem(LS_TASKS_KEY, JSON.stringify(state.list));
-  // }
+  const { formattedDate, isExpired } = formatDeadlineDate(todo.deadlineAt, 'en');
 
   return (
     <div className={styles.todoWrapper}>
       {!isEditState ? (
-        <div className={styles.todo}>
-          {!todo.isCompleted ? (
-            <div>
-              {!isLoadingUpdate && !isSuccessUpdate ? (
-                <div>
-                  <BiCircle
-                    className={styles.todoCircleIcon}
+        <div>
+          <div className={styles.todo}>
+            {!todo.isCompleted ? (
+              <div>
+                {!isLoadingUpdate && !isSuccessUpdate ? (
+                  <div>
+                    <BiCircle
+                      className={styles.todoCircleIcon}
+                      onClick={() => {
+                        updateTodo({ ...todo, isCompleted: !todo.isCompleted });
+                        removeTaskFromTimer(todo._id);
+                      }}
+                    />
+                    <button
+                      className={styles.todoAddToTimerBtn}
+                      type="button"
+                      aria-label="Add task to timer"
+                      onClick={() => addTaskToTimer(todo)}
+                    >
+                      {taskInTimer?._id === todo._id ? <SlClock /> : <BsPlayCircle />}
+                    </button>
+                  </div>
+                ) : (
+                  <div className={styles.loader} />
+                )}
+              </div>
+            ) : (
+              <div>
+                {!isLoadingUpdate && !isSuccessUpdate ? (
+                  <BiCheckCircle
+                    className={styles.todoCheckedCircleIcon}
                     onClick={() => {
                       updateTodo({ ...todo, isCompleted: !todo.isCompleted });
-                      removeTaskFromTimer(todo._id);
                     }}
                   />
-                  <button
-                    className={styles.todoAddToTimerBtn}
-                    type="button"
-                    aria-label="Add task to timer"
-                    onClick={() => addTaskToTimer(todo)}
-                  >
-                    {taskInTimer?._id === todo._id ? (
-                      <SlClock />
-                    ) : (
-                      <BsPlayCircle />
-                    )}
-                  </button>
-                </div>
-              ) : (
-                <div className={styles.loader} />
-              )}
-            </div>
-          ) : (
-            <div>
-              {!isLoadingUpdate && !isSuccessUpdate ? (
-                <BiCheckCircle
-                  className={styles.todoCheckedCircleIcon}
-                  onClick={() => {
-                    updateTodo({ ...todo, isCompleted: !todo.isCompleted });
-                  }}
-                />
-              ) : (
-                <div className={styles.loader} />
-              )}
-            </div>
-          )}
+                ) : (
+                  <div className={styles.loader} />
+                )}
+              </div>
+            )}
 
-          <div
-            className={`${
-              todo.isCompleted ? styles.todoCompletedText : styles.todoText
-            }`}
-          >
-            <div className={styles.title}>{todo.title}</div>
+            <div className={`${todo.isCompleted ? styles.todoCompletedText : styles.todoText}`}>
+              <div className={styles.title}>{todo.title}</div>
+            </div>
+            <div className={isExpired ? styles.expiredDate : styles.date}>{formattedDate}</div>
+            <div className={styles.stats}>
+              <span className={styles.PomodoroIcon}>🍅</span>
+              <span>
+                {todo.completedPomodors}/{todo.pomodorosNumber}
+              </span>
+            </div>
+            <div>
+              <button type="button" className={styles.editBtn} onClick={() => setIsEditState(true)}>
+                <GrMoreVertical />
+              </button>
+            </div>
           </div>
-          <div>
-            <span className={styles.PomodoroIcon}>🍅</span>
-            <span>
-              {todo.completedPomodors}/{todo.pomodorosNumber}
-            </span>
-          </div>
-          <div>
-            <button
-              type="button"
-              className={styles.editBtn}
-              onClick={() => setIsEditState(true)}
-            >
-              <GrMoreVertical />
-            </button>
-          </div>
+
           {todo.note && (
             <div className={styles.noteContainer}>
               <p className={styles.noteText}>{todo.note}</p>
@@ -107,6 +92,7 @@ const Todo = ({ todo }: { todo: ITask }) => {
           task={todo}
           onClose={() => setIsEditState(false)}
           isAdd={false}
+          deadline={deadline}
         />
       )}
     </div>

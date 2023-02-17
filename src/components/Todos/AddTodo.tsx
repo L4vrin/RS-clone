@@ -3,13 +3,13 @@ import { HiPlusCircle } from 'react-icons/hi';
 import EditPanel from './EditPanel';
 import styles from './styles/AddTodo.module.scss';
 
-const AddTodo = () => {
+const AddTodo = ({ deadline }: { deadline: string }) => {
   const [isCreateMode, setIsCreateMode] = useState(false);
   const [isAddTask, setIsAddTask] = useState(false);
   return (
     <div className={`container ${styles.container}`}>
       {isCreateMode ? (
-        <EditPanel onClose={() => setIsCreateMode(false)} isAdd={isAddTask} />
+        <EditPanel onClose={() => setIsCreateMode(false)} isAdd={isAddTask} deadline={deadline} />
       ) : (
         <button
           type="button"
