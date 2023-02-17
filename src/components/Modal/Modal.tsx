@@ -1,3 +1,5 @@
+import { useRef } from 'react';
+import { CSSTransition } from 'react-transition-group';
 import styles from './modal.module.scss';
 
 type ModalProps = {
@@ -7,19 +9,35 @@ type ModalProps = {
 };
 
 const Modal = ({ children, isVisible, setIsVisible }: ModalProps) => {
-  const rootClasses = [styles.modal];
-  if (isVisible) rootClasses.push(styles.active);
+  const modalRef = useRef(null);
 
   return (
-    <div className={rootClasses.join(' ')} onClick={() => setIsVisible(false)} role="presentation">
+    <CSSTransition
+      in={isVisible}
+      timeout={500}
+      unmountOnExit
+      classNames={{
+        enter: styles.modalEnter,
+        enterActive: styles.modalEnterActive,
+        exit: styles.modalExit,
+        exitActive: styles.modalExitActive,
+      }}
+    >
       <div
-        className={styles.modalContent}
-        onClick={(evt) => evt.stopPropagation()}
+        ref={modalRef}
+        className={styles.modal}
+        onClick={() => setIsVisible(false)}
         role="presentation"
       >
-        {children}
+        <div
+          className={styles.modalContent}
+          onClick={(evt) => evt.stopPropagation()}
+          role="presentation"
+        >
+          {children}
+        </div>
       </div>
-    </div>
+    </CSSTransition>
   );
 };
 
