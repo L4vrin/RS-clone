@@ -21,14 +21,6 @@ export const tasksApi = createApi({
       }),
       invalidatesTags: ['Tasks'],
     }),
-    // getAllTasks: build.query<ITask[], void>({
-    //   query: () => 'todos',
-    //   providesTags: (result) =>
-    //     result
-    //       ? [...result.map(({_id}) => ({type: 'Tasks' as const, _id})), 'Tasks']
-    //       : ['Tasks'],
-    // }),
-
     getAllUserTasks: build.query({
       query: (userId) => ({
         url: `todos/${userId}`,

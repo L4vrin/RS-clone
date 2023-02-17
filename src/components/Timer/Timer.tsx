@@ -5,6 +5,8 @@ import styles from './Timer.module.scss';
 import getPadTime from './helpers/getPadTime';
 import useAppSelector from '../../hooks/useAppSelector';
 import useActions from '../../hooks/useActions';
+import { useUpdateTodoMutation } from '../../store/tasks/tasksApi';
+import { ITask } from '../../models';
 
 const TIMER_RADIUS = 38.2;
 
@@ -13,7 +15,7 @@ const MODES = {
   break: 'break',
 };
 
-const Timer: React.FC = () => {
+const Timer = () => {
   const {
     workPeriodInMinutes,
     shortBreakPeriodInMinutes,
@@ -29,7 +31,7 @@ const Timer: React.FC = () => {
   const { currentTask, isRunning } = useAppSelector((store) => store.timer);
   const { setCompletedPomodoro, setIsRunning, setIsSettingsVisible } =
     useActions();
-
+  const [updateTodo] = useUpdateTodoMutation();
   const [currentMode, setCurrentMode] = useState(MODES.work);
   const totalSeconds = useRef(workPeriodInMinutes * 60);
   const [secondsLeft, setSecondsLeft] = useState(totalSeconds.current);
@@ -134,6 +136,9 @@ const Timer: React.FC = () => {
 
       if (currentTask && currentMode === MODES.work)
         setCompletedPomodoro(currentTask._id);
+        if(currentTask) {
+          updateTodo({ ...currentTask, completedPomodors: currentTask.completedPomodors + 1 })
+        }
     }
   }, [secondsLeft, autoRunWork, autoRunBreak, offBreak]);
 
