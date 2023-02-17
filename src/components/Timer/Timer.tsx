@@ -131,14 +131,15 @@ const Timer = () => {
 
       if (!autoRunWork && nextMode === MODES.work) setIsRunning(false);
       if (!autoRunBreak && nextMode === MODES.break) setIsRunning(false);
-      if (currentMode === MODES.work) pomodoroCount.current += 1;
+      if (currentMode === MODES.work && currentTask)
+        updateTodo({
+          ...currentTask,
+          completedPomodors: (currentTask.completedPomodors + 1),
+        });
       updatePeriod(nextMode);
 
       if (currentTask && currentMode === MODES.work)
         setCompletedPomodoro(currentTask._id);
-        if(currentTask) {
-          updateTodo({ ...currentTask, completedPomodors: currentTask.completedPomodors + 1 })
-        }
     }
   }, [secondsLeft, autoRunWork, autoRunBreak, offBreak]);
 
