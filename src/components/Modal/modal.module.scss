@@ -7,10 +7,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  opacity: 0;
+  z-index: 111;
   background: rgba(0, 0, 0, 0.5);
-  visibility: hidden;
-  transition: 0.5s;
 }
 
 .modalContent {
@@ -21,8 +19,20 @@
   min-width: 250px;
 }
 
-.modal.active {
-  z-index: 111;
+.modalEnter {
+  opacity: 0;
+}
+
+.modalEnterActive {
   opacity: 1;
-  visibility: visible;
+  transition: opacity 500ms;
+}
+
+.modalExit {
+  opacity: 1;
+}
+
+.modalExitActive {
+  opacity: 0;
+  transition: opacity 500ms;
 }
