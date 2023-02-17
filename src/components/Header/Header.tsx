@@ -10,7 +10,7 @@ const Header = () => {
   const navigate = useNavigate();
   const { changeUserName, switchRegistred } = useActions();
   const { t, i18n } = useTranslation();
-  
+
   const handlerLogoff = () => {
     changeUserName('Guest');
     switchRegistred(false);
@@ -20,31 +20,28 @@ const Header = () => {
     navigate('/');
   };
 
-  const changeLanguage = (language:any) => {
-    i18n.changeLanguage(language)
-  }
+  const changeLanguage = (language: any) => {
+    i18n.changeLanguage(language);
+  };
 
   return (
     <div className={styles.headerWrapper}>
       <div className={styles.headerContainer}>
-        <div className={styles.userContainer}>
-          {isLogin ? user.fullName : 'Guest'}
-        </div>
+        <div className={styles.userContainer}>{isLogin ? user.fullName : 'Guest'}</div>
         <div className={styles.buttonsContainer}>
           {isLogin && (
-            <button
-              className={styles.button}
-              type="button"
-              onClick={() => handlerLogoff()}
-            >
-              Logoff
+            <button className={styles.button} type="button" onClick={() => handlerLogoff()}>
+              {t('Logoff')}
             </button>
           )}
         </div>
-        <div>{t("title")}</div>
         <div>
-          <button type="button" onClick={() => changeLanguage('en')}>En</button>
-          <button type="button" onClick={() => changeLanguage('ru')}>Ru</button>
+          <button type="button" onClick={() => changeLanguage('en')}>
+            En
+          </button>
+          <button type="button" onClick={() => changeLanguage('ru')}>
+            Ru
+          </button>
         </div>
       </div>
     </div>

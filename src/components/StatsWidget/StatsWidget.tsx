@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { ITask } from '../../models';
 import StatsItem from './StatsItem';
 import styles from './statsWidget.module.scss';
@@ -8,6 +9,8 @@ type StatsWidgetProps = {
 };
 
 const StatsWidget = ({ todos }: StatsWidgetProps) => {
+  const { t } = useTranslation();
+
   const inCompletedTodos = todos.filter(
     (todo) =>
       !todo.isCompleted && todo.user?._id === localStorage.getItem('userId')
@@ -29,14 +32,14 @@ const StatsWidget = ({ todos }: StatsWidgetProps) => {
     <div className={`container ${styles.container}`}>
       <StatsItem
         stat={<TimeStat time={estimatedTime} />}
-        description="Estimated time"
+        description={ t("EstimatedTime")}
       />
-      <StatsItem stat={numberIncompleteTodos} description="Incomplete tasks" />
+      <StatsItem stat={numberIncompleteTodos} description={t("IncompletedTasks") } />
       <StatsItem
         stat={<TimeStat time={spentTime} />}
-        description="Spent time"
+        description={ t("SpentTime")}
       />
-      <StatsItem stat={numberCompletedTodos} description="Completed tasks" />
+      <StatsItem stat={numberCompletedTodos} description={t("СompletedTasks") } />
     </div>
   );
 };
