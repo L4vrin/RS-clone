@@ -11,7 +11,7 @@ import {
   maxLongBreakInterval,
   alarmSounds,
   ambientSounds,
-} from '../../settings/timerSettings';
+} from '../../constants/timerSettings';
 
 const TimerSettingsWidget = () => {
   const { isSettingsVisible } = useAppSelector((state) => state.widgets);

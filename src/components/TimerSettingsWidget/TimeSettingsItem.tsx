@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import NumberInput from '../ui/NumberInput/NumberInput';
 import styles from './timerSettings.module.scss';
-import { minTimeInMinutes, maxTimeInMinutes } from '../../settings/timerSettings';
+import { minTimeInMinutes, maxTimeInMinutes } from '../../constants/timerSettings';
 
 interface TimeSettingProps {
   label: string;

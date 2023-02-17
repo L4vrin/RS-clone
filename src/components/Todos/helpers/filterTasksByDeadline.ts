@@ -1,43 +1,48 @@
+import DEADLINES from '../../../constants/deadlines';
 import { ITask } from '../../../models';
+import getDeadlineDate from './getDeadlineDate';
 
-function checkDeadline(deadlineAt: number, deadlineId: string): boolean {
-  const now = new Date();
-  const endToday = now.setHours(23, 59, 59, 999);
-  const endTodayDate = new Date(endToday);
-  const deadlineDate = new Date(deadlineAt);
-  // console.log('Deadline: ', deadlineDate);
-  // console.log('Tomorrow: ', new Date(new Date(endToday).setDate(new Date().getDate() + 1)));
-  // console.log(
-  //   'End Weeek:',
-  //   new Date(endTodayDate.setDate(endTodayDate.getDate() - endTodayDate.getDay() + 7))
-  // );
-  // console.log('7 days:', new Date(endTodayDate.setDate(now.getDate() + 7)));
-
-  // console.log(
-  //   deadlineAt <= endTodayDate.setDate(endTodayDate.getDate() - endTodayDate.getDay() + 7)
-  // );
+export function checkDeadline(deadlineAt: number, deadlineId: string): boolean {
+  const deadlineTimestamp = getDeadlineDate(deadlineId).getTime();
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
   switch (deadlineId) {
-    case 'today':
-      return deadlineAt <= endToday;
+    case DEADLINES.today:
+      return deadlineAt > today.getTime() && deadlineAt <= deadlineTimestamp;
 
-    case 'tomorrow':
-      return deadlineAt > endToday && deadlineAt <= endTodayDate.setDate(now.getDate() + 1);
+    case DEADLINES.tomorrow:
+      return (
+        deadlineAt > getDeadlineDate(DEADLINES.today).getTime() && deadlineAt <= deadlineTimestamp
+      );
 
-    case 'week':
-      return deadlineAt <= endTodayDate.setDate(endTodayDate.getDate() - endTodayDate.getDay() + 7);
+    case DEADLINES.week: {
+      const startWeek = today.setDate(
+        today.getDate() - today.getDay() + (today.getDay() === 0 ? -6 : 1)
+      );
+      return deadlineAt > startWeek && deadlineAt <= deadlineTimestamp;
+    }
 
-    case '7days':
-      return deadlineAt <= endTodayDate.setDate(now.getDate() + 7);
+    case DEADLINES.month: {
+      const startMonth = new Date(today.getFullYear(), today.getMonth(), 1).getTime();
+      return deadlineAt > startMonth && deadlineAt <= deadlineTimestamp;
+    }
+
+    case DEADLINES.year: {
+      const startYear = new Date(today.getFullYear(), 0, 1).getTime();
+      return deadlineAt > startYear && deadlineAt <= deadlineTimestamp;
+    }
 
     default:
-      console.log('default!');
       return true;
   }
 }
 
 function filterTasksByDeadline(tasks: ITask[], deadlineId: string) {
-  return tasks.filter((task) => checkDeadline(task.deadlineAt, deadlineId));
+  if (deadlineId === DEADLINES.all) return tasks.sort((a, b) => a.deadlineAt - b.deadlineAt);
+  return tasks
+    .filter((task) => checkDeadline(task.deadlineAt, deadlineId))
+    .sort((a, b) => a.deadlineAt - b.deadlineAt);
 }
 
 export default filterTasksByDeadline;

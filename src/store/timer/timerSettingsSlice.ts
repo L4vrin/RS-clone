@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { alarmSounds, ambientSounds } from '../../settings/timerSettings';
+import { alarmSounds, ambientSounds } from '../../constants/timerSettings';
 
 const LS_TIMER_SETTINGS_KEY = 'timer_settings';
 
