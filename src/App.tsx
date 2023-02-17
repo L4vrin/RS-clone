@@ -6,7 +6,6 @@ import TasksPage from './pages/TasksPage';
 import TodoWidget from './components/Todos/TodoWidget';
 
 const App: React.FC = () => {
-
   return (
     <Routes>
       <Route path="/" element={<Layout />}>

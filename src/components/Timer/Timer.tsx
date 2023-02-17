@@ -27,7 +27,8 @@ const Timer: React.FC = () => {
   } = useAppSelector((store) => store.timerSettings);
 
   const { currentTask, isRunning } = useAppSelector((store) => store.timer);
-  const { setCompletedPomodoro, setIsRunning, setIsSettingsVisible } = useActions();
+  const { setCompletedPomodoro, setIsRunning, setIsSettingsVisible } =
+    useActions();
 
   const [currentMode, setCurrentMode] = useState(MODES.work);
   const totalSeconds = useRef(workPeriodInMinutes * 60);
@@ -131,13 +132,18 @@ const Timer: React.FC = () => {
       if (currentMode === MODES.work) pomodoroCount.current += 1;
       updatePeriod(nextMode);
 
-      if (currentTask && currentMode === MODES.work) setCompletedPomodoro(currentTask._id);
+      if (currentTask && currentMode === MODES.work)
+        setCompletedPomodoro(currentTask._id);
     }
   }, [secondsLeft, autoRunWork, autoRunBreak, offBreak]);
 
   useEffect(() => {
     updatePeriod(currentMode);
-  }, [workPeriodInMinutes, shortBreakPeriodInMinutes, longBreakPeriodInMinutes]);
+  }, [
+    workPeriodInMinutes,
+    shortBreakPeriodInMinutes,
+    longBreakPeriodInMinutes,
+  ]);
 
   const minutes = Math.floor(secondsLeft / 60);
   const seconds = secondsLeft - minutes * 60;
@@ -147,10 +153,18 @@ const Timer: React.FC = () => {
   );
 
   return (
-    <div className={`${styles.timer} ${currentTask ? styles.timerWithTask : ''}`}>
+    <div
+      className={`${styles.timer} ${currentTask ? styles.timerWithTask : ''}`}
+    >
       <div className={styles.dial}>
         <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" fill="none">
-          <circle className={styles.circleStatic} cx="40" cy="40" r="38.2" strokeDasharray="1" />
+          <circle
+            className={styles.circleStatic}
+            cx="40"
+            cy="40"
+            r="38.2"
+            strokeDasharray="1"
+          />
           <circle
             className={`${styles.circleActive} ${
               currentMode === MODES.break ? styles.circleActiveBreak : ''

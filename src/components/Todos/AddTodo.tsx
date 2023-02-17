@@ -9,12 +9,16 @@ const AddTodo = () => {
   return (
     <div className={`container ${styles.container}`}>
       {isCreateMode ? (
-        <EditPanel onClose={() => setIsCreateMode(false)} isAdd = {isAddTask}/>
+        <EditPanel onClose={() => setIsCreateMode(false)} isAdd={isAddTask} />
       ) : (
-        <button type="button" className={styles.addButton} onClick={() => {
-          setIsCreateMode(true)
-          setIsAddTask(true)
-        }}>
+        <button
+          type="button"
+          className={styles.addButton}
+          onClick={() => {
+            setIsCreateMode(true);
+            setIsAddTask(true);
+          }}
+        >
           <span className={styles.buttonIcon}>
             <HiPlusCircle />
           </span>

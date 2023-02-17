@@ -1,9 +1,9 @@
-import {useState, useRef, FC} from 'react';
-import {AiFillCaretDown, AiFillCaretUp} from 'react-icons/ai';
+import { useState, useRef, FC } from 'react';
+import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai';
 import useActions from '../../hooks/useActions';
 import useAppSelector from '../../hooks/useAppSelector';
 // import useAppSelector from '../../hooks/useAppSelector';
-import {ITask} from '../../models';
+import { ITask } from '../../models';
 import {
   useCreateTaskMutation,
   useDeleteTodoMutation,
@@ -19,11 +19,13 @@ interface EditPanelProps {
   isAdd: boolean;
 }
 
-const EditPanel: FC<EditPanelProps> = ({task, onClose, isAdd}) => {
-  const [deleteTodo, {isLoading: isLoadingDelete, isSuccess: isSuccessDelete}] =
-    useDeleteTodoMutation();
-  const [updateTodo, {isLoading: isLoadingUpdate}] = useUpdateTodoMutation();
-  const [createTask, {isLoading: isLoadingCreate}] = useCreateTaskMutation();
+const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd }) => {
+  const [
+    deleteTodo,
+    { isLoading: isLoadingDelete, isSuccess: isSuccessDelete },
+  ] = useDeleteTodoMutation();
+  const [updateTodo, { isLoading: isLoadingUpdate }] = useUpdateTodoMutation();
+  const [createTask, { isLoading: isLoadingCreate }] = useCreateTaskMutation();
 
   const [taskTitle, setTaskTitle] = useState(task ? task.title : '');
   const [taskNote, setTaskNote] = useState(task ? task.note : '');
@@ -41,7 +43,8 @@ const EditPanel: FC<EditPanelProps> = ({task, onClose, isAdd}) => {
   const pomodoroTime = useAppSelector(
     (state) => state.timerSettings.workPeriodInMinutes
   );
-  const {deleteTask, removeTaskFromTimer, addNewTask, editTask} = useActions();
+  const { deleteTask, removeTaskFromTimer, addNewTask, editTask } =
+    useActions();
   // const pomodoroTime = useAppSelector((state) => state.timerSettings.workPeriodInMinutes);
 
   // const saveHandler = () => {

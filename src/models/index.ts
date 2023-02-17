@@ -18,11 +18,10 @@ export interface ITask {
     passwordHash: string;
     fullName: string;
     email: string;
-  }
+  };
 }
 
 export interface IUser {
-  fullName: string,
-  isRegistred: boolean
+  fullName: string;
+  isRegistred: boolean;
 }
-

@@ -1,5 +1,5 @@
-import {useNavigate} from 'react-router-dom';
-import {useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import styles from './styles/WelcomePage.module.scss';
 import logo from '../assets/img/logo.png';
 import bgCalendar from '../assets/img/calendar-bg.png';
@@ -17,11 +17,11 @@ const WelcomePage = () => {
       navigate('tasks/today');
     }
   }, [navigate, user]);
-  
+
   return (
     <div
       className={styles.wrapper}
-      style={{backgroundImage: `url(${bgCalendar})`}}
+      style={{ backgroundImage: `url(${bgCalendar})` }}
     >
       <div className={styles.leftContainer}>
         <img src={logo} alt="logo" className={styles.logo} />
