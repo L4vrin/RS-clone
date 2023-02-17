@@ -2,14 +2,14 @@ export type TodoEvent =
   | React.FormEvent<HTMLFormElement>
   | React.MouseEvent<SVGElement>;
 
-  export interface ITodo {
+export interface ITodo {
   text: string;
   isCompleted: boolean;
   id: string;
 }
 
 export interface ITodoItem {
-  todo: ITodo,
+  todo: ITodo;
   deleteTodo: (id: string) => void;
   toggleTodo: (id: string) => void;
 }
@@ -21,5 +21,5 @@ export interface ITodoListProps {
 }
 
 export interface ITodoAdd {
-  addTodo:(id: string) => void;
+  addTodo: (id: string) => void;
 }

@@ -5,6 +5,8 @@ import styles from './Timer.module.scss';
 import getPadTime from './helpers/getPadTime';
 import useAppSelector from '../../hooks/useAppSelector';
 import useActions from '../../hooks/useActions';
+import { useUpdateTodoMutation } from '../../store/tasks/tasksApi';
+import { ITask } from '../../models';
 
 const TIMER_RADIUS = 38.2;
 
@@ -13,7 +15,7 @@ const MODES = {
   break: 'break',
 };
 
-const Timer: React.FC = () => {
+const Timer = () => {
   const {
     workPeriodInMinutes,
     shortBreakPeriodInMinutes,
@@ -27,8 +29,9 @@ const Timer: React.FC = () => {
   } = useAppSelector((store) => store.timerSettings);
 
   const { currentTask, isRunning } = useAppSelector((store) => store.timer);
-  const { setCompletedPomodoro, setIsRunning, setIsSettingsVisible } = useActions();
-
+  const { setCompletedPomodoro, setIsRunning, setIsSettingsVisible } =
+    useActions();
+  const [updateTodo] = useUpdateTodoMutation();
   const [currentMode, setCurrentMode] = useState(MODES.work);
   const totalSeconds = useRef(workPeriodInMinutes * 60);
   const [secondsLeft, setSecondsLeft] = useState(totalSeconds.current);
@@ -128,16 +131,25 @@ const Timer: React.FC = () => {
 
       if (!autoRunWork && nextMode === MODES.work) setIsRunning(false);
       if (!autoRunBreak && nextMode === MODES.break) setIsRunning(false);
-      if (currentMode === MODES.work) pomodoroCount.current += 1;
+      if (currentMode === MODES.work && currentTask)
+        updateTodo({
+          ...currentTask,
+          completedPomodors: (currentTask.completedPomodors + 1),
+        });
       updatePeriod(nextMode);
 
-      if (currentTask && currentMode === MODES.work) setCompletedPomodoro(currentTask._id);
+      if (currentTask && currentMode === MODES.work)
+        setCompletedPomodoro(currentTask._id);
     }
   }, [secondsLeft, autoRunWork, autoRunBreak, offBreak]);
 
   useEffect(() => {
     updatePeriod(currentMode);
-  }, [workPeriodInMinutes, shortBreakPeriodInMinutes, longBreakPeriodInMinutes]);
+  }, [
+    workPeriodInMinutes,
+    shortBreakPeriodInMinutes,
+    longBreakPeriodInMinutes,
+  ]);
 
   const minutes = Math.floor(secondsLeft / 60);
   const seconds = secondsLeft - minutes * 60;
@@ -147,10 +159,18 @@ const Timer: React.FC = () => {
   );
 
   return (
-    <div className={`${styles.timer} ${currentTask ? styles.timerWithTask : ''}`}>
+    <div
+      className={`${styles.timer} ${currentTask ? styles.timerWithTask : ''}`}
+    >
       <div className={styles.dial}>
         <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" fill="none">
-          <circle className={styles.circleStatic} cx="40" cy="40" r="38.2" strokeDasharray="1" />
+          <circle
+            className={styles.circleStatic}
+            cx="40"
+            cy="40"
+            r="38.2"
+            strokeDasharray="1"
+          />
           <circle
             className={`${styles.circleActive} ${
               currentMode === MODES.break ? styles.circleActiveBreak : ''

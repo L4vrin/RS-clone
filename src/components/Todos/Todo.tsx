@@ -8,8 +8,8 @@ import useAppSelector from '../../hooks/useAppSelector';
 import { ITask } from '../../models';
 import EditPanel from './EditPanel';
 import { useUpdateTodoMutation } from '../../store/tasks/tasksApi';
-import styles from './styles/Todo.module.scss';
 import formatDeadlineDate from './helpers/formatDeadlineDate';
+import styles from './styles/Todo.module.scss';
 
 const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
   const [isEditState, setIsEditState] = useState(false);

@@ -1,16 +1,16 @@
-import {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './Forms.module.scss';
-import {useLoginUserMutation} from '../../store/auth/users.api';
-import {IError, IUserLogin} from './types/data';
+import { useLoginUserMutation } from '../../store/auth/users.api';
+import { IError, IUserLogin } from './types/data';
 import useActions from '../../hooks/useActions';
 
 const FormLog = () => {
   const [emailLog, setEmailLog] = useState('');
   const [passwordLog, setPasswordLog] = useState('');
-  const [errorLog, setErrorLog] = useState<IError>({status: '0', data: []});
-  const [loginUser, {isLoading, isError, isSuccess}] = useLoginUserMutation();
-  const {changeUserName, switchRegistred} = useActions();
+  const [errorLog, setErrorLog] = useState<IError>({ status: '0', data: [] });
+  const [loginUser, { isLoading, isError, isSuccess }] = useLoginUserMutation();
+  const { changeUserName, switchRegistred } = useActions();
   const navigate = useNavigate();
   const formData = {
     email: emailLog,

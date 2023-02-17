@@ -33,8 +33,14 @@ export const timerSettingsSlice = createSlice({
   name: 'timerSettings',
   initialState,
   reducers: {
-    setTimerSettings(state, action: PayloadAction<Partial<TimerSettingsState>>) {
-      localStorage.setItem(LS_TIMER_SETTINGS_KEY, JSON.stringify({ ...state, ...action.payload }));
+    setTimerSettings(
+      state,
+      action: PayloadAction<Partial<TimerSettingsState>>
+    ) {
+      localStorage.setItem(
+        LS_TIMER_SETTINGS_KEY,
+        JSON.stringify({ ...state, ...action.payload })
+      );
       return { ...state, ...action.payload };
     },
   },
