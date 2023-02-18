@@ -33,14 +33,16 @@ const TimerSettingsWidget = () => {
   } = useAppSelector((state) => state.timerSettings);
   const { setIsSettingsVisible, setTimerSettings } = useActions();
 
+  const lang = i18n.language.split('-')[0];
+
   const alarmSoundOptions = Object.entries(alarmSounds).map(([key, value]) => ({
     value: key,
-    name: value.name[i18n.language as 'ru' | 'en'],
+    name: value.name[lang as 'ru' | 'en'],
   }));
 
   const ambientSoundOptions = Object.entries(ambientSounds).map(([key, value]) => ({
     value: key,
-    name: value.name[i18n.language as 'ru' | 'en'],
+    name: value.name[lang as 'ru' | 'en'],
   }));
 
   return (
@@ -123,7 +125,7 @@ const TimerSettingsWidget = () => {
             >
               <option value="">{t('None')}</option>
               {alarmSoundOptions.map((option) => (
-                <option key={option.value} value={option.value}>
+                <option className={styles.soundOption} key={option.value} value={option.value}>
                   {option.name}
                 </option>
               ))}
@@ -142,7 +144,7 @@ const TimerSettingsWidget = () => {
             >
               <option value="">{t('None')}</option>
               {ambientSoundOptions.map((option) => (
-                <option key={option.value} value={option.value}>
+                <option className={styles.soundOption} key={option.value} value={option.value}>
                   {option.name}
                 </option>
               ))}
