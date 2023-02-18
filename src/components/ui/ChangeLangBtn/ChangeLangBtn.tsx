@@ -1,11 +1,9 @@
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './ChangeLangBtn.module.scss';
 
 const ChangeLangBtn = () => {
   const lang = localStorage.getItem('i18nextLng')
   const { i18n } = useTranslation();
-  console.log(lang)
   const changeLanguage = (language: string) => {
     i18n.changeLanguage(language);
   };
