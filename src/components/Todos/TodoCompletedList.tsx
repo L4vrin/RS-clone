@@ -29,7 +29,7 @@ const TodoCompletedList = ({ todos, isLoading, deadline }: TodoCompletedListProp
       {!!todos.length && <h2>{t('CompletedTaskList')}</h2>}
       {isLoading && <div className={styles.loader} />}
       {completedTodos.map((todo: ITask) => (
-        <Reorder.Item key={todo._id} value={todo} whileDrag={{ scale: 1.1 }}>
+        <Reorder.Item key={todo._id} value={todo} whileDrag={{ scale: 1.05 }}>
           <Todo todo={todo} deadline={deadline} />
         </Reorder.Item>
       ))}
