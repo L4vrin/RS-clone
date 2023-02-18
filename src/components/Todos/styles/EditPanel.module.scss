@@ -1,3 +1,7 @@
+.container {
+  border-radius: 15px;
+}
+
 .content {
   padding: 30px 30px 15px;
 }
@@ -13,7 +17,6 @@
 
 .subtitle {
   font-weight: bold;
-  margin-bottom: 10px;
 }
 
 .inputText {
@@ -72,6 +75,8 @@
   display: flex;
   padding: 15px 30px;
   background: #efefef;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
 }
 
 .deleteButton,
@@ -162,12 +167,19 @@
 }
 
 .formattedDate {
+  min-width: 90px;
   margin: 0 10px;
   font-size: 1rem;
 }
 
 .expiredDate {
+  min-width: 90px;
   margin: 0 10px;
   font-size: 1rem;
   color: red;
+}
+
+.deadline {
+  display: flex;
+  align-items: center;
 }

@@ -13,6 +13,7 @@ import NumberInput from '../ui/NumberInput';
 import formatDeadlineDate from './helpers/formatDeadlineDate';
 import getDeadlineDate from './helpers/getDeadlineDate';
 import styles from './styles/EditPanel.module.scss';
+import DatePicker from '../ui/DatePicker';
 
 interface EditPanelProps {
   task?: ITask;
@@ -33,7 +34,7 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline }) => {
   const titleInput = useRef<HTMLInputElement>(null);
   const [pomodorosNumber, setPomodorosNumber] = useState(task ? task.pomodorosNumber : 0);
   const [deadlineDate, setDeadlineDate] = useState(
-    task ? task.deadlineDate : getDeadlineDate(deadline).toISOString().split('T')[0]
+    task ? new Date(task.deadlineAt) : getDeadlineDate(deadline)
   );
 
   const pomodoroTime = useAppSelector((state) => state.timerSettings.workPeriodInMinutes);
@@ -86,8 +87,8 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline }) => {
     setTaskNote(evt.target.value);
   };
 
-  const changeDateHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    setDeadlineDate(evt.target.value);
+  const changeDateHandler = (value: Date) => {
+    setDeadlineDate(value);
   };
 
   const { formattedDate, isExpired } = formatDeadlineDate(deadlineDate, true);
@@ -154,15 +155,13 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline }) => {
           />
         </div>
         <div className={styles.item}>
-          <span className={styles.subtitle}>{t('Deadline')} </span>
-          <span className={isExpired ? styles.expiredDate : styles.formattedDate}>
-            {formattedDate}
-          </span>
-          <input
-            type="date"
-            value={task?.deadlineDate ? task?.deadlineDate : deadlineDate}
-            onChange={changeDateHandler}
-          />
+          <div className={styles.deadline}>
+            <span className={styles.subtitle}>{t('Deadline')} </span>
+            <span className={isExpired ? styles.expiredDate : styles.formattedDate}>
+              {formattedDate}
+            </span>
+            <DatePicker date={deadlineDate} onChange={changeDateHandler} />
+          </div>
         </div>
       </div>
       <div className={styles.footer}>
@@ -175,7 +174,6 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline }) => {
               if (isSuccessDelete) {
                 onClose();
               }
-
               removeTaskFromTimer(task?._id);
             }}
           >
