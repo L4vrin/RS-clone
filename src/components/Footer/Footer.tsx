@@ -44,10 +44,7 @@ const Footer = () => {
             </svg>
           </a>
 
-          <a
-            className={styles.githubLink}
-            href="https://github.com/MaDKnighT404"
-          >
+          <a className={styles.githubLink} href="https://github.com/MaDKnighT404">
             <svg
               width="40"
               height="40"

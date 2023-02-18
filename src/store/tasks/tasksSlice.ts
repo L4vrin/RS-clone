@@ -32,13 +32,7 @@ export const tasksSlice = createSlice({
         localStorage.setItem(LS_TASKS_KEY, JSON.stringify(state.list));
       },
 
-      prepare({
-        title,
-        pomodorosNumber,
-        pomodoroTime,
-        note,
-        deadlineAt,
-      }: NewTaskPayload) {
+      prepare({ title, pomodorosNumber, pomodoroTime, note, deadlineAt }: NewTaskPayload) {
         const currentDate = new Date();
         const newTask: ITask = {
           _id: uuidv4(),
@@ -59,9 +53,7 @@ export const tasksSlice = createSlice({
     },
 
     toggleComplete(state, action: PayloadAction<string>) {
-      const toggledTask = state.list.find(
-        (task) => task._id === action.payload
-      );
+      const toggledTask = state.list.find((task) => task._id === action.payload);
       if (toggledTask) {
         toggledTask.isCompleted = !toggledTask.isCompleted;
         localStorage.setItem(LS_TASKS_KEY, JSON.stringify(state.list));
@@ -82,12 +74,9 @@ export const tasksSlice = createSlice({
     },
 
     editTask(state, action: PayloadAction<EditTaskPayload>) {
-      const targetTask = state.list.find(
-        (task) => task._id === action.payload.id
-      );
+      const targetTask = state.list.find((task) => task._id === action.payload.id);
       if (targetTask) {
-        const { title, pomodorosNumber, note, deadlineAt } =
-          action.payload.data;
+        const { title, pomodorosNumber, note, deadlineAt } = action.payload.data;
         targetTask.title = title;
         targetTask.pomodorosNumber = pomodorosNumber;
         targetTask.note = note;

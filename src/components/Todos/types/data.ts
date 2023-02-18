@@ -1,6 +1,4 @@
-export type TodoEvent =
-  | React.FormEvent<HTMLFormElement>
-  | React.MouseEvent<SVGElement>;
+export type TodoEvent = React.FormEvent<HTMLFormElement> | React.MouseEvent<SVGElement>;
 
 export interface ITodo {
   text: string;

@@ -9,32 +9,32 @@ const SideBar = () => {
     <ul>
       <li className={styles.item}>
         <NavLink to={DEADLINES.today} className={styles.link}>
-          { t("Today")}
+          {t('Today')}
         </NavLink>
       </li>
       <li>
         <NavLink to={DEADLINES.tomorrow} className={styles.link}>
-        { t("Tomorrow")}
+          {t('Tomorrow')}
         </NavLink>
       </li>
       <li>
         <NavLink to={DEADLINES.week} className={styles.link}>
-        { t("ThisWeek")}
+          {t('ThisWeek')}
         </NavLink>
       </li>
       <li>
         <NavLink to={DEADLINES.month} className={styles.link}>
-        { t("ThisMonth")}
+          {t('ThisMonth')}
         </NavLink>
       </li>
       <li>
         <NavLink to={DEADLINES.year} className={styles.link}>
-        { t("ThisYear")}
+          {t('ThisYear')}
         </NavLink>
       </li>
       <li>
         <NavLink to={DEADLINES.all} className={styles.link}>
-        { t("AllTime")}
+          {t('AllTime')}
         </NavLink>
       </li>
     </ul>

@@ -99,26 +99,26 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline }) => {
           <input
             className={styles.inputText}
             type="text"
-            placeholder={t("WhatWorking")}
+            placeholder={t('WhatWorking')}
             value={taskTitle}
             onChange={(evt) => setTaskTitle(evt.target.value)}
             ref={titleInput}
           />
         </div>
         <div className={styles.item}>
-          <p className={styles.subtitle}>{t("Pomodoros")}</p>
+          <p className={styles.subtitle}>{t('Pomodoros')}</p>
           <div className={styles.flexRow}>
             {task && (
               <>
                 <div className={styles.numberWrapper}>
-                  <span className={styles.numberLabel}>{t("Complete")}</span>
+                  <span className={styles.numberLabel}>{t('Complete')}</span>
                   <span className={styles.readOnlyNumber}>{task.completedPomodors}</span>
                 </div>
                 <span className={styles.numberSeparator}>/</span>
               </>
             )}
             <div className={styles.numberWrapper}>
-              <span className={styles.numberLabel}>{t("Total")}</span>
+              <span className={styles.numberLabel}>{t('Total')}</span>
               <NumberInput
                 value={pomodorosNumber}
                 min={0}
@@ -130,7 +130,7 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline }) => {
                 className={styles.numberBtn}
                 type="button"
                 onClick={() => setPomodorosNumber((prev) => (prev - 1 < 0 ? 0 : prev - 1))}
-                aria-label= {t("LessPomodoros")}
+                aria-label={t('LessPomodoros')}
               >
                 <AiFillCaretDown />
               </button>
@@ -138,7 +138,7 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline }) => {
                 className={styles.numberBtn}
                 type="button"
                 onClick={() => setPomodorosNumber((prev) => prev + 1)}
-                aria-label={t("MorePomodoros")}
+                aria-label={t('MorePomodoros')}
               >
                 <AiFillCaretUp />
               </button>
@@ -148,13 +148,13 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline }) => {
         <div className={styles.item}>
           <textarea
             className={`${styles.inputText} ${styles.note}`}
-            placeholder={t("SomeNotes")}
+            placeholder={t('SomeNotes')}
             value={taskNote}
             onChange={changeNoteHandler}
           />
         </div>
         <div className={styles.item}>
-          <span className={styles.subtitle}>{t("Deadline")} </span>
+          <span className={styles.subtitle}>{t('Deadline')} </span>
           <span className={isExpired ? styles.expiredDate : styles.formattedDate}>
             {formattedDate}
           </span>
@@ -179,12 +179,16 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline }) => {
               removeTaskFromTimer(task?._id);
             }}
           >
-            {!isLoadingDelete && !isSuccessDelete ? <span>{t("Delete")}</span> : <div className={styles.loader} />}
+            {!isLoadingDelete && !isSuccessDelete ? (
+              <span>{t('Delete')}</span>
+            ) : (
+              <div className={styles.loader} />
+            )}
           </button>
         )}
 
         <button type="button" className={styles.cancelButton} onClick={onClose}>
-        {t("Cancel")}
+          {t('Cancel')}
         </button>
         {!isAdd ? (
           <button
@@ -192,7 +196,7 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline }) => {
             className={styles.saveButton}
             onClick={async () => handlerUpdateTask()}
           >
-            {!isLoadingUpdate ? <span>{t("Save")}</span>  : <div className={styles.loader} />}
+            {!isLoadingUpdate ? <span>{t('Save')}</span> : <div className={styles.loader} />}
           </button>
         ) : (
           <button
@@ -200,7 +204,7 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline }) => {
             className={styles.saveButton}
             onClick={async () => handlerCreateTask()}
           >
-            {!isLoadingCreate ? <span>{t("Create")}</span> : <div className={styles.loader} />}
+            {!isLoadingCreate ? <span>{t('Create')}</span> : <div className={styles.loader} />}
           </button>
         )}
       </div>

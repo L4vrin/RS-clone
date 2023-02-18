@@ -52,23 +52,17 @@ const TimerSettingsWidget = () => {
             <TimeSettingsItem
               label="Pomodoro"
               value={workPeriodInMinutes}
-              onChange={(value) =>
-                setTimerSettings({ workPeriodInMinutes: value })
-              }
+              onChange={(value) => setTimerSettings({ workPeriodInMinutes: value })}
             />
             <TimeSettingsItem
               label="Short Break"
               value={shortBreakPeriodInMinutes}
-              onChange={(value) =>
-                setTimerSettings({ shortBreakPeriodInMinutes: value })
-              }
+              onChange={(value) => setTimerSettings({ shortBreakPeriodInMinutes: value })}
             />
             <TimeSettingsItem
               label="Long Break"
               value={longBreakPeriodInMinutes}
-              onChange={(value) =>
-                setTimerSettings({ longBreakPeriodInMinutes: value })
-              }
+              onChange={(value) => setTimerSettings({ longBreakPeriodInMinutes: value })}
             />
           </div>
         </div>
@@ -101,9 +95,7 @@ const TimerSettingsWidget = () => {
               min={minLongBreakInterval}
               max={maxLongBreakInterval}
               value={longBreakInterval}
-              onChange={(value) =>
-                setTimerSettings({ longBreakInterval: value })
-              }
+              onChange={(value) => setTimerSettings({ longBreakInterval: value })}
             />
           </div>
         </div>
@@ -113,9 +105,7 @@ const TimerSettingsWidget = () => {
             <select
               className={styles.selectSound}
               value={alarmSoundPath ?? ''}
-              onChange={(evt) =>
-                setTimerSettings({ alarmSoundPath: evt.target.value })
-              }
+              onChange={(evt) => setTimerSettings({ alarmSoundPath: evt.target.value })}
             >
               {alarmSoundOptions.map((option) => (
                 <option key={option.path} value={option.path}>
@@ -131,9 +121,7 @@ const TimerSettingsWidget = () => {
             <select
               className={styles.selectSound}
               value={ambientSoundPath ?? ''}
-              onChange={(evt) =>
-                setTimerSettings({ ambientSoundPath: evt.target.value })
-              }
+              onChange={(evt) => setTimerSettings({ ambientSoundPath: evt.target.value })}
             >
               {ambientSoundOptions.map((option) => (
                 <option key={option.path} value={option.path}>

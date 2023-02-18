@@ -44,8 +44,7 @@ export const tasksApi = createApi({
         body: todo,
       }),
       transformResponse: (response: { data: ITask }) => response.data,
-      transformErrorResponse: (response: { status: string | number }) =>
-        response.status,
+      transformErrorResponse: (response: { status: string | number }) => response.status,
       invalidatesTags: ['Tasks'],
     }),
 
@@ -55,8 +54,7 @@ export const tasksApi = createApi({
         method: 'DELETE',
       }),
       transformResponse: (response: { data: ITask }) => response.data,
-      transformErrorResponse: (response: { status: string | number }) =>
-        response.status,
+      transformErrorResponse: (response: { status: string | number }) => response.status,
       invalidatesTags: ['Tasks'],
     }),
   }),

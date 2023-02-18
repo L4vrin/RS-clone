@@ -9,9 +9,7 @@ import App from './App';
 import { tasksApi } from './store/tasks/tasksApi';
 import './settings/language/i18n';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <ApiProvider api={tasksApi}>
     <Provider store={store}>
