@@ -16,19 +16,23 @@ const TodoCompletedList = ({ todos, isLoading, deadline }: TodoCompletedListProp
 
   const [completedTodos, setCompletedTodos] = useState(todos);
   useEffect(() => {
-    setCompletedTodos(todos)
-  }, [todos])
-  
+    setCompletedTodos(todos);
+  }, [todos]);
 
   return (
-    <Reorder.Group axis="y" className={styles.todoList} onReorder={setCompletedTodos} values={completedTodos}>
+    <Reorder.Group
+      axis="y"
+      className={styles.todoList}
+      onReorder={setCompletedTodos}
+      values={completedTodos}
+    >
       {!!todos.length && <h2>{t('CompletedTaskList')}</h2>}
       {isLoading && <div className={styles.loader} />}
-      {completedTodos.map((todo: ITask) => 
-        <Reorder.Item value={todo} key={todo._id}>
-          <Todo key={todo._id} todo={todo} deadline={deadline} />
+      {completedTodos.map((todo: ITask) => (
+        <Reorder.Item key={todo._id} value={todo} whileDrag={{ scale: 1.1 }}>
+          <Todo todo={todo} deadline={deadline} />
         </Reorder.Item>
-      )}
+      ))}
     </Reorder.Group>
   );
 };
