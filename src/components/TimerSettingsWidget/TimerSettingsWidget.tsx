@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { AiOutlineClose } from 'react-icons/ai';
 import useActions from '../../hooks/useActions';
 import useAppSelector from '../../hooks/useAppSelector';
@@ -13,7 +14,11 @@ import {
   ambientSounds,
 } from '../../constants/timerSettings';
 
+type AlarmSoundsOptions = keyof typeof alarmSounds | '';
+type AmbientSoundsOptions = keyof typeof ambientSounds | '';
+
 const TimerSettingsWidget = () => {
+  const { t, i18n } = useTranslation();
   const { isSettingsVisible } = useAppSelector((state) => state.widgets);
   const {
     workPeriodInMinutes,
@@ -23,19 +28,26 @@ const TimerSettingsWidget = () => {
     autoRunWork,
     autoRunBreak,
     offBreak,
-    alarmSoundPath,
-    ambientSoundPath,
+    alarmSound,
+    ambientSound,
   } = useAppSelector((state) => state.timerSettings);
   const { setIsSettingsVisible, setTimerSettings } = useActions();
 
-  const alarmSoundOptions = [{ path: '', name: 'None' }, ...alarmSounds];
-  const ambientSoundOptions = [{ path: '', name: 'None' }, ...ambientSounds];
+  const alarmSoundOptions = Object.entries(alarmSounds).map(([key, value]) => ({
+    value: key,
+    name: value.name[i18n.language as 'ru' | 'en'],
+  }));
+
+  const ambientSoundOptions = Object.entries(ambientSounds).map(([key, value]) => ({
+    value: key,
+    name: value.name[i18n.language as 'ru' | 'en'],
+  }));
 
   return (
     <Modal isVisible={isSettingsVisible} setIsVisible={setIsSettingsVisible}>
       <div className={styles.container}>
         <div className={styles.header}>
-          <h3 className={styles.title}>Timer Settings</h3>
+          <h3 className={styles.title}>{t('TimerSettings')}</h3>
           <button
             className={styles.closeButton}
             type="button"
@@ -47,20 +59,20 @@ const TimerSettingsWidget = () => {
         </div>
 
         <div className={`${styles.row} ${styles.rowFlexColumn}`}>
-          <p className={styles.label}>Time (minutes)</p>
+          <p className={styles.label}>{t('TimeMinutes')}</p>
           <div className={styles.timeSettings}>
             <TimeSettingsItem
-              label="Pomodoro"
+              label={t('PomodoroTime')}
               value={workPeriodInMinutes}
               onChange={(value) => setTimerSettings({ workPeriodInMinutes: value })}
             />
             <TimeSettingsItem
-              label="Short Break"
+              label={t('ShortBreakTime')}
               value={shortBreakPeriodInMinutes}
               onChange={(value) => setTimerSettings({ shortBreakPeriodInMinutes: value })}
             />
             <TimeSettingsItem
-              label="Long Break"
+              label={t('LongBreakTime')}
               value={longBreakPeriodInMinutes}
               onChange={(value) => setTimerSettings({ longBreakPeriodInMinutes: value })}
             />
@@ -68,28 +80,28 @@ const TimerSettingsWidget = () => {
         </div>
 
         <div className={styles.row}>
-          <p className={styles.label}>Auto start Pomodoros?</p>
+          <p className={styles.label}>{t('AutoStartPomodoros')}</p>
           <ToggleButton
             checked={autoRunWork}
             onChange={(value) => setTimerSettings({ autoRunWork: value })}
           />
         </div>
         <div className={styles.row}>
-          <p className={styles.label}>Auto start Breaks?</p>
+          <p className={styles.label}>{t('AutoStartBreaks')}</p>
           <ToggleButton
             checked={autoRunBreak}
             onChange={(value) => setTimerSettings({ autoRunBreak: value })}
           />
         </div>
         <div className={styles.row}>
-          <p className={styles.label}>Disable Break?</p>
+          <p className={styles.label}>{t('DisableBreak')}</p>
           <ToggleButton
             checked={offBreak}
             onChange={(value) => setTimerSettings({ offBreak: value })}
           />
         </div>
         <div className={styles.row}>
-          <p className={styles.label}>Long Break interval</p>
+          <p className={styles.label}>{t('LongBreakInterval')}</p>
           <div className={styles.numberContainer}>
             <NumberInput
               min={minLongBreakInterval}
@@ -100,15 +112,18 @@ const TimerSettingsWidget = () => {
           </div>
         </div>
         <div className={styles.row}>
-          <p className={styles.label}>Alarm Sound</p>
+          <p className={styles.label}>{t('AlarmSound')}</p>
           <div className={styles.selectSoundContainer}>
             <select
               className={styles.selectSound}
-              value={alarmSoundPath ?? ''}
-              onChange={(evt) => setTimerSettings({ alarmSoundPath: evt.target.value })}
+              value={alarmSound ?? ''}
+              onChange={(evt) =>
+                setTimerSettings({ alarmSound: evt.target.value as AlarmSoundsOptions })
+              }
             >
+              <option value="">{t('None')}</option>
               {alarmSoundOptions.map((option) => (
-                <option key={option.path} value={option.path}>
+                <option key={option.value} value={option.value}>
                   {option.name}
                 </option>
               ))}
@@ -116,15 +131,18 @@ const TimerSettingsWidget = () => {
           </div>
         </div>
         <div className={styles.row}>
-          <p className={styles.label}>Ambient Sound</p>
+          <p className={styles.label}>{t('AmbientSound')}</p>
           <div className={styles.selectSoundContainer}>
             <select
               className={styles.selectSound}
-              value={ambientSoundPath ?? ''}
-              onChange={(evt) => setTimerSettings({ ambientSoundPath: evt.target.value })}
+              value={ambientSound ?? ''}
+              onChange={(evt) =>
+                setTimerSettings({ ambientSound: evt.target.value as AmbientSoundsOptions })
+              }
             >
+              <option value="">{t('None')}</option>
               {ambientSoundOptions.map((option) => (
-                <option key={option.path} value={option.path}>
+                <option key={option.value} value={option.value}>
                   {option.name}
                 </option>
               ))}

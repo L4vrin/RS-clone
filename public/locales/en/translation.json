@@ -39,7 +39,7 @@
   "CompletedTaskList": "Completed Task list",
 
   "WhatWorking": "What are you working on?",
-  "Pomodoros": "Pomodoros",
+  "Pomodoros": "Pomodoros:",
   "Complete": "Complete",
   "Total": "Total",
   "LessPomodoros": "Less pomodoros",
@@ -49,5 +49,19 @@
   "Delete": "Delete",
   "Save": "Save",
   "Create": "Create",
-  "Cancel": "Cancel"
+  "Cancel": "Cancel",
+
+  "TimerSettings": "Timer settings",
+  "TimeMinutes": "Time (minutes)",
+  "PomodoroTime": "Pomodoro",
+  "ShortBreakTime": "Short Break",
+  "LongBreakTime": "Long Break",
+  "AutoStartPomodoros": "Auto start Pomodoros?",
+  "AutoStartBreaks": "Auto start Breaks?",
+  "DisableBreak": "Disable Break?",
+  "LongBreakInterval": "Long Break interval",
+  "AlarmSound": "Alarm Sound",
+  "AmbientSound": "Ambient Sound",
+
+  "None": "None"
 }

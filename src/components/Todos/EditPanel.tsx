@@ -90,7 +90,7 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline }) => {
     setDeadlineDate(evt.target.value);
   };
 
-  const { formattedDate, isExpired } = formatDeadlineDate(deadlineDate, 'en', true);
+  const { formattedDate, isExpired } = formatDeadlineDate(deadlineDate, true);
 
   return (
     <div className={styles.container}>

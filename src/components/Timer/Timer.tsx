@@ -6,6 +6,7 @@ import getPadTime from './helpers/getPadTime';
 import useAppSelector from '../../hooks/useAppSelector';
 import useActions from '../../hooks/useActions';
 import { useUpdateTodoMutation } from '../../store/tasks/tasksApi';
+import { alarmSounds, ambientSounds } from '../../constants/timerSettings';
 
 const TIMER_RADIUS = 38.2;
 
@@ -23,8 +24,8 @@ const Timer = () => {
     offBreak,
     longBreakPeriodInMinutes,
     longBreakInterval,
-    alarmSoundPath,
-    ambientSoundPath,
+    alarmSound,
+    ambientSound,
   } = useAppSelector((store) => store.timerSettings);
 
   const { currentTask, isRunning } = useAppSelector((store) => store.timer);
@@ -74,8 +75,6 @@ const Timer = () => {
   };
 
   useEffect(() => {
-    if (alarmSoundPath) alarmAudio.current = new Audio(alarmSoundPath);
-
     return () => {
       ambientAudio.current.pause();
       reset();
@@ -83,23 +82,23 @@ const Timer = () => {
   }, []);
 
   useEffect(() => {
-    if (alarmSoundPath) {
-      alarmAudio.current.src = alarmSoundPath;
+    if (alarmSound) {
+      alarmAudio.current.src = alarmSounds[alarmSound].path;
     }
-  }, [alarmSoundPath]);
+  }, [alarmSound]);
 
   useEffect(() => {
-    if (ambientSoundPath) {
-      ambientAudio.current.src = ambientSoundPath;
+    if (ambientSound) {
+      ambientAudio.current.src = ambientSounds[ambientSound].path;
       ambientAudio.current.loop = true;
       if (isRunning) ambientAudio.current.play();
     } else {
       ambientAudio.current.pause();
     }
-  }, [ambientSoundPath]);
+  }, [ambientSound]);
 
   useEffect(() => {
-    if (isRunning && ambientSoundPath) {
+    if (isRunning && ambientSound) {
       ambientAudio.current.play();
     } else {
       ambientAudio.current.pause();
@@ -116,7 +115,7 @@ const Timer = () => {
 
   useEffect(() => {
     if (secondsLeft === 0) {
-      if (alarmSoundPath) alarmAudio.current.play();
+      if (alarmSound) alarmAudio.current.play();
       let nextMode = currentMode;
 
       if (!offBreak) {

@@ -11,8 +11,8 @@ interface TimerSettingsState {
   autoRunWork: boolean;
   autoRunBreak: boolean;
   offBreak: boolean;
-  alarmSoundPath: string | null;
-  ambientSoundPath: string | null;
+  alarmSound: keyof typeof alarmSounds | '';
+  ambientSound: keyof typeof ambientSounds | '';
 }
 
 const initialState: TimerSettingsState = JSON.parse(
@@ -25,8 +25,8 @@ const initialState: TimerSettingsState = JSON.parse(
   autoRunWork: true,
   autoRunBreak: true,
   offBreak: false,
-  alarmSoundPath: alarmSounds[0].path,
-  ambientSoundPath: ambientSounds[0].path,
+  alarmSound: 'digital',
+  ambientSound: 'tickingSlow',
 };
 
 export const timerSettingsSlice = createSlice({

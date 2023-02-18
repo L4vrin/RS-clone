@@ -39,15 +39,29 @@
   "CompletedTaskList": "Список выполненных задач",
 
   "WhatWorking": "Над чем ты работаешь?",
-  "Pomodoros": "«Помодоры»",
+  "Pomodoros": "Количество томатов:",
   "Complete": "Завершено",
   "Total": "Всего",
-  "LessPomodoros": "Меньше «помодоров»",
-  "MorePomodoros": "Больше «помодоров»",
-  "SomeNotes": "Возможные заметки",
-  "Deadline": "Предельный срок:",
+  "LessPomodoros": "Меньше томатов",
+  "MorePomodoros": "Больше томатов",
+  "SomeNotes": "Заметки",
+  "Deadline": "Срок:",
   "Delete": "Удалить",
   "Save": "Сохранить",
   "Create": "Создать",
-  "Cancel": "Отменить"
+  "Cancel": "Отменить",
+
+  "TimerSettings": "Настройки таймера",
+  "TimeMinutes": "Время (минуты)",
+  "PomodoroTime": "Томат",
+  "ShortBreakTime": "Короткий отдых",
+  "LongBreakTime": "Длительный отдых",
+  "AutoStartPomodoros": "Автоматический запуск томата?",
+  "AutoStartBreaks": "Автоматический запуск отдыха?",
+  "DisableBreak": "Отключить отдых?",
+  "LongBreakInterval": "Интервал длительного отдыха",
+  "AlarmSound": "Звук сигнала",
+  "AmbientSound": "Окружающий звук",
+
+  "None": "Нет"
 }

@@ -18,7 +18,7 @@ const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
   const [updateTodo, { isLoading: isLoadingUpdate, isSuccess: isSuccessUpdate }] =
     useUpdateTodoMutation();
 
-  const { formattedDate, isExpired } = formatDeadlineDate(todo.deadlineAt, 'en');
+  const { formattedDate, isExpired } = formatDeadlineDate(todo.deadlineAt);
 
   return (
     <div className={styles.todoWrapper}>

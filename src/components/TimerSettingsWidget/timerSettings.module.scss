@@ -16,6 +16,7 @@
 }
 
 .label {
+  padding-right: 10px;
   color: #555;
   font-weight: bold;
 }
@@ -41,10 +42,11 @@
   margin-top: 10px;
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
 }
 
 .timeSettingsItem {
-  width: 27%;
+  width: 28%;
 }
 
 .numberLabel {
