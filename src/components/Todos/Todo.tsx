@@ -1,3 +1,4 @@
+import { Reorder } from 'framer-motion';
 import { useState } from 'react';
 import { BiCircle, BiCheckCircle } from 'react-icons/bi';
 import { BsPlayCircle } from 'react-icons/bs';

@@ -1,3 +1,5 @@
+import { Reorder } from 'framer-motion';
+import { useState, useEffect} from 'react';
 import { useTranslation } from 'react-i18next';
 import Todo from './Todo';
 import styles from './styles/TodoList.module.scss';
@@ -10,16 +12,24 @@ interface TodoListProps {
 }
 
 const TodoList = ({ todos, isLoading, deadline }: TodoListProps) => {
-  const notCompletedArray = todos.filter((task: ITask) => !task.isCompleted);
   const { t } = useTranslation();
+
+  const [inCompletedTodos, setInCompletedTodos] = useState(todos);
+  useEffect(() => {
+    setInCompletedTodos(todos)
+  }, [todos])
+  
+
   return (
-    <div className={styles.todoList}>
-      {!!notCompletedArray && <h2>{t('TaskList')}</h2>}
+    <Reorder.Group axis="y" className={styles.todoList} onReorder={setInCompletedTodos} values={inCompletedTodos}>
+      {!!todos && <h2>{t('TaskList')}</h2>}
       {isLoading && <div className={styles.loader} />}
-      {notCompletedArray.map((todo: ITask) => {
-        return <Todo key={todo._id} todo={todo} deadline={deadline} />;
-      })}
-    </div>
+      {inCompletedTodos.map((todo: ITask) => 
+        <Reorder.Item value={todo} key={todo._id}>
+          <Todo key={todo._id} todo={todo} deadline={deadline} />
+        </Reorder.Item>
+      )}
+    </Reorder.Group>
   );
 };
 
