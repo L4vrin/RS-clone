@@ -1,38 +1,40 @@
+import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import DEADLINES from '../../constants/deadlines';
 import styles from './SideBar.module.scss';
 
 const SideBar = () => {
+  const { t } = useTranslation();
   return (
     <ul>
       <li className={styles.item}>
         <NavLink to={DEADLINES.today} className={styles.link}>
-          Today
+          {t('Today')}
         </NavLink>
       </li>
       <li>
         <NavLink to={DEADLINES.tomorrow} className={styles.link}>
-          Tomorrow
+          {t('Tomorrow')}
         </NavLink>
       </li>
       <li>
         <NavLink to={DEADLINES.week} className={styles.link}>
-          This Week
+          {t('ThisWeek')}
         </NavLink>
       </li>
       <li>
         <NavLink to={DEADLINES.month} className={styles.link}>
-          This Month
+          {t('ThisMonth')}
         </NavLink>
       </li>
       <li>
         <NavLink to={DEADLINES.year} className={styles.link}>
-          This Year
+          {t('ThisYear')}
         </NavLink>
       </li>
       <li>
         <NavLink to={DEADLINES.all} className={styles.link}>
-          All
+          {t('AllTime')}
         </NavLink>
       </li>
     </ul>

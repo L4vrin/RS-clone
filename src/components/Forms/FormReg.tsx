@@ -1,9 +1,7 @@
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import {
-  useCreateUserMutation,
-  useLoginUserMutation,
-} from '../../store/auth/users.api';
+import { useCreateUserMutation, useLoginUserMutation } from '../../store/auth/users.api';
 import { IUserCreate, IError } from './types/data';
 import useActions from '../../hooks/useActions';
 import styles from './Forms.module.scss';
@@ -13,11 +11,11 @@ const FormReg = () => {
   const [emailReg, setEmailReg] = useState('');
   const [passwordReg, setPasswordReg] = useState('');
   const [errorReg, setErrorReg] = useState<IError>({ status: '0', data: [] });
-  const [addNewUser, { isLoading, isError, isSuccess }] =
-    useCreateUserMutation();
+  const [addNewUser, { isLoading, isError, isSuccess }] = useCreateUserMutation();
   const [loginUser] = useLoginUserMutation();
   const navigate = useNavigate();
   const { changeUserName, switchRegistred } = useActions();
+  const { t } = useTranslation();
 
   const formData = {
     fullName: userNameReg,
@@ -42,26 +40,26 @@ const FormReg = () => {
 
   return (
     <div className={styles.formWrapper}>
-      <h2>Register</h2>
+      <h2>{t('Register')}</h2>
       <form className={styles.form}>
         <input
           className={styles.input}
           type="text"
-          placeholder="User Name"
+          placeholder={t('UserName')}
           value={userNameReg}
           onChange={(e) => setUserNameReg(e.target.value)}
         />
         <input
           className={styles.input}
           type="email"
-          placeholder="Email"
+          placeholder={t('Email')}
           value={emailReg}
           onChange={(e) => setEmailReg(e.target.value)}
         />
         <input
           className={styles.input}
           type="password"
-          placeholder="Password"
+          placeholder={t('Password')}
           value={passwordReg}
           onChange={(e) => setPasswordReg(e.target.value)}
         />
@@ -73,19 +71,15 @@ const FormReg = () => {
             handleAddNewUser(formData);
           }}
         >
-          Create new account
+          {t('CreateNewAccount')}
         </button>
       </form>
       <p>
-        Already registered?{' '}
-        <button
-          type="button"
-          className={styles.linkButton}
-          onClick={() => switchRegistred(false)}
-        >
-          Click here
-        </button>{' '}
-        to log in
+        {t('AlreadyRegistered')}
+        <button type="button" className={styles.linkButton} onClick={() => switchRegistred(false)}>
+          {t('ClickHere')}
+        </button>
+        {t('ToLogIn')}
       </p>
       <div className={styles.serverAnswer}>
         {isLoading && (
@@ -100,7 +94,7 @@ const FormReg = () => {
             ))}
           </ul>
         )}
-        {isSuccess && <div className={styles.success}> User created! </div>}
+        {isSuccess && <div className={styles.success}> {t('UserCreated')} </div>}
       </div>
     </div>
   );

@@ -1,0 +1,53 @@
+{
+  "Register": "Register",
+  "CreateNewAccount": "Create new account",
+  "UserName": "User Name",
+  "Email": "Email",
+  "Password": "Password",
+  "AlreadyRegistered": "Already registred?",
+  "ClickHere": "Click here",
+  "ToLogIn": "to log in",
+  "UserCreated": "User created!",
+
+  "SignIn": "Sign in",
+  "Login": "Login",
+  "Logoff": "Logoff",
+  "DontHaveAccount": "Dont have an account? ",
+  "ToRegister": " to register",
+
+  "AboutApp": "About this App",
+  "TheAim": "The aim of this app is to help you focus on any task you are working on, such as study, coding, or writing. This app is inspired by ",
+  "PomodoroTechnique": "Pomodoro Technique",
+  "WhichIs": " which is a time management method developed by Francesco Cirillo",
+  "WhatIsPomodoro": "What is Pomodoro Technique?",
+  "ThePomodoroTechnique": "The Pomodoro Technique is created for a more productive way to work and study. It uses atimer to break down work into intervals, traditionally 25 minutes in length, separatedby short breaks.",
+
+  "EstimatedTime": "Estimated time",
+  "SpentTime": "Spent time",
+  "IncompletedTasks": "Incompleted tasks",
+  "СompletedTasks": "Сompleted tasks",
+
+  "Today": "Today",
+  "Tomorrow": "Tomorrow",
+  "ThisWeek": "This week",
+  "ThisMonth": "This month",
+  "ThisYear": "This year",
+  "AllTime": "All the time",
+
+  "AddTask": "Add task",
+  "TaskList": "Task list",
+  "CompletedTaskList": "Completed Task list",
+
+  "WhatWorking": "What are you working on?",
+  "Pomodoros": "Pomodoros",
+  "Complete": "Complete",
+  "Total": "Total",
+  "LessPomodoros": "Less pomodoros",
+  "MorePomodoros": "More pomodoros",
+  "SomeNotes": "Some notes",
+  "Deadline": "Deadline:",
+  "Delete": "Delete",
+  "Save": "Save",
+  "Create": "Create",
+  "Cancel": "Cancel"
+}

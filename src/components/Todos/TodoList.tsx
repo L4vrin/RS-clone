@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import Todo from './Todo';
 import styles from './styles/TodoList.module.scss';
 import { ITask } from '../../models';
@@ -10,9 +11,10 @@ interface TodoListProps {
 
 const TodoList = ({ todos, isLoading, deadline }: TodoListProps) => {
   const notCompletedArray = todos.filter((task: ITask) => !task.isCompleted);
+  const { t } = useTranslation();
   return (
     <div className={styles.todoList}>
-      {!!notCompletedArray && <h2>Todo list</h2>}
+      {!!notCompletedArray && <h2>{t('TaskList')}</h2>}
       {isLoading && <div className={styles.loader} />}
       {notCompletedArray.map((todo: ITask) => {
         return <Todo key={todo._id} todo={todo} deadline={deadline} />;
