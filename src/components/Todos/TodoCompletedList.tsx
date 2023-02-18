@@ -22,14 +22,22 @@ const TodoCompletedList = ({ todos, isLoading, deadline }: TodoCompletedListProp
   return (
     <Reorder.Group
       axis="y"
-      className={styles.todoList}
+      className={styles.todoCompletedList }
       onReorder={setCompletedTodos}
       values={completedTodos}
     >
       {!!todos.length && <h2>{t('CompletedTaskList')}</h2>}
       {isLoading && <div className={styles.loader} />}
       {completedTodos.map((todo: ITask) => (
-        <Reorder.Item key={todo._id} value={todo} whileDrag={{ scale: 1.05 }}>
+        <Reorder.Item
+          key={todo._id}
+          className={styles.todoWrapper}
+          value={todo}
+          whileDrag={{
+            scale: 1.05,
+            boxShadow: '0px 10px 10px -7px #000000',
+          }}
+        >
           <Todo todo={todo} deadline={deadline} />
         </Reorder.Item>
       ))}

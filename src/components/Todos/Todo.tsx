@@ -24,7 +24,7 @@ const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
   return (
     <div className={styles.todoWrapper}>
       {!isEditState ? (
-        <div>
+        <>
           <div className={styles.todo}>
             {!todo.isCompleted ? (
               <div>
@@ -87,7 +87,7 @@ const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
               <p className={styles.noteText}>{todo.note}</p>
             </div>
           )}
-        </div>
+        </>
       ) : (
         <EditPanel
           task={todo}
