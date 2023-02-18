@@ -5,7 +5,7 @@ import styles from './ChangeLangBtn.module.scss'
 const ChangeLangBtn = () => {
   const [isEnglish, setIsEnglish] = useState(false);
   const { i18n } = useTranslation();
-  const changeLanguage = (language: any) => {
+  const changeLanguage = (language:string) => {
     i18n.changeLanguage(language);
     setIsEnglish(!isEnglish);
   };
