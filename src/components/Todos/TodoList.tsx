@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Todo from './Todo';
 import styles from './styles/TodoList.module.scss';
 import { ITask } from '../../models';
+import { todoVariants } from './styles/variants';
 
 interface TodoListProps {
   todos: ITask[];
@@ -28,7 +29,7 @@ const TodoList = ({ todos, isLoading, deadline }: TodoListProps) => {
     >
       {!!todos && <h2>{t('TaskList')}</h2>}
       {isLoading && <div className={styles.loader} />}
-      {inCompletedTodos.map((todo: ITask) => (
+      {inCompletedTodos.map((todo: ITask, i) => (
         <Reorder.Item
           key={todo._id}
           className={styles.todoWrapper}
@@ -37,6 +38,10 @@ const TodoList = ({ todos, isLoading, deadline }: TodoListProps) => {
             scale: 1.05,
             boxShadow: '0px 10px 10px -7px #000000',
           }}
+          variants={todoVariants}
+          initial="hidden"
+          animate="visible"
+          custom={i}
         >
           <Todo todo={todo} deadline={deadline} />
         </Reorder.Item>
