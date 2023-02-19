@@ -1,3 +1,5 @@
+@import '../../styles/base/global';
+
 .container {
   width: 320px;
 }
@@ -11,13 +13,12 @@
 }
 
 .title {
-  color: gray;
+  color: var(--main-text-color);
   text-transform: uppercase;
 }
 
 .label {
-  padding-right: 10px;
-  color: #555;
+  color: var(--main-text-color);
   font-weight: bold;
 }
 
@@ -51,7 +52,7 @@
 
 .numberLabel {
   margin-bottom: 5px;
-  color: gray;
+  color: var(--main-text-color);
 }
 
 .numberContainer {
@@ -61,7 +62,7 @@
 .closeButton {
   display: inline-flex;
   font-size: 1.2rem;
-  color: gray;
+  color: var(--main-text-color);
   background: none;
   border: none;
   cursor: pointer;
@@ -79,9 +80,9 @@
 .selectSound {
   width: 100%;
   padding: 0.625rem 0.325rem;
-  color: #555;
+  color: var(--main-text-color);
   font-size: 1rem;
-  background-color: #efefef;
+  background-color: var(--module-background-color);
   border: 1px solid transparent;
   border-radius: 5px;
   box-shadow: none;

@@ -5,6 +5,7 @@ import { tasksActions } from '../store/tasks/tasksSlice';
 import { timerActions } from '../store/timer/timerSlice';
 import { widgetsActions } from '../store/widgets/widgetsSlice';
 import { userActions } from '../store/auth/users.slice';
+import { preferencesActions } from '../store/preferences/preferencesSlice';
 
 const actions = {
   ...tasksActions,
@@ -12,6 +13,7 @@ const actions = {
   ...widgetsActions,
   ...timerSettingsActions,
   ...userActions,
+  ...preferencesActions,
 };
 
 const useActions = () => {

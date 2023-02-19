@@ -1,6 +1,15 @@
+@import './../../../styles/base/colorVars';
+
 .todoCompletedList {
   max-width: 1000px;
   margin: 0 auto;
+  background-color: var(--module-background-color);
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.hidden {
+  display: none;
 }
 
 .loader {
@@ -13,6 +22,10 @@
   margin: 0 auto;
 }
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
