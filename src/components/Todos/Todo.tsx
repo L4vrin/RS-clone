@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { BiCircle, BiCheckCircle } from 'react-icons/bi';
 import { BsPlayCircle } from 'react-icons/bs';
 import { GrMoreVertical } from 'react-icons/gr';
@@ -14,10 +14,12 @@ import styles from './styles/Todo.module.scss';
 const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
   const [isEditState, setIsEditState] = useState(false);
   const { addTaskToTimer, removeTaskFromTimer } = useActions();
+
   const taskInTimer = useAppSelector((state) => state.timer.currentTask);
   const [updateTodo, { isLoading: isLoadingUpdate, isSuccess: isSuccessUpdate }] =
     useUpdateTodoMutation();
 
+  const controlRef = useRef<HTMLButtonElement>(null);
   const { formattedDate, isExpired } = formatDeadlineDate(todo.deadlineAt);
 
   return (
@@ -26,9 +28,9 @@ const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
         <div>
           <div className={styles.todo}>
             {!todo.isCompleted ? (
-              <div>
+              <div className={styles.inlineFlex}>
                 {!isLoadingUpdate && !isSuccessUpdate ? (
-                  <div>
+                  <div className={styles.inlineFlex}>
                     <BiCircle
                       className={styles.todoCircleIcon}
                       onClick={() => {
@@ -50,7 +52,7 @@ const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
                 )}
               </div>
             ) : (
-              <div>
+              <div className={styles.inlineFlex}>
                 {!isLoadingUpdate && !isSuccessUpdate ? (
                   <BiCheckCircle
                     className={styles.todoCheckedCircleIcon}
@@ -75,7 +77,12 @@ const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
               </span>
             </div>
             <div>
-              <button type="button" className={styles.editBtn} onClick={() => setIsEditState(true)}>
+              <button
+                ref={controlRef}
+                type="button"
+                className={styles.editBtn}
+                onClick={() => setIsEditState(true)}
+              >
                 <GrMoreVertical />
               </button>
             </div>
@@ -93,6 +100,7 @@ const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
           onClose={() => setIsEditState(false)}
           isAdd={false}
           deadline={deadline}
+          openButton={controlRef.current}
         />
       )}
     </div>

@@ -1,5 +1,5 @@
+import { useState, useRef, useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useState, useRef, FC } from 'react';
 import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai';
 import useActions from '../../hooks/useActions';
 import useAppSelector from '../../hooks/useAppSelector';
@@ -20,9 +20,10 @@ interface EditPanelProps {
   onClose: () => void;
   isAdd: boolean;
   deadline: string;
+  openButton: HTMLButtonElement | null;
 }
 
-const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline }) => {
+const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline, openButton }) => {
   const [deleteTodo, { isLoading: isLoadingDelete, isSuccess: isSuccessDelete }] =
     useDeleteTodoMutation();
   const [updateTodo, { isLoading: isLoadingUpdate }] = useUpdateTodoMutation();
@@ -32,6 +33,7 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline }) => {
   const [taskNote, setTaskNote] = useState(task ? task.note : '');
 
   const titleInput = useRef<HTMLInputElement>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const [pomodorosNumber, setPomodorosNumber] = useState(task ? task.pomodorosNumber : 0);
   const [deadlineDate, setDeadlineDate] = useState(
     task ? new Date(task.deadlineAt) : getDeadlineDate(deadline)
@@ -41,9 +43,26 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline }) => {
   const { removeTaskFromTimer } = useActions();
   const { t } = useTranslation();
 
+  useEffect(() => {
+    const clickOutsideHandler = (evt: MouseEvent) => {
+      if (
+        !containerRef.current?.contains(evt.target as Node) &&
+        !openButton?.contains(evt.target as Node)
+      )
+        onClose();
+    };
+
+    document.addEventListener('click', clickOutsideHandler);
+
+    return () => {
+      document.removeEventListener('click', clickOutsideHandler);
+    };
+  }, [onClose, openButton]);
+
   const handlerCreateTask = async () => {
     if (taskTitle) {
-      const deadlineAt = new Date(deadlineDate).setHours(23, 59, 59, 999);
+      deadlineDate.setHours(23, 59, 59, 999);
+      const deadlineAt = deadlineDate.getTime();
 
       const newTaskData = {
         title: taskTitle,
@@ -64,7 +83,9 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline }) => {
 
   const handlerUpdateTask = async () => {
     if (taskTitle) {
-      const deadlineAt = new Date(deadlineDate).setHours(23, 59, 59, 999);
+      deadlineDate.setHours(23, 59, 59, 999);
+      const deadlineAt = deadlineDate.getTime();
+
       await updateTodo({
         ...task,
         title: taskTitle,
@@ -94,7 +115,7 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline }) => {
   const { formattedDate, isExpired } = formatDeadlineDate(deadlineDate, true);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} ref={containerRef}>
       <div className={styles.content}>
         <div className={styles.item}>
           <input
@@ -108,7 +129,7 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline }) => {
         </div>
         <div className={styles.item}>
           <p className={styles.subtitle}>{t('Pomodoros')}</p>
-          <div className={styles.flexRow}>
+          <div className={styles.numbers}>
             {task && (
               <>
                 <div className={styles.numberWrapper}>

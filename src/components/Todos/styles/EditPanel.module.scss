@@ -10,9 +10,10 @@
   margin-bottom: 15px;
 }
 
-.flexRow {
+.numbers {
   display: flex;
   align-items: flex-end;
+  margin-top: 5px;
 }
 
 .subtitle {
@@ -168,15 +169,17 @@
 
 .formattedDate {
   min-width: 90px;
-  margin: 0 10px;
+  margin: 0 5px;
   font-size: 1rem;
+  text-align: center;
 }
 
 .expiredDate {
   min-width: 90px;
-  margin: 0 10px;
+  margin: 0 5px;
   font-size: 1rem;
   color: red;
+  text-align: center;
 }
 
 .deadline {
