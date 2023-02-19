@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useState, useRef, FC } from 'react';
 import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai';
@@ -93,122 +94,132 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline }) => {
   const { formattedDate, isExpired } = formatDeadlineDate(deadlineDate, true);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.content}>
-        <div className={styles.item}>
-          <input
-            className={styles.inputText}
-            type="text"
-            placeholder={t('WhatWorking')}
-            value={taskTitle}
-            onChange={(evt) => setTaskTitle(evt.target.value)}
-            ref={titleInput}
-          />
-        </div>
-        <div className={styles.item}>
-          <p className={styles.subtitle}>{t('Pomodoros')}</p>
-          <div className={styles.flexRow}>
-            {task && (
-              <>
-                <div className={styles.numberWrapper}>
-                  <span className={styles.numberLabel}>{t('Complete')}</span>
-                  <span className={styles.readOnlyNumber}>{task.completedPomodors}</span>
-                </div>
-                <span className={styles.numberSeparator}>/</span>
-              </>
-            )}
-            <div className={styles.numberWrapper}>
-              <span className={styles.numberLabel}>{t('Total')}</span>
-              <NumberInput
-                value={pomodorosNumber}
-                min={0}
-                onChange={(value) => setPomodorosNumber(value)}
-              />
-            </div>
-            <div className={styles.pomodoroControls}>
-              <button
-                className={styles.numberBtn}
-                type="button"
-                onClick={() => setPomodorosNumber((prev) => (prev - 1 < 0 ? 0 : prev - 1))}
-                aria-label={t('LessPomodoros')}
-              >
-                <AiFillCaretDown />
-              </button>
-              <button
-                className={styles.numberBtn}
-                type="button"
-                onClick={() => setPomodorosNumber((prev) => prev + 1)}
-                aria-label={t('MorePomodoros')}
-              >
-                <AiFillCaretUp />
-              </button>
+    <AnimatePresence>
+      <motion.div
+        exit={{ height: 0, opacity: 0 }}
+        initial={{ height: 0, opacity: 0 }}
+        animate={{ height: 'auto', opacity: 1 }}
+        transition={{
+          duration: 0.5,
+        }}
+        className={styles.container}
+      >
+        <div className={styles.content}>
+          <div className={styles.item}>
+            <input
+              className={styles.inputText}
+              type="text"
+              placeholder={t('WhatWorking')}
+              value={taskTitle}
+              onChange={(evt) => setTaskTitle(evt.target.value)}
+              ref={titleInput}
+            />
+          </div>
+          <div className={styles.item}>
+            <p className={styles.subtitle}>{t('Pomodoros')}</p>
+            <div className={styles.flexRow}>
+              {task && (
+                <>
+                  <div className={styles.numberWrapper}>
+                    <span className={styles.numberLabel}>{t('Complete')}</span>
+                    <span className={styles.readOnlyNumber}>{task.completedPomodors}</span>
+                  </div>
+                  <span className={styles.numberSeparator}>/</span>
+                </>
+              )}
+              <div className={styles.numberWrapper}>
+                <span className={styles.numberLabel}>{t('Total')}</span>
+                <NumberInput
+                  value={pomodorosNumber}
+                  min={0}
+                  onChange={(value) => setPomodorosNumber(value)}
+                />
+              </div>
+              <div className={styles.pomodoroControls}>
+                <button
+                  className={styles.numberBtn}
+                  type="button"
+                  onClick={() => setPomodorosNumber((prev) => (prev - 1 < 0 ? 0 : prev - 1))}
+                  aria-label={t('LessPomodoros')}
+                >
+                  <AiFillCaretDown />
+                </button>
+                <button
+                  className={styles.numberBtn}
+                  type="button"
+                  onClick={() => setPomodorosNumber((prev) => prev + 1)}
+                  aria-label={t('MorePomodoros')}
+                >
+                  <AiFillCaretUp />
+                </button>
+              </div>
             </div>
           </div>
+          <div className={styles.item}>
+            <textarea
+              className={`${styles.inputText} ${styles.note}`}
+              placeholder={t('SomeNotes')}
+              value={taskNote}
+              onChange={changeNoteHandler}
+            />
+          </div>
+          <div className={styles.item}>
+            <span className={styles.subtitle}>{t('Deadline')} </span>
+            <span className={isExpired ? styles.expiredDate : styles.formattedDate}>
+              {formattedDate}
+            </span>
+            <input
+              type="date"
+              value={task?.deadlineDate ? task?.deadlineDate : deadlineDate}
+              onChange={changeDateHandler}
+            />
+          </div>
         </div>
-        <div className={styles.item}>
-          <textarea
-            className={`${styles.inputText} ${styles.note}`}
-            placeholder={t('SomeNotes')}
-            value={taskNote}
-            onChange={changeNoteHandler}
-          />
-        </div>
-        <div className={styles.item}>
-          <span className={styles.subtitle}>{t('Deadline')} </span>
-          <span className={isExpired ? styles.expiredDate : styles.formattedDate}>
-            {formattedDate}
-          </span>
-          <input
-            type="date"
-            value={task?.deadlineDate ? task?.deadlineDate : deadlineDate}
-            onChange={changeDateHandler}
-          />
-        </div>
-      </div>
-      <div className={styles.footer}>
-        {task?._id && (
-          <button
-            type="button"
-            className={styles.deleteButton}
-            onClick={() => {
-              deleteTodo(task).unwrap();
-              if (isSuccessDelete) {
-                onClose();
-              }
+        <div className={styles.footer}>
+          {task?._id && (
+            <button
+              type="button"
+              className={styles.deleteButton}
+              onClick={() => {
+                deleteTodo(task).unwrap();
+                if (isSuccessDelete) {
+                  onClose();
+                }
 
-              removeTaskFromTimer(task?._id);
-            }}
-          >
-            {!isLoadingDelete && !isSuccessDelete ? (
-              <span>{t('Delete')}</span>
-            ) : (
-              <div className={styles.loader} />
-            )}
-          </button>
-        )}
+                removeTaskFromTimer(task?._id);
+              }}
+            >
+              {!isLoadingDelete && !isSuccessDelete ? (
+                <span>{t('Delete')}</span>
+              ) : (
+                <div className={styles.loader} />
+              )}
+            </button>
+          )}
 
-        <button type="button" className={styles.cancelButton} onClick={onClose}>
-          {t('Cancel')}
-        </button>
-        {!isAdd ? (
-          <button
-            type="button"
-            className={styles.saveButton}
-            onClick={async () => handlerUpdateTask()}
-          >
-            {!isLoadingUpdate ? <span>{t('Save')}</span> : <div className={styles.loader} />}
+          <button type="button" className={styles.cancelButton} onClick={onClose}>
+            {t('Cancel')}
           </button>
-        ) : (
-          <button
-            type="button"
-            className={styles.saveButton}
-            onClick={async () => handlerCreateTask()}
-          >
-            {!isLoadingCreate ? <span>{t('Create')}</span> : <div className={styles.loader} />}
-          </button>
-        )}
-      </div>
-    </div>
+          {!isAdd ? (
+            <button
+              type="button"
+              className={styles.saveButton}
+              onClick={async () => handlerUpdateTask()}
+            >
+              {!isLoadingUpdate ? <span>{t('Save')}</span> : <div className={styles.loader} />}
+            </button>
+          ) : (
+            <button
+              type="button"
+              className={styles.saveButton}
+              onClick={async () => handlerCreateTask()}
+            >
+              {!isLoadingCreate ? <span>{t('Create')}</span> : <div className={styles.loader} />}
+            </button>
+          )}
+        </div>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 
