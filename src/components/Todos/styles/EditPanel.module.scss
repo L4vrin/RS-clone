@@ -1,3 +1,5 @@
+@import '../../../styles/base/global';
+
 .content {
   padding: 30px 30px 15px;
 }
@@ -19,11 +21,11 @@
 .inputText {
   width: 100%;
   padding: 0.625rem;
-  color: #555;
+  color: var(--main-text-color);
   font-size: 1.2rem;
   font-weight: bold;
-  background-color: #efefef;
-  border: 1px solid transparent;
+  background-color: var(--input-bg-color);
+  border: 1px solid var(--border-color);
   border-radius: 5px;
   box-shadow: none;
   outline: none;
@@ -63,7 +65,7 @@
   padding: 0.625rem;
   color: rgba($color: #555, $alpha: 0.75);
   font-size: 1rem;
-  background: #efefef;
+  background-color: var(--input-bg-color);
   border: 1px solid transparent;
   border-radius: 5px;
 }
@@ -71,7 +73,7 @@
 .footer {
   display: flex;
   padding: 15px 30px;
-  background: #efefef;
+  background-color: var(--input-bg-color);
 }
 
 .deleteButton,
@@ -105,7 +107,7 @@
 
 .saveButton {
   color: white;
-  background: #1e1e1e;
+  background: var(--button-color);
 
   &:hover {
     opacity: 0.7;

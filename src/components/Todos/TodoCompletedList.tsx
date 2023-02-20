@@ -13,7 +13,7 @@ const TodoCompletedList = ({ todos, isLoading, deadline }: TodoCompletedListProp
   const completedArray = todos.filter((task: ITask) => task.isCompleted);
   const { t } = useTranslation();
   return (
-    <div className={styles.todoCompletedList}>
+    <div className={completedArray.length > 0 ? styles.todoCompletedList : styles.hidden}>
       {!!completedArray.length && <h2>{t('CompletedTaskList')}</h2>}
       {isLoading && <div className={styles.loader} />}
       {completedArray.map((todo) => {

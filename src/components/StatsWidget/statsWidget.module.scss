@@ -1,11 +1,13 @@
+@import '../../styles/base/colorVars';
 .container {
   margin-bottom: 25px;
   display: flex;
   padding: 15px;
   text-align: center;
-  background: white;
-  border-radius: 15px;
-  color: gray;
+  background: var(--module-background-color);
+  border-radius: 5px;
+  color: var(--main-text-color);
+  margin-top: 30px;
 }
 
 .item {
@@ -15,10 +17,10 @@
 .number,
 .stat {
   font-size: 1.8rem;
-  color: red;
+  color: var(--accent-text-color);
 }
 
 .text {
-  color: gray;
+  color: var(--main-text-color);
   font-size: 1rem;
 }

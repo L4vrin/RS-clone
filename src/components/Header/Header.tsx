@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import useActions from '../../hooks/useActions';
 import useAppSelector from '../../hooks/useAppSelector';
+import ThemeSwitch from '../ThemeSwtich/ThemeSwitch';
 import ChangeLangBtn from '../ui/ChangeLangBtn';
 import styles from './Header.module.scss';
 
@@ -11,7 +12,7 @@ const Header = () => {
 
   const navigate = useNavigate();
   const { changeUserName, switchRegistred } = useActions();
-  const { t, } = useTranslation();
+  const { t } = useTranslation();
 
   const handlerLogoff = () => {
     changeUserName('Guest');
@@ -27,13 +28,14 @@ const Header = () => {
       <div className={styles.headerContainer}>
         <div className={styles.userContainer}>{isLogin ? user.fullName : 'Guest'}</div>
         <div className={styles.buttonsContainer}>
+          <ChangeLangBtn />
+          <ThemeSwitch />
           {isLogin && (
             <button className={styles.button} type="button" onClick={() => handlerLogoff()}>
               {t('Logoff')}
             </button>
           )}
         </div>
-        <ChangeLangBtn />
       </div>
     </div>
   );
