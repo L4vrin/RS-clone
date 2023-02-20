@@ -29,6 +29,12 @@ h2 {
   padding: 15px;
   border: 1px solid var(--border-color);
   width: 100%;
+  background-color: var(--input-bg-color);
+  color: var(--main-text-color);
+}
+
+.input:focus-visible {
+  outline: 1px solid var(--button-color);
 }
 
 .submitBtn {

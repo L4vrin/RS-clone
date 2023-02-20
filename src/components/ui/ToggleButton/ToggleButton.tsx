@@ -4,9 +4,11 @@ import styles from './toggle.module.scss';
 interface ToggleButtonProps {
   checked: boolean;
   onChange: (value: boolean) => void;
+  // eslint-disable-next-line react/require-default-props
+  icon?: JSX.Element;
 }
 
-const ToggleButton = ({ checked, onChange }: ToggleButtonProps) => {
+const ToggleButton = ({ checked, onChange, icon }: ToggleButtonProps) => {
   const [isToggled, setIsToggle] = useState(checked);
 
   const handleClick = () => {
@@ -20,7 +22,7 @@ const ToggleButton = ({ checked, onChange }: ToggleButtonProps) => {
   return (
     <span className={toggleClasses.join(' ')} onClick={handleClick} aria-hidden="true">
       <input type="checkbox" defaultChecked={isToggled} />
-      <span className={styles.handle} />
+      <span className={styles.handle}>{icon ?? null}</span>
     </span>
   );
 };

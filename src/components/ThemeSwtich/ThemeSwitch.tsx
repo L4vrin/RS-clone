@@ -1,3 +1,5 @@
+import { IoMdMoon } from 'react-icons/io';
+import { BsBrightnessHighFill } from 'react-icons/bs';
 import useActions from '../../hooks/useActions';
 import useAppSelector from '../../hooks/useAppSelector';
 import ToggleButton from '../ui/ToggleButton';
@@ -11,6 +13,7 @@ const ThemeSwitch = () => {
     <div className={styles.themeSwitchWrapper}>
       <ToggleButton
         checked={isDarkTheme}
+        icon={!isDarkTheme ? <IoMdMoon /> : <BsBrightnessHighFill />}
         onChange={(value) => {
           toggleTheme(value);
         }}

@@ -28,13 +28,14 @@ const Header = () => {
       <div className={styles.headerContainer}>
         <div className={styles.userContainer}>{isLogin ? user.fullName : 'Guest'}</div>
         <div className={styles.buttonsContainer}>
+          <ChangeLangBtn />
+          <ThemeSwitch />
           {isLogin && (
             <button className={styles.button} type="button" onClick={() => handlerLogoff()}>
               {t('Logoff')}
             </button>
           )}
         </div>
-        <ChangeLangBtn />
       </div>
     </div>
   );

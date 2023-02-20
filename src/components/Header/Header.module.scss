@@ -5,11 +5,11 @@
 }
 
 .headerContainer {
-  max-width: 1240px;
+  max-width: 981px;
   margin: 0 auto;
   height: 70px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 }
 .nav {
@@ -34,6 +34,7 @@
 
 .buttonsContainer {
   display: flex;
+  gap: 20px;
 }
 
 .button {
