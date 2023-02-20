@@ -24,7 +24,7 @@ const TodoList = ({ todos, isLoading, deadline }: TodoListProps) => {
     
     <Reorder.Group
       axis="y"
-      className={notCompletedArray.length > 0 ? styles.todoList : styles.hidden}
+      className={inCompletedTodos.length > 0 ? styles.todoList : styles.hidden}
       onReorder={setInCompletedTodos}
       values={inCompletedTodos}
     >
