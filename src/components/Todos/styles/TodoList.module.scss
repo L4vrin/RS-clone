@@ -8,10 +8,16 @@
   padding: 15px;
   border-radius: 5px;
   margin-bottom: 20px;
+  list-style: none;
+  margin-bottom: 100px;
 }
 
 .hidden {
   display: none;
+}
+
+.todoWrapper {
+  border-radius: 15px;
 }
 
 .loader {
