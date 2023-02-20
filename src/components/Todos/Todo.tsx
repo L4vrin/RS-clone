@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { BiCircle, BiCheckCircle } from 'react-icons/bi';
+import { BiCircle, BiCheckCircle, BiCheck } from 'react-icons/bi';
 import { BsPlayCircle } from 'react-icons/bs';
 import { GrMoreVertical } from 'react-icons/gr';
 import { SlClock } from 'react-icons/sl';
@@ -31,13 +31,17 @@ const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
               <div className={styles.inlineFlex}>
                 {!isLoadingUpdate && !isSuccessUpdate ? (
                   <div className={styles.inlineFlex}>
-                    <BiCircle
-                      className={styles.todoCircleIcon}
+                    <button
+                      type="button"
+                      className={styles.checkButton}
                       onClick={() => {
                         updateTodo({ ...todo, isCompleted: !todo.isCompleted });
                         removeTaskFromTimer(todo._id);
                       }}
-                    />
+                    >
+                      <BiCheck className={styles.todoCircleIcon} />
+                    </button>
+
                     <button
                       className={styles.todoAddToTimerBtn}
                       type="button"
@@ -54,12 +58,15 @@ const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
             ) : (
               <div className={styles.inlineFlex}>
                 {!isLoadingUpdate && !isSuccessUpdate ? (
-                  <BiCheckCircle
-                    className={styles.todoCheckedCircleIcon}
+                  <button
+                    type="button"
+                    className={`${styles.checkButton} ${styles.checkButtonCompleted}`}
                     onClick={() => {
                       updateTodo({ ...todo, isCompleted: !todo.isCompleted });
                     }}
-                  />
+                  >
+                    <BiCheck className={styles.todoCheckedCircleIcon} />
+                  </button>
                 ) : (
                   <div className={styles.loader} />
                 )}

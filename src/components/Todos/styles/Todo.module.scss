@@ -26,32 +26,54 @@
 }
 
 .todoCircleIcon {
-  margin-right: 10px;
-
-  &:hover {
-    color: green;
-  }
-}
-
-.todoDeleteIcon {
-  &:hover {
-    color: red;
-  }
-}
-
-.todoDeleteIcon,
-.todoCircleIcon,
-.todoCheckedCircleIcon,
-.todoAddToTimerBtn {
-  font-size: 1.2rem;
-  transition: 0.2s ease-in;
-  cursor: pointer;
+  color: inherit;
+  opacity: 0;
+  transition: 0.3s;
 }
 
 .todoCheckedCircleIcon {
+  color: inherit;
+  opacity: 1;
+  transition: 0.3s;
+}
+
+.checkButton {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   margin-right: 10px;
-  font-size: 1.5rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  font-size: 1rem;
+  color: inherit;
+  background: none;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    color: green;
+    border-color: green;
+
+    .todoCircleIcon {
+      opacity: 1;
+    }
+  }
+}
+
+.checkButtonCompleted {
   color: green;
+  border-color: green;
+
+  &:hover {
+    color: inherit;
+    border-color: currentColor;
+
+    .todoCheckedCircleIcon {
+      opacity: 0;
+    }
+  }
 }
 
 .todoAddToTimerBtn {
@@ -64,7 +86,11 @@
   color: red;
   border-radius: 50%;
   line-height: 1;
+  font-size: 1.2rem;
+  transition: 0.3s ease-in;
+  cursor: pointer;
 }
+
 .wrapperBtn {
   width: 100px;
   display: flex;
