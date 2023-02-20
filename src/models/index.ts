@@ -10,6 +10,7 @@ export interface ITask {
   pomodorosNumber: number;
   pomodoroTime: number; // time in minutes
   completedPomodors: number;
+  order: number;
   user?: {
     _id: string;
     __v: number;

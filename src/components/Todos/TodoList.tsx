@@ -19,7 +19,7 @@ const TodoList = ({ todos, isLoading, deadline }: TodoListProps) => {
   useEffect(() => {
     setInCompletedTodos(todos);
   }, [todos]);
-
+  console.log(inCompletedTodos)
   return (
     
     <Reorder.Group
