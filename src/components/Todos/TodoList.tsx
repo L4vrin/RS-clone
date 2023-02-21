@@ -15,13 +15,11 @@ interface TodoListProps {
 
 const TodoList = ({ todos, isLoading, deadline }: TodoListProps) => {
   const { t } = useTranslation();
-  const [currentTodo, setCurrentTodo] = useState<ITask>();
   const [updateTodo, { isLoading: isLoadingUpdate, isSuccess: isSuccessUpdate }] =
     useUpdateTodoMutation();
   const [inCompletedTodos, setInCompletedTodos] = useState<ITask[]>(todos);
   const [prevStatus, setPrevStatus] = useState<ITask[]>(todos);
   const [newStatus, setNewStatus] = useState<ITask[]>(todos);
-  const st = useRef<ITask[]>();
 
   useEffect(() => {
     setInCompletedTodos(todos);
@@ -41,40 +39,13 @@ const TodoList = ({ todos, isLoading, deadline }: TodoListProps) => {
           return { ...todo };
         }),
       ]);
-      setNewStatus(inCompletedTodos)
+      setNewStatus(inCompletedTodos);
     }
-
   };
 
   useEffect(() => {
-    console.log(newStatus)
-    console.log('new', inCompletedTodos)
-    inCompletedTodos.forEach(todo => updateTodo({ ...todo }))
-  }, [newStatus, updateTodo]);
-
-  // const dragEndHandler = (e: any, todo: any) => {
-  //   console.log('prev', prevStatus);
-  //   console.log('now', inCompletedTodos);
-
-  //   if (inCompletedTodos && prevStatus) {
-  //     const arrayForServer: any = [
-  //       ...inCompletedTodos.map((todoq: any, index: number) => {
-
-  //         if (prevStatus[index].order !== todoq.order) {
-  //           console.log(1)
-
-  //           return { ...todoq, order: prevStatus[index].order};
-  //         }
-
-  //         return { ...todoq };
-  //       }),
-  //     ];
-
-  //     console.log('array', arrayForServer);
-  //     setPrevStatus(arrayForServer)
-  //     console.log('newPrev', prevStatus)
-  //   }
-  // };
+    inCompletedTodos.forEach((todo) => updateTodo({ ...todo }));
+  }, [newStatus]);
 
   return (
     <Reorder.Group
@@ -98,8 +69,8 @@ const TodoList = ({ todos, isLoading, deadline }: TodoListProps) => {
           initial="hidden"
           animate="visible"
           custom={i}
-          onDragStart={(e) => dragStartHandler()}
-          onDragEnd={(e) => dragEndHandler()}
+          onDragStart={() => dragStartHandler()}
+          onDragEnd={() => dragEndHandler()}
         >
           <Todo todo={todo} deadline={deadline} />
         </Reorder.Item>

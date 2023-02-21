@@ -43,9 +43,7 @@ export const tasksApi = createApi({
         method: 'PATCH',
         body: todo,
       }),
-      transformResponse: (response: { data: ITask }) => response.data,
-      transformErrorResponse: (response: { status: string | number }) => response.status,
-      invalidatesTags: ['Tasks'],
+
     }),
 
     deleteTodo: build.mutation({
