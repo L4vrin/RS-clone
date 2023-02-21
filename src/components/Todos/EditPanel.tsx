@@ -48,14 +48,11 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline, openBut
 
   useEffect(() => {
     const clickOutsideHandler = (evt: MouseEvent) => {
-      console.log(isControlBtnRef.current);
-
       if (
         !containerRef.current?.contains(evt.target as Node) &&
         !openButton?.contains(evt.target as Node) &&
         !isControlBtnRef.current
       ) {
-        console.log('outside Close');
         onClose();
       }
     };
