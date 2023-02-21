@@ -7,6 +7,8 @@
   border: 1px solid var(--border-color);
   background-color: var(--module-background-color);
   user-select: none;
+  transition: height 0.5s;
+  overflow: hidden;
 }
 
 .todo {

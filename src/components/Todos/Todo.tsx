@@ -1,4 +1,5 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { CSSTransition } from 'react-transition-group';
 import { BiCircle, BiCheckCircle, BiCheck } from 'react-icons/bi';
 import { BsPlayCircle } from 'react-icons/bs';
 import { GrMoreVertical } from 'react-icons/gr';
@@ -22,9 +23,52 @@ const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
   const controlRef = useRef<HTMLButtonElement>(null);
   const { formattedDate, isExpired } = formatDeadlineDate(todo.deadlineAt);
 
+  const [containerHeight, setContainerHeight] = useState<number>();
+  const [overflow, setOverflow] = useState('hidden');
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const calcHeight = (el: HTMLElement) => {
+    let containerBorders = 0;
+    if (containerRef.current)
+      containerBorders = containerRef.current.offsetHeight - containerRef.current.clientHeight;
+
+    const height = el.offsetHeight + containerBorders;
+    setContainerHeight(height);
+    setOverflow('hidden');
+  };
+
+  useEffect(() => {
+    setContainerHeight(containerRef.current?.offsetHeight);
+  }, []);
+
   return (
-    <div className={styles.todoWrapper}>
-      {!isEditState ? (
+    <div
+      className={styles.todoWrapper}
+      ref={containerRef}
+      style={{ height: containerHeight, overflow }}
+    >
+      <CSSTransition
+        in={isEditState}
+        unmountOnExit
+        timeout={500}
+        onEnter={calcHeight}
+        onEntered={() => setOverflow('unset')}
+      >
+        <EditPanel
+          task={todo}
+          onClose={() => setIsEditState(false)}
+          isAdd={false}
+          deadline={deadline}
+          openButton={controlRef.current}
+        />
+      </CSSTransition>
+
+      <CSSTransition
+        in={!isEditState}
+        unmountOnExit
+        timeout={{ appear: 0, enter: 500, exit: 0 }}
+        onEnter={calcHeight}
+      >
         <div>
           <div className={styles.todo}>
             {!todo.isCompleted ? (
@@ -100,15 +144,7 @@ const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
             </div>
           )}
         </div>
-      ) : (
-        <EditPanel
-          task={todo}
-          onClose={() => setIsEditState(false)}
-          isAdd={false}
-          deadline={deadline}
-          openButton={controlRef.current}
-        />
-      )}
+      </CSSTransition>
     </div>
   );
 };

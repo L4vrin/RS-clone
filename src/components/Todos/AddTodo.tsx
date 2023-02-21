@@ -12,11 +12,17 @@ const AddTodo = ({ deadline }: { deadline: string }) => {
   const { t } = useTranslation();
 
   const [containerHeight, setContainerHeight] = useState<number>();
+  const [overflow, setOverflow] = useState('hidden');
   const containerRef = useRef<HTMLDivElement>(null);
 
   const calcHeight = (el: HTMLElement) => {
-    const height = el.offsetHeight + 2;
+    let containerBorders = 0;
+    if (containerRef.current)
+      containerBorders = containerRef.current.offsetHeight - containerRef.current.clientHeight;
+
+    const height = el.offsetHeight + containerBorders;
     setContainerHeight(height);
+    setOverflow('hidden');
   };
 
   useEffect(() => {
@@ -27,9 +33,15 @@ const AddTodo = ({ deadline }: { deadline: string }) => {
     <div
       className={`container ${styles.container}`}
       ref={containerRef}
-      style={{ height: containerHeight }}
+      style={{ height: containerHeight, overflow }}
     >
-      <CSSTransition in={isCreateMode} unmountOnExit timeout={500} onEnter={calcHeight}>
+      <CSSTransition
+        in={isCreateMode}
+        unmountOnExit
+        timeout={500}
+        onEnter={calcHeight}
+        onEntered={() => setOverflow('unset')}
+      >
         <EditPanel
           onClose={() => setIsCreateMode(false)}
           isAdd={isAddTask}
