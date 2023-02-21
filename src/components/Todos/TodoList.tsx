@@ -19,7 +19,8 @@ const TodoList = ({ todos, isLoading, deadline }: TodoListProps) => {
   const [updateTodo, { isLoading: isLoadingUpdate, isSuccess: isSuccessUpdate }] =
     useUpdateTodoMutation();
   const [inCompletedTodos, setInCompletedTodos] = useState<ITask[]>(todos);
-  const [prevStatus, setPrevStatus] = useState<ITask[]>();
+  const [prevStatus, setPrevStatus] = useState<ITask[]>(todos);
+  const [newArray, setNewArray] = useState<ITask[]>(todos);
 
   useEffect(() => {
     setInCompletedTodos(todos);
@@ -33,9 +34,10 @@ const TodoList = ({ todos, isLoading, deadline }: TodoListProps) => {
   const dragEndHandler = (e: any, todo: any) => {
     console.log('prev', prevStatus);
     console.log('now', inCompletedTodos);
-
+    console.log('array', newArray);
+    
     if (inCompletedTodos && prevStatus) {
-      const arrayForServer: any = [
+      setNewArray ([
         ...inCompletedTodos.map((todoq: any, index: number) => {
           
           if (prevStatus[index].order !== todoq.order) {
@@ -46,29 +48,38 @@ const TodoList = ({ todos, isLoading, deadline }: TodoListProps) => {
 
           return { ...todoq };
         }),
-      ];
+      ]);
 
-      console.log('array', arrayForServer);
-      setPrevStatus(arrayForServer)
+      
+      setPrevStatus(newArray)
       console.log('newPrev', prevStatus)
     }
-    // updateTodo({ ...todo, order: 555 });
-    // setInCompletedTodos(inCompletedTodos.map((to: any) => {
-    //   if (currentTodo) {
-    //     if (to._id === todo._id) {
-    //       console.log(todo)
-    //       console.log(currentTodo)
-    //       console.log(inCompletedTodos)
-    //     return {...to, order: todo.order }
-    //   }
-    //     if (to._id === currentTodo._id) {
-    //       console.log(2)
-    //     return {...to, order: todo.order }
-    //     }
-    //   }
-    //   return to
-    // }))
   };
+
+
+  // const dragEndHandler = (e: any, todo: any) => {
+  //   console.log('prev', prevStatus);
+  //   console.log('now', inCompletedTodos);
+
+  //   if (inCompletedTodos && prevStatus) {
+  //     const arrayForServer: any = [
+  //       ...inCompletedTodos.map((todoq: any, index: number) => {
+          
+  //         if (prevStatus[index].order !== todoq.order) {
+  //           console.log(1)
+
+  //           return { ...todoq, order: prevStatus[index].order};
+  //         }
+
+  //         return { ...todoq };
+  //       }),
+  //     ];
+
+  //     console.log('array', arrayForServer);
+  //     setPrevStatus(arrayForServer)
+  //     console.log('newPrev', prevStatus)
+  //   }
+  // };
 
   return (
     <Reorder.Group
