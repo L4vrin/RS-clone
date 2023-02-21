@@ -43,9 +43,17 @@ export const tasksApi = createApi({
         method: 'PATCH',
         body: todo,
       }),
-
     }),
-
+    updateTodoRefresh: build.mutation({
+      query: (todo) => ({
+        url: `todos/${todo._id}`,
+        method: 'PATCH',
+        body: todo,
+      }),
+      transformResponse: (response: { data: ITask }) => response.data,
+      transformErrorResponse: (response: { status: string | number }) => response.status,
+      invalidatesTags: ['Tasks'],
+    }),
     deleteTodo: build.mutation({
       query: (todo) => ({
         url: `todos/${todo._id}`,
@@ -63,4 +71,5 @@ export const {
   useGetAllUserTasksQuery,
   useUpdateTodoMutation,
   useDeleteTodoMutation,
+  useUpdateTodoRefreshMutation
 } = tasksApi;

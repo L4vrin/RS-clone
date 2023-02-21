@@ -8,7 +8,7 @@ import { ITask } from '../../models';
 import {
   useCreateTaskMutation,
   useDeleteTodoMutation,
-  useUpdateTodoMutation,
+  useUpdateTodoRefreshMutation,
 } from '../../store/tasks/tasksApi';
 import NumberInput from '../ui/NumberInput';
 import formatDeadlineDate from './helpers/formatDeadlineDate';
@@ -25,7 +25,7 @@ interface EditPanelProps {
 const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline }) => {
   const [deleteTodo, { isLoading: isLoadingDelete, isSuccess: isSuccessDelete }] =
     useDeleteTodoMutation();
-  const [updateTodo, { isLoading: isLoadingUpdate }] = useUpdateTodoMutation();
+  const [updateTodo, { isLoading: isLoadingUpdate }] = useUpdateTodoRefreshMutation();
   const [createTask, { isLoading: isLoadingCreate }] = useCreateTaskMutation();
 
   const [taskTitle, setTaskTitle] = useState(task ? task.title : '');

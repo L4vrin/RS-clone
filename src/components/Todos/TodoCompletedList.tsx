@@ -5,6 +5,7 @@ import Todo from './Todo';
 import styles from './styles/TodoCompletedList.module.scss';
 import { ITask } from '../../models';
 import { todoVariants } from './styles/variants';
+import { useUpdateTodoMutation } from '../../store/tasks/tasksApi';
 
 interface TodoCompletedListProps {
   todos: ITask[];
@@ -14,11 +15,37 @@ interface TodoCompletedListProps {
 
 const TodoCompletedList = ({ todos, isLoading, deadline }: TodoCompletedListProps) => {
   const { t } = useTranslation();
+  const [updateTodo, { isLoading: isLoadingUpdate, isSuccess: isSuccessUpdate }] =
+    useUpdateTodoMutation();
+  const [completedTodos, setCompletedTodos] = useState<ITask[]>(todos);
+  const [prevStatus, setPrevStatus] = useState<ITask[]>(todos);
+  const [newStatus, setNewStatus] = useState<ITask[]>(todos);
 
-  const [completedTodos, setCompletedTodos] = useState(todos);
   useEffect(() => {
     setCompletedTodos(todos);
   }, [todos]);
+
+  const dragStartHandler = () => {
+    setPrevStatus(completedTodos);
+  };
+
+  const dragEndHandler = () => {
+    if (completedTodos && prevStatus) {
+      setCompletedTodos([
+        ...completedTodos.map((todo, index) => {
+          if (prevStatus[index].order !== todo.order) {
+            return { ...todo, order: prevStatus[index].order };
+          }
+          return { ...todo };
+        }),
+      ]);
+      setNewStatus(completedTodos);
+    }
+  };
+
+  useEffect(() => {
+    completedTodos.forEach((todo) => updateTodo({ ...todo }));
+  }, [newStatus]);
 
   return (
     <Reorder.Group
@@ -42,6 +69,8 @@ const TodoCompletedList = ({ todos, isLoading, deadline }: TodoCompletedListProp
           initial="hidden"
           animate="visible"
           custom={i}
+          onDragStart={() => dragStartHandler()}
+          onDragEnd={() => dragEndHandler()}
         >
           <Todo todo={todo} deadline={deadline} />
         </Reorder.Item>
