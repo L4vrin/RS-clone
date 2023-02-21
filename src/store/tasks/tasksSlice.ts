@@ -45,6 +45,7 @@ export const tasksSlice = createSlice({
           pomodorosNumber,
           __v: 0,
           note,
+          order: 0,
           deadlineDate: new Date().toISOString().split('T')[0],
         };
 

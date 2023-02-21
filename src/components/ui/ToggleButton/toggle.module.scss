@@ -15,7 +15,9 @@
 }
 
 .handle {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   top: 50%;
   transform: translateY(-50%) translateX(0.125rem);
@@ -24,6 +26,10 @@
   background: white;
   border-radius: 50%;
   transition: 0.3s;
+}
+
+.handle svg {
+  fill: black;
 }
 
 .toggle.toggled {

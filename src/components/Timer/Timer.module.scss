@@ -1,3 +1,5 @@
+@import '../../styles/base/colorVars';
+
 .timer {
   width: 250px;
   position: fixed;
@@ -8,9 +10,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #1e1e1e;
+  background-color: var(--module-background-color);
   border-radius: 15px;
-  color: white;
 }
 
 .timerWithTask {
@@ -49,7 +50,6 @@
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 26px;
-  color: #ffffff;
   user-select: none;
 }
 
@@ -67,6 +67,10 @@
   display: flex;
   flex-shrink: 0;
   justify-content: flex-end;
+}
+
+.timer svg {
+  fill: var(--timer-icons-color);
 }
 
 .timerButton,

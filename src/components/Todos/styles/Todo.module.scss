@@ -1,17 +1,20 @@
+@import './../../../styles/base/colorVars';
+
 .todoWrapper {
   margin: 15px 0;
   font-size: 1.2rem;
-  border-radius: 15px;
-  border: 1px solid #555;
-  color: #555;
-  background-color: #fbfef9;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  background-color: var(--module-background-color);
   user-select: none;
 }
 
 .todo {
   padding: 10px 15px;
+  border-radius: 15px;
   display: flex;
   align-items: center;
+  cursor: grab;
 }
 
 .todoText {
@@ -22,7 +25,6 @@
 .todoCompletedText {
   flex-grow: 1;
   text-align: left;
-  color: gray;
 }
 
 .todoCircleIcon {
@@ -103,7 +105,7 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid gray;
+  border: none;
   line-height: 1;
   font-size: 1.25rem;
   padding: 0.25rem 0;

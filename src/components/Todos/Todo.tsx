@@ -36,7 +36,6 @@ const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
                       className={styles.checkButton}
                       onClick={() => {
                         updateTodo({ ...todo, isCompleted: !todo.isCompleted });
-                        removeTaskFromTimer(todo._id);
                       }}
                     >
                       <BiCheck className={styles.todoCircleIcon} />

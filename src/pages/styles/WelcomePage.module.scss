@@ -1,13 +1,14 @@
 // @import url('./../../assets/img/calendar-bg.png');
+@import '../../styles/base/colorVars';
 
 .wrapper {
   display: flex;
   justify-content: center;
   gap: 100px;
-  height: calc(100vh - 141px);
   // background-image: url('./../../assets/img/calendar-bg.png');
   background-repeat: no-repeat;
   background-position: right 10px bottom 30px;
+  height: 70vh;
 }
 
 .leftContainer {
@@ -18,13 +19,14 @@
 }
 
 .rightContainer {
-  background-color: white;
+  background-color: var(--module-background-color);
   padding: 20px;
   border-radius: 17px;
   transition: box-shadow 0.2s ease-in;
+  width: 390px;
 }
 .rightContainer:hover {
-  box-shadow: 0px 8px 17px 4px rgb(145 145 145 / 20%);
+  box-shadow: var(--hover-box-shadow);
 }
 
 .leftContainer,
@@ -45,4 +47,7 @@
   text-decoration: underline;
   color: #ff0000;
   cursor: pointer;
+}
+
+@media screen {
 }

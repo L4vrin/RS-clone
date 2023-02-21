@@ -1,3 +1,5 @@
+@import '../../../styles/base/colorVars';
+
 .container {
   position: relative;
   margin-bottom: 25px;
@@ -5,7 +7,7 @@
   border-radius: 15px;
   border: 1px dashed #555;
   color: #555;
-  background-color: #fbfef9;
+  background-color: var(--module-background-color);
   user-select: none;
   transition: height 0.5s ease;
   overflow: hidden;

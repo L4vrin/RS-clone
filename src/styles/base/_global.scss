@@ -1,3 +1,4 @@
+@import './colorVars';
 .container {
   max-width: 1000px;
   margin: 0 auto;
@@ -6,7 +7,17 @@
 body {
   font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
     'Helvetica Neue', sans-serif;
-  background-color: #fbf7f4;
+  background-color: var(--background-main-color);
+  color: var(--main-text-color);
+  transition: background-color 0.3s linear, color 0.3s linear;
+}
+
+a {
+  color: var(--link-color);
+}
+
+a:hover {
+  color: var(--link-hover-color);
 }
 
 .visually-hidden {
