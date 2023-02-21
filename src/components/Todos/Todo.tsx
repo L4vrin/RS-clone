@@ -8,7 +8,7 @@ import useActions from '../../hooks/useActions';
 import useAppSelector from '../../hooks/useAppSelector';
 import { ITask } from '../../models';
 import EditPanel from './EditPanel';
-import { useUpdateTodoMutation } from '../../store/tasks/tasksApi';
+import { useUpdateTodoRefreshMutation } from '../../store/tasks/tasksApi';
 import formatDeadlineDate from './helpers/formatDeadlineDate';
 import styles from './styles/Todo.module.scss';
 
@@ -18,7 +18,7 @@ const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
 
   const taskInTimer = useAppSelector((state) => state.timer.currentTask);
   const [updateTodo, { isLoading: isLoadingUpdate, isSuccess: isSuccessUpdate }] =
-    useUpdateTodoMutation();
+  useUpdateTodoRefreshMutation();
 
   const controlRef = useRef<HTMLButtonElement>(null);
   const { formattedDate, isExpired } = formatDeadlineDate(todo.deadlineAt);

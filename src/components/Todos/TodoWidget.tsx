@@ -15,7 +15,7 @@ const TodoWidget = ({ deadline }: { deadline: string }) => {
 
   const userTodos = todos.filter((todo: ITask) => todo.user?._id === userId);
   const filteredTodos = filterTasksByDeadline(userTodos, deadline);
-  const InCompletedTodos = filteredTodos.filter((task: ITask) => !task.isCompleted);
+  const InCompletedTodos = filteredTodos.filter((task: ITask) => !task.isCompleted).sort((a,b) => a.order - b.order);
   const completedTodos = filteredTodos.filter((task: ITask) => task.isCompleted);
   
   return (
