@@ -1,5 +1,5 @@
 import { Reorder } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import Todo from './Todo';
 import styles from './styles/TodoList.module.scss';
@@ -20,42 +20,37 @@ const TodoList = ({ todos, isLoading, deadline }: TodoListProps) => {
     useUpdateTodoMutation();
   const [inCompletedTodos, setInCompletedTodos] = useState<ITask[]>(todos);
   const [prevStatus, setPrevStatus] = useState<ITask[]>(todos);
-  const [newArray, setNewArray] = useState<ITask[]>(todos);
+  const [newStatus, setNewStatus] = useState<ITask[]>(todos);
+  const st = useRef<ITask[]>();
 
   useEffect(() => {
     setInCompletedTodos(todos);
   }, [todos]);
 
-  const dragStartHandler = (todo: any) => {
+  const dragStartHandler = () => {
     setPrevStatus(inCompletedTodos);
-
   };
 
-  const dragEndHandler = (e: any, todo: any) => {
-    console.log('prev', prevStatus);
-    console.log('now', inCompletedTodos);
-    console.log('array', newArray);
-    
+  const dragEndHandler = () => {
     if (inCompletedTodos && prevStatus) {
-      setNewArray ([
-        ...inCompletedTodos.map((todoq: any, index: number) => {
-          
-          if (prevStatus[index].order !== todoq.order) {
-            console.log(1)
-
-            return { ...todoq, order: prevStatus[index].order};
+      setInCompletedTodos([
+        ...inCompletedTodos.map((todo, index) => {
+          if (prevStatus[index].order !== todo.order) {
+            return { ...todo, order: prevStatus[index].order };
           }
-
-          return { ...todoq };
+          return { ...todo };
         }),
       ]);
-
-      
-      setPrevStatus(newArray)
-      console.log('newPrev', prevStatus)
+      setNewStatus(inCompletedTodos)
     }
+
   };
 
+  useEffect(() => {
+    console.log(newStatus)
+    console.log('new', inCompletedTodos)
+    inCompletedTodos.forEach(todo => updateTodo({ ...todo }))
+  }, [newStatus, updateTodo]);
 
   // const dragEndHandler = (e: any, todo: any) => {
   //   console.log('prev', prevStatus);
@@ -64,7 +59,7 @@ const TodoList = ({ todos, isLoading, deadline }: TodoListProps) => {
   //   if (inCompletedTodos && prevStatus) {
   //     const arrayForServer: any = [
   //       ...inCompletedTodos.map((todoq: any, index: number) => {
-          
+
   //         if (prevStatus[index].order !== todoq.order) {
   //           console.log(1)
 
@@ -103,8 +98,8 @@ const TodoList = ({ todos, isLoading, deadline }: TodoListProps) => {
           initial="hidden"
           animate="visible"
           custom={i}
-          onDragStart={(e) => dragStartHandler(todo)}
-          onDragEnd={(e) => dragEndHandler(e, todo)}
+          onDragStart={(e) => dragStartHandler()}
+          onDragEnd={(e) => dragEndHandler()}
         >
           <Todo todo={todo} deadline={deadline} />
         </Reorder.Item>
