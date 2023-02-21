@@ -1,5 +1,5 @@
 import { Reorder } from 'framer-motion';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Todo from './Todo';
 import styles from './styles/TodoList.module.scss';
@@ -15,8 +15,7 @@ interface TodoListProps {
 
 const TodoList = ({ todos, isLoading, deadline }: TodoListProps) => {
   const { t } = useTranslation();
-  const [updateTodo, { isLoading: isLoadingUpdate, isSuccess: isSuccessUpdate }] =
-    useUpdateTodoMutation();
+  const [updateTodo] = useUpdateTodoMutation();
   const [inCompletedTodos, setInCompletedTodos] = useState<ITask[]>(todos);
   const [prevStatus, setPrevStatus] = useState<ITask[]>(todos);
   const [newStatus, setNewStatus] = useState<ITask[]>(todos);

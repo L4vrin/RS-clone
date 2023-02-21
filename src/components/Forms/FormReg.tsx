@@ -1,3 +1,4 @@
+import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -39,64 +40,75 @@ const FormReg = () => {
   };
 
   return (
-    <div className={styles.formWrapper}>
-      <h2>{t('Register')}</h2>
-      <form className={styles.form}>
-        <input
-          className={styles.input}
-          type="text"
-          placeholder={t('UserName')}
-          value={userNameReg}
-          onChange={(e) => setUserNameReg(e.target.value)}
-        />
-        <input
-          className={styles.input}
-          type="email"
-          placeholder={t('Email')}
-          value={emailReg}
-          onChange={(e) => setEmailReg(e.target.value)}
-        />
-        <input
-          className={styles.input}
-          type="password"
-          placeholder={t('Password')}
-          value={passwordReg}
-          onChange={(e) => setPasswordReg(e.target.value)}
-        />
-        <button
-          className={styles.submitBtn}
-          type="submit"
-          onClick={(e) => {
-            e.preventDefault();
-            handleAddNewUser(formData);
-          }}
-        >
-          {t('CreateNewAccount')}
-        </button>
-      </form>
-      <p>
-        {t('AlreadyRegistered')}
-        <button type="button" className={styles.linkButton} onClick={() => switchRegistred(false)}>
-          {t('ClickHere')}
-        </button>
-        {t('ToLogIn')}
-      </p>
-      <div className={styles.serverAnswer}>
-        {isLoading && (
-          <div className={styles.loading}>
-            <div className={styles.loader} />
-          </div>
-        )}
-        {isError && (
-          <ul className={styles.errorsList}>
-            {errorReg.data.map((errorObj) => (
-              <li key={errorObj.msg}>{errorObj.msg}</li>
-            ))}
-          </ul>
-        )}
-        {isSuccess && <div className={styles.success}> {t('UserCreated')} </div>}
-      </div>
-    </div>
+    <AnimatePresence>
+      <motion.div
+        className={styles.formWrapper}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
+        <h2>{t('Register')}</h2>
+        <form className={styles.form}>
+          <input
+            className={styles.input}
+            type="text"
+            placeholder={t('UserName')}
+            value={userNameReg}
+            onChange={(e) => setUserNameReg(e.target.value)}
+          />
+          <input
+            className={styles.input}
+            type="email"
+            placeholder={t('Email')}
+            value={emailReg}
+            onChange={(e) => setEmailReg(e.target.value)}
+          />
+          <input
+            className={styles.input}
+            type="password"
+            placeholder={t('Password')}
+            value={passwordReg}
+            onChange={(e) => setPasswordReg(e.target.value)}
+          />
+          <button
+            className={styles.submitBtn}
+            type="submit"
+            onClick={(e) => {
+              e.preventDefault();
+              handleAddNewUser(formData);
+            }}
+          >
+            {t('CreateNewAccount')}
+          </button>
+        </form>
+        <p className={styles.text}>
+          {t('AlreadyRegistered')}
+          <button
+            type="button"
+            className={styles.linkButton}
+            onClick={() => switchRegistred(false)}
+          >
+            {t('ClickHere')}
+          </button>
+          {t('ToLogIn')}
+        </p>
+        <div className={styles.serverAnswer}>
+          {isLoading && (
+            <div className={styles.loading}>
+              <div className={styles.loader} />
+            </div>
+          )}
+          {isError && (
+            <ul className={styles.errorsList}>
+              {errorReg.data.map((errorObj) => (
+                <li key={errorObj.msg}>{errorObj.msg}</li>
+              ))}
+            </ul>
+          )}
+          {isSuccess && <div className={styles.success}> {t('UserCreated')} </div>}
+        </div>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 

@@ -1,3 +1,4 @@
+import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -34,57 +35,64 @@ const FormLog = () => {
   };
 
   return (
-    <div className={styles.formWrapper}>
-      <h2>{t('SignIn')}</h2>
-      <form className={styles.form}>
-        <input
-          className={styles.input}
-          type="email"
-          placeholder={t('Email')}
-          value={emailLog}
-          onChange={(e) => setEmailLog(e.target.value)}
-        />
-        <input
-          className={styles.input}
-          type="password"
-          placeholder={t('Password')}
-          value={passwordLog}
-          onChange={(e) => setPasswordLog(e.target.value)}
-        />
-        <button
-          className={styles.submitBtn}
-          type="submit"
-          onClick={(e) => {
-            e.preventDefault();
-            handleLoginUser(formData);
-          }}
-        >
-          {t('Login')}
-        </button>
-      </form>
-      <p>
-        {t('DontHaveAccount')}
-        <button type="button" className={styles.linkButton} onClick={() => switchRegistred(true)}>
-          {t('ClickHere')}
-        </button>
-        {t('ToRegister')}
-      </p>
-      <div className={styles.serverAnswer}>
-        {isLoading && (
-          <div className={styles.loading}>
-            <div className={styles.loader} />
-          </div>
-        )}
-        {isError && (
-          <ul className={styles.errorsList}>
-            {errorLog.data.map((errorObj) => (
-              <li key={errorObj.msg}>{errorObj.msg}</li>
-            ))}
-          </ul>
-        )}
-        {isSuccess && <div className={styles.success}> User successful login </div>}
-      </div>
-    </div>
+    <AnimatePresence>
+      <motion.div
+        className={styles.formWrapper}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
+        <h2>{t('SignIn')}</h2>
+        <form className={styles.form}>
+          <input
+            className={styles.input}
+            type="email"
+            placeholder={t('Email')}
+            value={emailLog}
+            onChange={(e) => setEmailLog(e.target.value)}
+          />
+          <input
+            className={styles.input}
+            type="password"
+            placeholder={t('Password')}
+            value={passwordLog}
+            onChange={(e) => setPasswordLog(e.target.value)}
+          />
+          <button
+            className={styles.submitBtn}
+            type="submit"
+            onClick={(e) => {
+              e.preventDefault();
+              handleLoginUser(formData);
+            }}
+          >
+            {t('Login')}
+          </button>
+        </form>
+        <p className={styles.text}>
+          {t('DontHaveAccount')} 
+          <button type="button" className={styles.linkButton} onClick={() => switchRegistred(true)}>
+            {t('ClickHere')}
+          </button>
+          {t('ToRegister')}
+        </p>
+        <div className={styles.serverAnswer}>
+          {isLoading && (
+            <div className={styles.loading}>
+              <div className={styles.loader} />
+            </div>
+          )}
+          {isError && (
+            <ul className={styles.errorsList}>
+              {errorLog.data.map((errorObj) => (
+                <li key={errorObj.msg}>{errorObj.msg}</li>
+              ))}
+            </ul>
+          )}
+          {isSuccess && <div className={styles.success}> User successful login </div>}
+        </div>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 

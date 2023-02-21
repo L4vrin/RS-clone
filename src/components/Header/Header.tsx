@@ -5,6 +5,7 @@ import useAppSelector from '../../hooks/useAppSelector';
 import ThemeSwitch from '../ThemeSwtich/ThemeSwitch';
 import ChangeLangBtn from '../ui/ChangeLangBtn';
 import styles from './Header.module.scss';
+import logo from '../../assets/img/logo_symbol.png';
 
 const Header = () => {
   const user = useAppSelector((state) => state.user);
@@ -15,7 +16,7 @@ const Header = () => {
   const { t } = useTranslation();
 
   const handlerLogoff = () => {
-    changeUserName('Guest');
+    changeUserName('');
     switchRegistred(false);
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
@@ -26,7 +27,7 @@ const Header = () => {
   return (
     <div className={styles.headerWrapper}>
       <div className={styles.headerContainer}>
-        <div className={styles.userContainer}>{isLogin ? user.fullName : 'Guest'}</div>
+        <div className={styles.userContainer}>{isLogin ? user.fullName : <img src={logo} alt="logo symbol" className={styles.logo} />}</div>
         <div className={styles.buttonsContainer}>
           <ChangeLangBtn />
           <ThemeSwitch />
