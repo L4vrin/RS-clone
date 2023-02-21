@@ -15,8 +15,7 @@ interface TodoCompletedListProps {
 
 const TodoCompletedList = ({ todos, isLoading, deadline }: TodoCompletedListProps) => {
   const { t } = useTranslation();
-  const [updateTodo, { isLoading: isLoadingUpdate, isSuccess: isSuccessUpdate }] =
-    useUpdateTodoMutation();
+  const [updateTodo] = useUpdateTodoMutation();
   const [completedTodos, setCompletedTodos] = useState<ITask[]>(todos);
   const [prevStatus, setPrevStatus] = useState<ITask[]>(todos);
   const [newStatus, setNewStatus] = useState<ITask[]>(todos);
