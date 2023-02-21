@@ -23,7 +23,7 @@ const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
   const controlRef = useRef<HTMLButtonElement>(null);
   const { formattedDate, isExpired } = formatDeadlineDate(todo.deadlineAt);
 
-  const [containerHeight, setContainerHeight] = useState<number>();
+  const [containerHeight, setContainerHeight] = useState<number | string>();
   const [overflow, setOverflow] = useState('hidden');
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -41,6 +41,16 @@ const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
     setContainerHeight(containerRef.current?.offsetHeight);
   }, []);
 
+  const openEditPanel = () => {
+    setContainerHeight(containerRef.current?.offsetHeight);
+    setIsEditState(true);
+  };
+
+  const closeEditPanel = () => {
+    setContainerHeight(containerRef.current?.offsetHeight);
+    setIsEditState(false);
+  };
+
   return (
     <div
       className={styles.todoWrapper}
@@ -52,11 +62,15 @@ const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
         unmountOnExit
         timeout={500}
         onEnter={calcHeight}
-        onEntered={() => setOverflow('unset')}
+        onEntered={() => {
+          setOverflow('unset');
+          setContainerHeight('auto');
+        }}
+        onExited={() => setContainerHeight('auto')}
       >
         <EditPanel
           task={todo}
-          onClose={() => setIsEditState(false)}
+          onClose={closeEditPanel}
           isAdd={false}
           deadline={deadline}
           openButton={controlRef.current}
@@ -68,6 +82,7 @@ const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
         unmountOnExit
         timeout={{ appear: 0, enter: 500, exit: 0 }}
         onEnter={calcHeight}
+        onEntered={() => setContainerHeight('auto')}
       >
         <div>
           <div className={styles.todo}>
@@ -131,7 +146,7 @@ const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
                 ref={controlRef}
                 type="button"
                 className={styles.editBtn}
-                onClick={() => setIsEditState(true)}
+                onClick={openEditPanel}
               >
                 <GrMoreVertical />
               </button>

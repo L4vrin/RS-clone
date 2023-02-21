@@ -11,7 +11,7 @@ const AddTodo = ({ deadline }: { deadline: string }) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const { t } = useTranslation();
 
-  const [containerHeight, setContainerHeight] = useState<number>();
+  const [containerHeight, setContainerHeight] = useState<number | string>();
   const [overflow, setOverflow] = useState('hidden');
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -23,6 +23,11 @@ const AddTodo = ({ deadline }: { deadline: string }) => {
     const height = el.offsetHeight + containerBorders;
     setContainerHeight(height);
     setOverflow('hidden');
+  };
+
+  const closeEditPanel = () => {
+    setContainerHeight(containerRef.current?.offsetHeight);
+    setIsCreateMode(false);
   };
 
   useEffect(() => {
@@ -40,10 +45,13 @@ const AddTodo = ({ deadline }: { deadline: string }) => {
         unmountOnExit
         timeout={500}
         onEnter={calcHeight}
-        onEntered={() => setOverflow('unset')}
+        onEntered={() => {
+          setOverflow('unset');
+          setContainerHeight('auto');
+        }}
       >
         <EditPanel
-          onClose={() => setIsCreateMode(false)}
+          onClose={closeEditPanel}
           isAdd={isAddTask}
           deadline={deadline}
           openButton={buttonRef.current}

@@ -32,8 +32,11 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline, openBut
   const [taskTitle, setTaskTitle] = useState(task ? task.title : '');
   const [taskNote, setTaskNote] = useState(task ? task.note : '');
 
+  const containerRef = useRef<HTMLDivElement>(null);
   const titleInput = useRef<HTMLInputElement>(null);
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const noteRef = useRef<HTMLTextAreaElement>(null);
+  const isControlBtnRef = useRef(false);
+
   const [pomodorosNumber, setPomodorosNumber] = useState(task ? task.pomodorosNumber : 0);
   const [deadlineDate, setDeadlineDate] = useState(
     task ? new Date(task.deadlineAt) : getDeadlineDate(deadline)
@@ -45,11 +48,16 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline, openBut
 
   useEffect(() => {
     const clickOutsideHandler = (evt: MouseEvent) => {
+      console.log(isControlBtnRef.current);
+
       if (
         !containerRef.current?.contains(evt.target as Node) &&
-        !openButton?.contains(evt.target as Node)
-      )
+        !openButton?.contains(evt.target as Node) &&
+        !isControlBtnRef.current
+      ) {
+        console.log('outside Close');
         onClose();
+      }
     };
 
     document.addEventListener('click', clickOutsideHandler);
@@ -57,12 +65,19 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline, openBut
     return () => {
       document.removeEventListener('click', clickOutsideHandler);
     };
-  }, [onClose, openButton]);
+  }, []);
+
+  useEffect(() => {
+    if (!noteRef.current) return;
+    const minHeight = 77;
+    noteRef.current.style.height = `${Math.max(minHeight, noteRef.current.scrollHeight)}px`;
+  }, [taskNote]);
 
   const handlerCreateTask = async () => {
     if (taskTitle) {
       deadlineDate.setHours(23, 59, 59, 999);
       const deadlineAt = deadlineDate.getTime();
+      isControlBtnRef.current = true;
 
       const newTaskData = {
         title: taskTitle,
@@ -85,13 +100,14 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline, openBut
     if (taskTitle) {
       deadlineDate.setHours(23, 59, 59, 999);
       const deadlineAt = deadlineDate.getTime();
+      isControlBtnRef.current = true;
 
       await updateTodo({
         ...task,
         title: taskTitle,
+        note: taskNote,
         pomodorosNumber,
         pomodoroTime,
-        note: taskNote,
         deadlineDate,
         deadlineAt,
       }).unwrap();
@@ -101,14 +117,15 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline, openBut
     }
   };
 
-  const changeNoteHandler = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const minHeight = 60;
-    const textarea = evt.target;
-    textarea.style.height = `${Math.max(minHeight, textarea.scrollHeight)}px`;
-    setTaskNote(evt.target.value);
+  const handleDeleteTask = async () => {
+    if (!task) return;
+    isControlBtnRef.current = true;
+    await deleteTodo(task).unwrap();
+    onClose();
+    removeTaskFromTimer(task._id);
   };
 
-  const changeDateHandler = (value: Date) => {
+  const handleChangeDate = (value: Date) => {
     setDeadlineDate(value);
   };
 
@@ -169,10 +186,12 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline, openBut
         </div>
         <div className={styles.item}>
           <textarea
+            ref={noteRef}
+            rows={3}
             className={`${styles.inputText} ${styles.note}`}
             placeholder={t('SomeNotes')}
             value={taskNote}
-            onChange={changeNoteHandler}
+            onChange={(evt) => setTaskNote(evt.target.value)}
           />
         </div>
         <div className={styles.item}>
@@ -181,23 +200,13 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline, openBut
             <span className={isExpired ? styles.expiredDate : styles.formattedDate}>
               {formattedDate}
             </span>
-            <DatePicker date={deadlineDate} onChange={changeDateHandler} />
+            <DatePicker date={deadlineDate} onChange={handleChangeDate} />
           </div>
         </div>
       </div>
       <div className={styles.footer}>
-        {task?._id && (
-          <button
-            type="button"
-            className={styles.deleteButton}
-            onClick={() => {
-              deleteTodo(task).unwrap();
-              if (isSuccessDelete) {
-                onClose();
-              }
-              removeTaskFromTimer(task?._id);
-            }}
-          >
+        {task && (
+          <button type="button" className={styles.deleteButton} onClick={handleDeleteTask}>
             {!isLoadingDelete && !isSuccessDelete ? (
               <span>{t('Delete')}</span>
             ) : (
@@ -210,11 +219,7 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline, openBut
           {t('Cancel')}
         </button>
         {!isAdd ? (
-          <button
-            type="button"
-            className={styles.saveButton}
-            onClick={async () => handlerUpdateTask()}
-          >
+          <button type="button" className={styles.saveButton} onClick={handlerUpdateTask}>
             {!isLoadingUpdate ? <span>{t('Save')}</span> : <div className={styles.loader} />}
           </button>
         ) : (
