@@ -81,7 +81,7 @@ const FormReg = () => {
             {t('CreateNewAccount')}
           </button>
         </form>
-        <p>
+        <p className={styles.text}>
           {t('AlreadyRegistered')}
           <button
             type="button"

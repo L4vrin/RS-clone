@@ -20,6 +20,7 @@ h2 {
   align-items: center;
   padding: 10px;
   border: 1px solid var(--border-color);
+  margin-bottom: 15px;
 }
 
 .input {
@@ -35,6 +36,14 @@ h2 {
 
 .input:focus-visible {
   outline: 1px solid var(--button-color);
+}
+.text {
+text-align: center;
+
+  span {
+    display: block;
+    width: 100%;
+  }
 }
 
 .submitBtn {

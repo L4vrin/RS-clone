@@ -4,9 +4,9 @@
   "UserName": "Имя пользователя",
   "Email": "Эл. почта",
   "Password": "Пароль",
-  "AlreadyRegistered": "Уже зарегистрированы?",
-  "ClickHere": "Нажмите сюда",
-  "ToLogIn": "чтобы войти",
+  "AlreadyRegistered": "Уже зарегистрированы? ",
+  "ClickHere": " Нажмите сюда ",
+  "ToLogIn": " чтобы войти",
   "UserCreated": "Пользователь создан!",
 
   "SignIn": "Войти",

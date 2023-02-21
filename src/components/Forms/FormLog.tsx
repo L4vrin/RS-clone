@@ -69,8 +69,8 @@ const FormLog = () => {
             {t('Login')}
           </button>
         </form>
-        <p>
-          {t('DontHaveAccount')}
+        <p className={styles.text}>
+          {t('DontHaveAccount')} 
           <button type="button" className={styles.linkButton} onClick={() => switchRegistred(true)}>
             {t('ClickHere')}
           </button>
