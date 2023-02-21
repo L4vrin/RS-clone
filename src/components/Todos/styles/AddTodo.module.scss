@@ -9,6 +9,7 @@
   color: #555;
   background-color: var(--module-background-color);
   user-select: none;
+  transition: height 0.5s ease;
   overflow: hidden;
 }
 

@@ -29,18 +29,18 @@
 .circleStatic {
   fill: none;
   stroke: rgba($color: #ffffff, $alpha: 0.5);
-  stroke-width: 3;
+  stroke-width: 4;
 }
 
 .circleActive {
   fill: none;
   stroke: rgba($color: red, $alpha: 0.7);
-  stroke-width: 3;
+  stroke-width: 4;
   transform-origin: center;
   transform: rotate(-90deg);
 
   &Break {
-    stroke: rgba($color: blue, $alpha: 0.7);
+    stroke: rgba($color: #397097, $alpha: 0.9);
   }
 }
 
@@ -54,6 +54,11 @@
 }
 
 .task {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  line-height: 1;
+  font-size: 1rem;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -69,13 +74,13 @@
 }
 
 .timerButton,
-.settingsButton {
-  margin-left: 10px;
+.settingsButton,
+.removeTaskButton {
   flex-shrink: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 40px;
+  color: #ffffff;
   background: none;
   border: none;
   cursor: pointer;
@@ -86,10 +91,23 @@
   }
 }
 
+.timerButton {
+  margin-left: 10px;
+  font-size: 36px;
+}
+
 .settingsButton {
   position: absolute;
   top: 10px;
   right: 10px;
-  margin: 0;
   font-size: 16px;
+}
+
+.removeTaskButton {
+  margin-left: 5px;
+  font-size: 14px;
+
+  :hover {
+    color: red;
+  }
 }

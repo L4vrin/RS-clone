@@ -1,6 +1,5 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { useState, useRef, useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useState, useRef, FC } from 'react';
 import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai';
 import useActions from '../../hooks/useActions';
 import useAppSelector from '../../hooks/useAppSelector';
@@ -14,15 +13,17 @@ import NumberInput from '../ui/NumberInput';
 import formatDeadlineDate from './helpers/formatDeadlineDate';
 import getDeadlineDate from './helpers/getDeadlineDate';
 import styles from './styles/EditPanel.module.scss';
+import DatePicker from '../ui/DatePicker';
 
 interface EditPanelProps {
   task?: ITask;
   onClose: () => void;
   isAdd: boolean;
   deadline: string;
+  openButton: HTMLButtonElement | null;
 }
 
-const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline }) => {
+const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline, openButton }) => {
   const [deleteTodo, { isLoading: isLoadingDelete, isSuccess: isSuccessDelete }] =
     useDeleteTodoMutation();
   const [updateTodo, { isLoading: isLoadingUpdate }] = useUpdateTodoMutation();
@@ -31,19 +32,49 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline }) => {
   const [taskTitle, setTaskTitle] = useState(task ? task.title : '');
   const [taskNote, setTaskNote] = useState(task ? task.note : '');
 
+  const containerRef = useRef<HTMLDivElement>(null);
   const titleInput = useRef<HTMLInputElement>(null);
+  const noteRef = useRef<HTMLTextAreaElement>(null);
+  const isControlBtnRef = useRef(false);
+
   const [pomodorosNumber, setPomodorosNumber] = useState(task ? task.pomodorosNumber : 0);
   const [deadlineDate, setDeadlineDate] = useState(
-    task ? task.deadlineDate : getDeadlineDate(deadline).toISOString().split('T')[0]
+    task ? new Date(task.deadlineAt) : getDeadlineDate(deadline)
   );
 
   const pomodoroTime = useAppSelector((state) => state.timerSettings.workPeriodInMinutes);
   const { removeTaskFromTimer } = useActions();
   const { t } = useTranslation();
 
+  useEffect(() => {
+    const clickOutsideHandler = (evt: MouseEvent) => {
+      if (
+        !containerRef.current?.contains(evt.target as Node) &&
+        !openButton?.contains(evt.target as Node) &&
+        !isControlBtnRef.current
+      ) {
+        onClose();
+      }
+    };
+
+    document.addEventListener('click', clickOutsideHandler);
+
+    return () => {
+      document.removeEventListener('click', clickOutsideHandler);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!noteRef.current) return;
+    const minHeight = 77;
+    noteRef.current.style.height = `${Math.max(minHeight, noteRef.current.scrollHeight)}px`;
+  }, [taskNote]);
+
   const handlerCreateTask = async () => {
     if (taskTitle) {
-      const deadlineAt = new Date(deadlineDate).setHours(23, 59, 59, 999);
+      deadlineDate.setHours(23, 59, 59, 999);
+      const deadlineAt = deadlineDate.getTime();
+      isControlBtnRef.current = true;
 
       const newTaskData = {
         title: taskTitle,
@@ -64,13 +95,16 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline }) => {
 
   const handlerUpdateTask = async () => {
     if (taskTitle) {
-      const deadlineAt = new Date(deadlineDate).setHours(23, 59, 59, 999);
+      deadlineDate.setHours(23, 59, 59, 999);
+      const deadlineAt = deadlineDate.getTime();
+      isControlBtnRef.current = true;
+
       await updateTodo({
         ...task,
         title: taskTitle,
+        note: taskNote,
         pomodorosNumber,
         pomodoroTime,
-        note: taskNote,
         deadlineDate,
         deadlineAt,
       }).unwrap();
@@ -80,146 +114,122 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline }) => {
     }
   };
 
-  const changeNoteHandler = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const minHeight = 60;
-    const textarea = evt.target;
-    textarea.style.height = `${Math.max(minHeight, textarea.scrollHeight)}px`;
-    setTaskNote(evt.target.value);
+  const handleDeleteTask = async () => {
+    if (!task) return;
+    isControlBtnRef.current = true;
+    await deleteTodo(task).unwrap();
+    onClose();
+    removeTaskFromTimer(task._id);
   };
 
-  const changeDateHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    setDeadlineDate(evt.target.value);
+  const handleChangeDate = (value: Date) => {
+    setDeadlineDate(value);
   };
 
   const { formattedDate, isExpired } = formatDeadlineDate(deadlineDate, true);
 
   return (
-    <AnimatePresence>
-      <motion.div
-        exit={{ height: 0, opacity: 0 }}
-        initial={{ height: 0, opacity: 0 }}
-        animate={{ height: 'auto', opacity: 1 }}
-        transition={{
-          duration: 0.5,
-        }}
-        className={styles.container}
-      >
-        <div className={styles.content}>
-          <div className={styles.item}>
-            <input
-              className={styles.inputText}
-              type="text"
-              placeholder={t('WhatWorking')}
-              value={taskTitle}
-              onChange={(evt) => setTaskTitle(evt.target.value)}
-              ref={titleInput}
-            />
-          </div>
-          <div className={styles.item}>
-            <p className={styles.subtitle}>{t('Pomodoros')}</p>
-            <div className={styles.flexRow}>
-              {task && (
-                <>
-                  <div className={styles.numberWrapper}>
-                    <span className={styles.numberLabel}>{t('Complete')}</span>
-                    <span className={styles.readOnlyNumber}>{task.completedPomodors}</span>
-                  </div>
-                  <span className={styles.numberSeparator}>/</span>
-                </>
-              )}
-              <div className={styles.numberWrapper}>
-                <span className={styles.numberLabel}>{t('Total')}</span>
-                <NumberInput
-                  value={pomodorosNumber}
-                  min={0}
-                  onChange={(value) => setPomodorosNumber(value)}
-                />
-              </div>
-              <div className={styles.pomodoroControls}>
-                <button
-                  className={styles.numberBtn}
-                  type="button"
-                  onClick={() => setPomodorosNumber((prev) => (prev - 1 < 0 ? 0 : prev - 1))}
-                  aria-label={t('LessPomodoros')}
-                >
-                  <AiFillCaretDown />
-                </button>
-                <button
-                  className={styles.numberBtn}
-                  type="button"
-                  onClick={() => setPomodorosNumber((prev) => prev + 1)}
-                  aria-label={t('MorePomodoros')}
-                >
-                  <AiFillCaretUp />
-                </button>
-              </div>
+    <div className={styles.container} ref={containerRef}>
+      <div className={styles.content}>
+        <div className={styles.item}>
+          <input
+            className={styles.inputText}
+            type="text"
+            placeholder={t('WhatWorking')}
+            value={taskTitle}
+            onChange={(evt) => setTaskTitle(evt.target.value)}
+            ref={titleInput}
+          />
+        </div>
+        <div className={styles.item}>
+          <p className={styles.subtitle}>{t('Pomodoros')}</p>
+          <div className={styles.numbers}>
+            {task && (
+              <>
+                <div className={styles.numberWrapper}>
+                  <span className={styles.numberLabel}>{t('Complete')}</span>
+                  <span className={styles.readOnlyNumber}>{task.completedPomodors}</span>
+                </div>
+                <span className={styles.numberSeparator}>/</span>
+              </>
+            )}
+            <div className={styles.numberWrapper}>
+              <span className={styles.numberLabel}>{t('Total')}</span>
+              <NumberInput
+                value={pomodorosNumber}
+                min={0}
+                onChange={(value) => setPomodorosNumber(value)}
+              />
+            </div>
+            <div className={styles.pomodoroControls}>
+              <button
+                className={styles.numberBtn}
+                type="button"
+                onClick={() => setPomodorosNumber((prev) => (prev - 1 < 0 ? 0 : prev - 1))}
+                aria-label={t('LessPomodoros')}
+              >
+                <AiFillCaretDown />
+              </button>
+              <button
+                className={styles.numberBtn}
+                type="button"
+                onClick={() => setPomodorosNumber((prev) => prev + 1)}
+                aria-label={t('MorePomodoros')}
+              >
+                <AiFillCaretUp />
+              </button>
             </div>
           </div>
-          <div className={styles.item}>
-            <textarea
-              className={`${styles.inputText} ${styles.note}`}
-              placeholder={t('SomeNotes')}
-              value={taskNote}
-              onChange={changeNoteHandler}
-            />
-          </div>
-          <div className={styles.item}>
+        </div>
+        <div className={styles.item}>
+          <textarea
+            ref={noteRef}
+            rows={3}
+            className={`${styles.inputText} ${styles.note}`}
+            placeholder={t('SomeNotes')}
+            value={taskNote}
+            onChange={(evt) => setTaskNote(evt.target.value)}
+          />
+        </div>
+        <div className={styles.item}>
+          <div className={styles.deadline}>
             <span className={styles.subtitle}>{t('Deadline')} </span>
             <span className={isExpired ? styles.expiredDate : styles.formattedDate}>
               {formattedDate}
             </span>
-            <input
-              type="date"
-              value={task?.deadlineDate ? task?.deadlineDate : deadlineDate}
-              onChange={changeDateHandler}
-            />
+            <DatePicker date={deadlineDate} onChange={handleChangeDate} />
           </div>
         </div>
-        <div className={styles.footer}>
-          {task?._id && (
-            <button
-              type="button"
-              className={styles.deleteButton}
-              onClick={() => {
-                deleteTodo(task).unwrap();
-                if (isSuccessDelete) {
-                  onClose();
-                }
-
-                removeTaskFromTimer(task?._id);
-              }}
-            >
-              {!isLoadingDelete && !isSuccessDelete ? (
-                <span>{t('Delete')}</span>
-              ) : (
-                <div className={styles.loader} />
-              )}
-            </button>
-          )}
-
-          <button type="button" className={styles.cancelButton} onClick={onClose}>
-            {t('Cancel')}
+      </div>
+      <div className={styles.footer}>
+        {task && (
+          <button type="button" className={styles.deleteButton} onClick={handleDeleteTask}>
+            {!isLoadingDelete && !isSuccessDelete ? (
+              <span>{t('Delete')}</span>
+            ) : (
+              <div className={styles.loader} />
+            )}
           </button>
-          {!isAdd ? (
-            <button
-              type="button"
-              className={styles.saveButton}
-              onClick={async () => handlerUpdateTask()}
-            >
-              {!isLoadingUpdate ? <span>{t('Save')}</span> : <div className={styles.loader} />}
-            </button>
-          ) : (
-            <button
-              type="button"
-              className={styles.saveButton}
-              onClick={async () => handlerCreateTask()}
-            >
-              {!isLoadingCreate ? <span>{t('Create')}</span> : <div className={styles.loader} />}
-            </button>
-          )}
-        </div>
-      </motion.div>
-    </AnimatePresence>
+        )}
+
+        <button type="button" className={styles.cancelButton} onClick={onClose}>
+          {t('Cancel')}
+        </button>
+        {!isAdd ? (
+          <button type="button" className={styles.saveButton} onClick={handlerUpdateTask}>
+            {!isLoadingUpdate ? <span>{t('Save')}</span> : <div className={styles.loader} />}
+          </button>
+        ) : (
+          <button
+            type="button"
+            className={styles.saveButton}
+            onClick={async () => handlerCreateTask()}
+          >
+            {!isLoadingCreate ? <span>{t('Create')}</span> : <div className={styles.loader} />}
+          </button>
+        )}
+      </div>
+    </div>
   );
 };
 

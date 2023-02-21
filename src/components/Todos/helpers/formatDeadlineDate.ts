@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import DEADLINES from '../../../constants/deadlines';
 import { checkDeadline } from './filterTasksByDeadline';
 
-function formatDeadlineDate(deadline: number | string, withWeek = false) {
+function formatDeadlineDate(deadline: Date | number | string, withWeek = false) {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { t, i18n } = useTranslation();
 

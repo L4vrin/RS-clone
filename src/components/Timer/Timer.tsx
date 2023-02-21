@@ -1,6 +1,13 @@
-import { BiPauseCircle, BiPlayCircle, BiStopCircle } from 'react-icons/bi';
-import { BsGearFill } from 'react-icons/bs';
 import { useEffect, useRef, useState } from 'react';
+import { useInterval } from '@mantine/hooks';
+import {
+  BsGearFill,
+  BsPauseCircle,
+  BsPlayCircle,
+  BsSkipEndCircle,
+  BsStopCircle,
+} from 'react-icons/bs';
+import { AiOutlineClose } from 'react-icons/ai';
 import styles from './Timer.module.scss';
 import getPadTime from './helpers/getPadTime';
 import useAppSelector from '../../hooks/useAppSelector';
@@ -29,11 +36,12 @@ const Timer = () => {
   } = useAppSelector((store) => store.timerSettings);
 
   const { currentTask, isRunning } = useAppSelector((store) => store.timer);
-  const { setCompletedPomodoro, setIsRunning, setIsSettingsVisible } = useActions();
+  const { setIsRunning, setIsSettingsVisible, removeTaskFromTimer } = useActions();
   const [updateTodo] = useUpdateTodoMutation();
   const [currentMode, setCurrentMode] = useState(MODES.work);
   const totalSeconds = useRef(workPeriodInMinutes * 60);
   const [secondsLeft, setSecondsLeft] = useState(totalSeconds.current);
+  const interval = useInterval(() => setSecondsLeft((s) => s - 1), 1000);
   const pomodoroCount = useRef(0);
 
   const alarmAudio = useRef(new Audio());
@@ -70,8 +78,9 @@ const Timer = () => {
   const reset = () => {
     setIsRunning(false);
     setCurrentMode(MODES.work);
-    pomodoroCount.current = 0;
+    updatePeriod(MODES.work);
     setSecondsLeft(workPeriodInMinutes * 60);
+    pomodoroCount.current = 0;
   };
 
   useEffect(() => {
@@ -104,38 +113,36 @@ const Timer = () => {
       ambientAudio.current.pause();
     }
 
-    const interval = setInterval(() => {
-      if (isRunning) setSecondsLeft((prev) => (prev >= 0.1 ? prev - 0.1 : 0));
-    }, 100);
-
-    return () => {
-      clearInterval(interval);
-    };
+    if (isRunning) interval.start();
+    return interval.stop();
   }, [isRunning]);
+
+  const switchMode = () => {
+    let nextMode = currentMode;
+
+    if (!offBreak) {
+      nextMode = currentMode === MODES.work ? MODES.break : MODES.work;
+    } else {
+      nextMode = MODES.work;
+    }
+
+    setCurrentMode(nextMode);
+
+    if (!autoRunWork && nextMode === MODES.work) setIsRunning(false);
+    if (!autoRunBreak && nextMode === MODES.break) setIsRunning(false);
+    updatePeriod(nextMode);
+  };
 
   useEffect(() => {
     if (secondsLeft === 0) {
       if (alarmSound) alarmAudio.current.play();
-      let nextMode = currentMode;
-
-      if (!offBreak) {
-        nextMode = currentMode === MODES.work ? MODES.break : MODES.work;
-      } else {
-        nextMode = MODES.work;
-      }
-
-      setCurrentMode(nextMode);
-
-      if (!autoRunWork && nextMode === MODES.work) setIsRunning(false);
-      if (!autoRunBreak && nextMode === MODES.break) setIsRunning(false);
       if (currentMode === MODES.work && currentTask)
         updateTodo({
           ...currentTask,
           completedPomodors: currentTask.completedPomodors + 1,
         });
-      updatePeriod(nextMode);
 
-      if (currentTask && currentMode === MODES.work) setCompletedPomodoro(currentTask._id);
+      switchMode();
     }
   }, [secondsLeft, autoRunWork, autoRunBreak, offBreak]);
 
@@ -170,17 +177,42 @@ const Timer = () => {
           {getPadTime(minutes)}:{getPadTime(seconds)}
         </div>
       </div>
-      <div className={styles.task}>{currentTask && currentTask.title}</div>
+      {currentTask && (
+        <div className={styles.task}>
+          <span>{currentTask.title}</span>
+          <button
+            type="button"
+            className={styles.removeTaskButton}
+            onClick={() => removeTaskFromTimer(currentTask._id)}
+          >
+            <AiOutlineClose />
+          </button>
+        </div>
+      )}
+
       <div className={styles.controls}>
         {isRunning ? (
-          <button
-            className={styles.timerButton}
-            type="button"
-            aria-label="Pause timer"
-            onClick={pause}
-          >
-            <BiPauseCircle />
-          </button>
+          <div>
+            {currentMode === MODES.work ? (
+              <button
+                className={styles.timerButton}
+                type="button"
+                aria-label="Pause timer"
+                onClick={pause}
+              >
+                <BsPauseCircle />
+              </button>
+            ) : (
+              <button
+                className={styles.timerButton}
+                type="button"
+                aria-label="Skip pause"
+                onClick={switchMode}
+              >
+                <BsSkipEndCircle />
+              </button>
+            )}
+          </div>
         ) : (
           <>
             <button
@@ -189,15 +221,15 @@ const Timer = () => {
               aria-label="Start timer"
               onClick={start}
             >
-              <BiPlayCircle />
+              <BsPlayCircle />
             </button>
             <button
               className={styles.timerButton}
               type="button"
-              aria-label="Stop timer"
+              aria-label="Reset timer"
               onClick={reset}
             >
-              <BiStopCircle />
+              <BsStopCircle />
             </button>
           </>
         )}
