@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Calendar } from '@mantine/dates';
+import 'dayjs/locale/ru';
 import { FaCalendarAlt } from 'react-icons/fa';
 import styles from './DatePicker.module.scss';
 
@@ -12,11 +13,8 @@ interface DatePickerProps {
 const DatePicker = ({ date, onChange }: DatePickerProps) => {
   const { i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
-  const [value, setValue] = useState<Date | null>(date);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const calendarRef = useRef<HTMLDivElement>(null);
-
-  const lang = i18n.language.split('-')[0];
 
   useEffect(() => {
     const clickOutsideHandler = (evt: MouseEvent) => {
@@ -37,11 +35,6 @@ const DatePicker = ({ date, onChange }: DatePickerProps) => {
     };
   }, [isOpen]);
 
-  const changeHandler = (newValue: Date) => {
-    onChange(newValue);
-    setValue(newValue);
-  };
-
   return (
     <div className={styles.container}>
       <div className={styles.container}>
@@ -55,7 +48,16 @@ const DatePicker = ({ date, onChange }: DatePickerProps) => {
         </button>
         {isOpen && (
           <div className={styles.calendar} ref={calendarRef}>
-            <Calendar locale={lang} value={value} onChange={changeHandler} />
+            <Calendar
+              value={date}
+              onChange={onChange}
+              locale={i18n.language}
+              size="xs"
+              hideOutsideDates
+              allowLevelChange={false}
+              minDate={new Date()}
+              dayClassName={(day, mod) => (mod.selected ? styles.selectedDate : '')}
+            />
           </div>
         )}
       </div>
