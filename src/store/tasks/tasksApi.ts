@@ -5,7 +5,7 @@ export const tasksApi = createApi({
   reducerPath: 'tasksApi',
   tagTypes: ['Tasks'],
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://rs-clone-tody.up.railway.app/',
+    baseUrl: 'https://rs-clone-server-ggzg.onrender.com',
     prepareHeaders: async (headers) => {
       const token = localStorage.getItem('token');
       headers.set('authorization', `${token}`);
