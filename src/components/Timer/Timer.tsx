@@ -12,7 +12,7 @@ import styles from './Timer.module.scss';
 import getPadTime from './helpers/getPadTime';
 import useAppSelector from '../../hooks/useAppSelector';
 import useActions from '../../hooks/useActions';
-import { useUpdateTodoMutation } from '../../store/tasks/tasksApi';
+import { useUpdateTodoRefreshMutation } from '../../store/tasks/tasksApi';
 import { alarmSounds, ambientSounds } from '../../constants/timerSettings';
 
 const TIMER_RADIUS = 38.2;
@@ -36,13 +36,11 @@ const Timer = () => {
   } = useAppSelector((store) => store.timerSettings);
   const { currentTask, isRunning } = useAppSelector((store) => store.timer);
   const { setIsRunning, setIsSettingsVisible, removeTaskFromTimer } = useActions();
-  const [updateTodo] = useUpdateTodoMutation();
+  const [updateTodo] = useUpdateTodoRefreshMutation();
 
   const getWorkPeriodInSeconds = () => {
     return (currentTask ? currentTask.pomodoroTime : workPeriodInMinutes) * 60;
   };
-
-  console.log(getWorkPeriodInSeconds());
 
   const [currentMode, setCurrentMode] = useState(MODES.work);
   const totalSeconds = useRef(getWorkPeriodInSeconds());
