@@ -34,12 +34,18 @@ const Timer = () => {
     alarmSound,
     ambientSound,
   } = useAppSelector((store) => store.timerSettings);
-
   const { currentTask, isRunning } = useAppSelector((store) => store.timer);
   const { setIsRunning, setIsSettingsVisible, removeTaskFromTimer } = useActions();
   const [updateTodo] = useUpdateTodoMutation();
+
+  const getWorkPeriodInSeconds = () => {
+    return (currentTask ? currentTask.pomodoroTime : workPeriodInMinutes) * 60;
+  };
+
+  console.log(getWorkPeriodInSeconds());
+
   const [currentMode, setCurrentMode] = useState(MODES.work);
-  const totalSeconds = useRef(workPeriodInMinutes * 60);
+  const totalSeconds = useRef(getWorkPeriodInSeconds());
   const [secondsLeft, setSecondsLeft] = useState(totalSeconds.current);
   const interval = useInterval(() => setSecondsLeft((s) => s - 1), 1000);
   const pomodoroCount = useRef(0);
@@ -50,7 +56,7 @@ const Timer = () => {
   const updatePeriod = (mode: string) => {
     switch (mode) {
       case MODES.work:
-        totalSeconds.current = workPeriodInMinutes * 60;
+        totalSeconds.current = getWorkPeriodInSeconds();
         break;
       case MODES.break:
         if (pomodoroCount.current === longBreakInterval) {
@@ -79,7 +85,7 @@ const Timer = () => {
     setIsRunning(false);
     setCurrentMode(MODES.work);
     updatePeriod(MODES.work);
-    setSecondsLeft(workPeriodInMinutes * 60);
+    setSecondsLeft(getWorkPeriodInSeconds());
     pomodoroCount.current = 0;
   };
 
@@ -149,6 +155,10 @@ const Timer = () => {
   useEffect(() => {
     updatePeriod(currentMode);
   }, [workPeriodInMinutes, shortBreakPeriodInMinutes, longBreakPeriodInMinutes]);
+
+  useEffect(() => {
+    reset();
+  }, [currentTask]);
 
   const minutes = Math.floor(secondsLeft / 60);
   const seconds = secondsLeft - minutes * 60;

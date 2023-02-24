@@ -64,7 +64,7 @@ const TimerSettingsWidget = () => {
           <p className={styles.label}>{t('TimeMinutes')}</p>
           <div className={styles.timeSettings}>
             <TimeSettingsItem
-              label={t('PomodoroTime')}
+              label={t('Pomodoro')}
               value={workPeriodInMinutes}
               onChange={(value) => setTimerSettings({ workPeriodInMinutes: value })}
             />

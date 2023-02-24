@@ -17,7 +17,6 @@ export const timerSlice = createSlice({
   reducers: {
     addTaskToTimer(state, action: PayloadAction<ITask>) {
       state.currentTask = action.payload;
-      state.isRunning = true;
     },
 
     removeTaskFromTimer(state, action: PayloadAction<string>) {

@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import { BiCircle, BiCheckCircle, BiCheck } from 'react-icons/bi';
+import { BiCheck } from 'react-icons/bi';
 import { BsPlayCircle } from 'react-icons/bs';
 import { GrMoreVertical } from 'react-icons/gr';
 import { SlClock } from 'react-icons/sl';
@@ -14,11 +14,11 @@ import styles from './styles/Todo.module.scss';
 
 const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
   const [isEditState, setIsEditState] = useState(false);
-  const { addTaskToTimer, removeTaskFromTimer } = useActions();
+  const { addTaskToTimer } = useActions();
 
   const taskInTimer = useAppSelector((state) => state.timer.currentTask);
   const [updateTodo, { isLoading: isLoadingUpdate, isSuccess: isSuccessUpdate }] =
-  useUpdateTodoRefreshMutation();
+    useUpdateTodoRefreshMutation();
 
   const controlRef = useRef<HTMLButtonElement>(null);
   const { formattedDate, isExpired } = formatDeadlineDate(todo.deadlineAt);
@@ -36,10 +36,6 @@ const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
     setContainerHeight(height);
     setOverflow('hidden');
   };
-
-  useEffect(() => {
-    setContainerHeight(containerRef.current?.offsetHeight);
-  }, []);
 
   const openEditPanel = () => {
     setContainerHeight(containerRef.current?.offsetHeight);
@@ -101,12 +97,16 @@ const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
                     </button>
 
                     <button
-                      className={styles.todoAddToTimerBtn}
+                      className={`${styles.todoAddToTimerBtn}`}
                       type="button"
                       aria-label="Add task to timer"
                       onClick={() => addTaskToTimer(todo)}
                     >
-                      {taskInTimer?._id === todo._id ? <SlClock /> : <BsPlayCircle />}
+                      {taskInTimer?._id === todo._id ? (
+                        <SlClock className={styles.taskInTimerIcon} />
+                      ) : (
+                        <SlClock />
+                      )}
                     </button>
                   </div>
                 ) : (
