@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const usersApi = createApi({
   reducerPath: 'usersApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://rs-clone-tody.up.railway.app/',
+    baseUrl: 'https://rs-clone-server-ggzg.onrender.com',
   }),
   endpoints: (build) => ({
     createUser: build.mutation({
