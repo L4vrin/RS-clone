@@ -4,11 +4,13 @@ import { ITask } from '../../models';
 interface TimerState {
   currentTask: ITask | null;
   isRunning: boolean;
+  isPomodoroStarted: boolean;
 }
 
 const initialState: TimerState = {
   currentTask: null,
   isRunning: false,
+  isPomodoroStarted: false,
 };
 
 export const timerSlice = createSlice({
@@ -17,7 +19,6 @@ export const timerSlice = createSlice({
   reducers: {
     addTaskToTimer(state, action: PayloadAction<ITask>) {
       state.currentTask = action.payload;
-      state.isRunning = true;
     },
 
     removeTaskFromTimer(state, action: PayloadAction<string>) {
@@ -29,6 +30,10 @@ export const timerSlice = createSlice({
 
     setIsRunning(state, action: PayloadAction<boolean>) {
       state.isRunning = action.payload;
+    },
+
+    setIsPomodoroStarted(state, action: PayloadAction<boolean>) {
+      state.isPomodoroStarted = action.payload;
     },
   },
 });

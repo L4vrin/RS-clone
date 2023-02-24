@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import Notfound from './pages/Notfound';
 import WelcomePage from './pages/WelcomePage';
@@ -12,6 +12,7 @@ const App: React.FC = () => {
       <Route path="/" element={<Layout />}>
         <Route index element={<WelcomePage />} />
         <Route path="tasks" element={<TasksPage />}>
+          <Route path="" element={<Navigate to={DEADLINES.today} replace />} />
           <Route path={DEADLINES.today} element={<TodoWidget deadline={DEADLINES.today} />} />
           <Route path={DEADLINES.tomorrow} element={<TodoWidget deadline={DEADLINES.tomorrow} />} />
           <Route path={DEADLINES.week} element={<TodoWidget deadline={DEADLINES.week} />} />

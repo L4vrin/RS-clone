@@ -24,6 +24,22 @@ export const alarmSounds = {
     },
     path: `${SOUND_PATH}alarm_ding-2.mp3`,
   },
+
+  diling: {
+    name: {
+      en: 'Diling',
+      ru: 'Сообщение',
+    },
+    path: `${SOUND_PATH}alarm-diling.mp3`,
+  },
+
+  fanfare: {
+    name: {
+      en: 'Fanfare',
+      ru: 'Фанфары',
+    },
+    path: `${SOUND_PATH}alarm_fanfare.wav`,
+  },
 };
 
 export const ambientSounds = {
@@ -49,6 +65,29 @@ export const ambientSounds = {
       ru: 'Офис',
     },
     path: `${SOUND_PATH}ambient_office.wav`,
+  },
+
+  forest: {
+    name: {
+      en: 'Forest',
+      ru: 'Лес',
+    },
+    path: `${SOUND_PATH}ambient_forest.wav`,
+  },
+
+  seaWaves: {
+    name: {
+      en: 'Sea Waves',
+      ru: 'Морские волны',
+    },
+    path: `${SOUND_PATH}ambient_sea-waves.wav`,
+  },
+  campfire: {
+    name: {
+      en: 'Campfire',
+      ru: 'Костер',
+    },
+    path: `${SOUND_PATH}ambient_campfire.mp3`,
   },
 };
 

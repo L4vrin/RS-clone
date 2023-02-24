@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AiOutlineClose } from 'react-icons/ai';
 import useActions from '../../hooks/useActions';
@@ -31,7 +32,9 @@ const TimerSettingsWidget = () => {
     alarmSound,
     ambientSound,
   } = useAppSelector((state) => state.timerSettings);
-  const { setIsSettingsVisible, setTimerSettings } = useActions();
+  const { setIsSettingsVisible, setTimerSettings, setIsRunning } = useActions();
+  const audioPlayer = useRef(new Audio());
+  const timeoutId = useRef<ReturnType<typeof setTimeout>>();
 
   const lang = i18n.language.split('-')[0];
 
@@ -44,6 +47,26 @@ const TimerSettingsWidget = () => {
     value: key,
     name: value.name[lang as 'ru' | 'en'],
   }));
+
+  const testSound = (src: string) => {
+    if (!src) return;
+    clearTimeout(timeoutId.current);
+
+    setIsRunning(false);
+    audioPlayer.current.src = src;
+    audioPlayer.current.play();
+
+    timeoutId.current = setTimeout(() => {
+      audioPlayer.current.pause();
+    }, 5000);
+  };
+
+  useEffect(() => {
+    if (!isSettingsVisible) {
+      audioPlayer.current.pause();
+      clearTimeout(timeoutId.current);
+    }
+  }, [isSettingsVisible]);
 
   return (
     <Modal isVisible={isSettingsVisible} setIsVisible={setIsSettingsVisible}>
@@ -64,7 +87,7 @@ const TimerSettingsWidget = () => {
           <p className={styles.label}>{t('TimeMinutes')}</p>
           <div className={styles.timeSettings}>
             <TimeSettingsItem
-              label={t('PomodoroTime')}
+              label={t('Pomodoro')}
               value={workPeriodInMinutes}
               onChange={(value) => setTimerSettings({ workPeriodInMinutes: value })}
             />
@@ -119,9 +142,12 @@ const TimerSettingsWidget = () => {
             <select
               className={styles.selectSound}
               value={alarmSound ?? ''}
-              onChange={(evt) =>
-                setTimerSettings({ alarmSound: evt.target.value as AlarmSoundsOptions })
-              }
+              onChange={(evt) => {
+                const soundId = evt.target.value as AlarmSoundsOptions;
+                setTimerSettings({ alarmSound: soundId });
+                if (!soundId) return;
+                testSound(alarmSounds[soundId].path);
+              }}
             >
               <option value="">{t('None')}</option>
               {alarmSoundOptions.map((option) => (
@@ -138,9 +164,12 @@ const TimerSettingsWidget = () => {
             <select
               className={styles.selectSound}
               value={ambientSound ?? ''}
-              onChange={(evt) =>
-                setTimerSettings({ ambientSound: evt.target.value as AmbientSoundsOptions })
-              }
+              onChange={(evt) => {
+                const soundId = evt.target.value as AmbientSoundsOptions;
+                setTimerSettings({ ambientSound: soundId });
+                if (!soundId) return;
+                testSound(ambientSounds[soundId].path);
+              }}
             >
               <option value="">{t('None')}</option>
               {ambientSoundOptions.map((option) => (

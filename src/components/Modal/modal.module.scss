@@ -11,10 +11,12 @@
   align-items: center;
   z-index: 111;
   background: rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
 }
 
 .modalContent {
   position: relative;
+  margin: auto;
   padding: 15px;
   background: var(--module-background-color);
   border-radius: 15px;

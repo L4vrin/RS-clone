@@ -39,11 +39,14 @@
   "CompletedTaskList": "Список выполненных задач",
 
   "WhatWorking": "Над чем ты работаешь?",
-  "Pomodoros": "Количество томатов:",
+  "PomodorosCount": "Количество томатов:",
+  "PomodoroTime": "Время томата:",
   "Complete": "Завершено",
   "Total": "Всего",
   "LessPomodoros": "Меньше томатов",
   "MorePomodoros": "Больше томатов",
+  "DecreasePomodoroTime": "Уменьшить время томата",
+  "IncreasePomodoroTime": "Увеличить время томата",
   "SomeNotes": "Заметки",
   "Deadline": "Срок:",
   "Delete": "Удалить",
@@ -53,7 +56,7 @@
 
   "TimerSettings": "Настройки таймера",
   "TimeMinutes": "Время (минуты)",
-  "PomodoroTime": "Томат",
+  "Pomodoro": "Томат",
   "ShortBreakTime": "Короткий отдых",
   "LongBreakTime": "Длительный отдых",
   "AutoStartPomodoros": "Автоматический запуск томата?",
@@ -62,6 +65,13 @@
   "LongBreakInterval": "Интервал длительного отдыха",
   "AlarmSound": "Звук сигнала",
   "AmbientSound": "Окружающий звук",
+
+  "LostPomodoroProgress": "Прогресс текущего томата будет потерян.",
+  "ChangeTaskConfirm": "Вы уверены, что хотите изменить задачу?",
+
+  "Minutes": "Минут",
+  "m": "м",
+  "h": "ч",
 
   "None": "Нет"
 }

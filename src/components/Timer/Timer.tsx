@@ -12,7 +12,7 @@ import styles from './Timer.module.scss';
 import getPadTime from './helpers/getPadTime';
 import useAppSelector from '../../hooks/useAppSelector';
 import useActions from '../../hooks/useActions';
-import { useUpdateTodoMutation } from '../../store/tasks/tasksApi';
+import { useUpdateTodoRefreshMutation } from '../../store/tasks/tasksApi';
 import { alarmSounds, ambientSounds } from '../../constants/timerSettings';
 
 const TIMER_RADIUS = 38.2;
@@ -34,12 +34,17 @@ const Timer = () => {
     alarmSound,
     ambientSound,
   } = useAppSelector((store) => store.timerSettings);
-
   const { currentTask, isRunning } = useAppSelector((store) => store.timer);
-  const { setIsRunning, setIsSettingsVisible, removeTaskFromTimer } = useActions();
-  const [updateTodo] = useUpdateTodoMutation();
+  const { setIsRunning, setIsSettingsVisible, setIsPomodoroStarted, removeTaskFromTimer } =
+    useActions();
+  const [updateTodo] = useUpdateTodoRefreshMutation();
+
+  const getWorkPeriodInSeconds = () => {
+    return (currentTask ? currentTask.pomodoroTime : workPeriodInMinutes) * 60;
+  };
+
   const [currentMode, setCurrentMode] = useState(MODES.work);
-  const totalSeconds = useRef(workPeriodInMinutes * 60);
+  const totalSeconds = useRef(getWorkPeriodInSeconds());
   const [secondsLeft, setSecondsLeft] = useState(totalSeconds.current);
   const interval = useInterval(() => setSecondsLeft((s) => s - 1), 1000);
   const pomodoroCount = useRef(0);
@@ -50,7 +55,7 @@ const Timer = () => {
   const updatePeriod = (mode: string) => {
     switch (mode) {
       case MODES.work:
-        totalSeconds.current = workPeriodInMinutes * 60;
+        totalSeconds.current = getWorkPeriodInSeconds();
         break;
       case MODES.break:
         if (pomodoroCount.current === longBreakInterval) {
@@ -67,7 +72,7 @@ const Timer = () => {
   };
 
   const start = () => {
-    if (secondsLeft === 0) setSecondsLeft(totalSeconds.current);
+    if (currentTask) setIsPomodoroStarted(true);
     setIsRunning(true);
   };
 
@@ -77,9 +82,10 @@ const Timer = () => {
 
   const reset = () => {
     setIsRunning(false);
+    setIsPomodoroStarted(false);
     setCurrentMode(MODES.work);
     updatePeriod(MODES.work);
-    setSecondsLeft(workPeriodInMinutes * 60);
+    setSecondsLeft(getWorkPeriodInSeconds());
     pomodoroCount.current = 0;
   };
 
@@ -114,6 +120,7 @@ const Timer = () => {
     }
 
     if (isRunning) interval.start();
+
     return interval.stop();
   }, [isRunning]);
 
@@ -127,7 +134,6 @@ const Timer = () => {
     }
 
     setCurrentMode(nextMode);
-
     if (!autoRunWork && nextMode === MODES.work) setIsRunning(false);
     if (!autoRunBreak && nextMode === MODES.break) setIsRunning(false);
     updatePeriod(nextMode);
@@ -149,6 +155,10 @@ const Timer = () => {
   useEffect(() => {
     updatePeriod(currentMode);
   }, [workPeriodInMinutes, shortBreakPeriodInMinutes, longBreakPeriodInMinutes]);
+
+  useEffect(() => {
+    reset();
+  }, [currentTask]);
 
   const minutes = Math.floor(secondsLeft / 60);
   const seconds = secondsLeft - minutes * 60;

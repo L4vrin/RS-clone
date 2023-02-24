@@ -12,8 +12,9 @@ import {
 import NumberInput from '../ui/NumberInput';
 import formatDeadlineDate from './helpers/formatDeadlineDate';
 import getDeadlineDate from './helpers/getDeadlineDate';
-import styles from './styles/EditPanel.module.scss';
 import DatePicker from '../ui/DatePicker';
+import { minTimeInMinutes, maxTimeInMinutes } from '../../constants/timerSettings';
+import styles from './styles/EditPanel.module.scss';
 
 interface EditPanelProps {
   task?: ITask;
@@ -28,6 +29,7 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline, openBut
     useDeleteTodoMutation();
   const [updateTodo, { isLoading: isLoadingUpdate }] = useUpdateTodoRefreshMutation();
   const [createTask, { isLoading: isLoadingCreate }] = useCreateTaskMutation();
+  const defaultPomodoroTime = useAppSelector((state) => state.timerSettings.workPeriodInMinutes);
 
   const [taskTitle, setTaskTitle] = useState(task ? task.title : '');
   const [taskNote, setTaskNote] = useState(task ? task.note : '');
@@ -38,11 +40,11 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline, openBut
   const isControlBtnRef = useRef(false);
 
   const [pomodorosNumber, setPomodorosNumber] = useState(task ? task.pomodorosNumber : 0);
+  const [pomodoroTime, setPomodoroTime] = useState(task ? task.pomodoroTime : defaultPomodoroTime);
   const [deadlineDate, setDeadlineDate] = useState(
     task ? new Date(task.deadlineAt) : getDeadlineDate(deadline)
   );
 
-  const pomodoroTime = useAppSelector((state) => state.timerSettings.workPeriodInMinutes);
   const { removeTaskFromTimer } = useActions();
   const { t } = useTranslation();
 
@@ -141,43 +143,85 @@ const EditPanel: FC<EditPanelProps> = ({ task, onClose, isAdd, deadline, openBut
             ref={titleInput}
           />
         </div>
-        <div className={styles.item}>
-          <p className={styles.subtitle}>{t('Pomodoros')}</p>
-          <div className={styles.numbers}>
-            {task && (
-              <>
-                <div className={styles.numberWrapper}>
-                  <span className={styles.numberLabel}>{t('Complete')}</span>
-                  <span className={styles.readOnlyNumber}>{task.completedPomodors}</span>
-                </div>
-                <span className={styles.numberSeparator}>/</span>
-              </>
-            )}
-            <div className={styles.numberWrapper}>
-              <span className={styles.numberLabel}>{t('Total')}</span>
-              <NumberInput
-                value={pomodorosNumber}
-                min={0}
-                onChange={(value) => setPomodorosNumber(value)}
-              />
+        <div className={styles.flexRow}>
+          <div className={styles.item}>
+            <p className={styles.subtitle}>{t('PomodorosCount')}</p>
+            <div className={styles.numbers}>
+              {task && (
+                <>
+                  <div className={styles.numberWrapper}>
+                    <span className={styles.numberLabel}>{t('Complete')}</span>
+                    <span className={styles.readOnlyNumber}>{task.completedPomodors}</span>
+                  </div>
+                  <span className={styles.numberSeparator}>/</span>
+                </>
+              )}
+              <div className={styles.numberWrapper}>
+                <span className={styles.numberLabel}>{t('Total')}</span>
+                <NumberInput
+                  value={pomodorosNumber}
+                  min={0}
+                  onChange={(value) => setPomodorosNumber(value)}
+                />
+              </div>
+              <div className={styles.pomodoroControls}>
+                <button
+                  className={styles.numberBtn}
+                  type="button"
+                  onClick={() => setPomodorosNumber((prev) => (prev - 1 < 0 ? 0 : prev - 1))}
+                  aria-label={t('LessPomodoros')}
+                >
+                  <AiFillCaretDown />
+                </button>
+                <button
+                  className={styles.numberBtn}
+                  type="button"
+                  onClick={() => setPomodorosNumber((prev) => prev + 1)}
+                  aria-label={t('MorePomodoros')}
+                >
+                  <AiFillCaretUp />
+                </button>
+              </div>
             </div>
-            <div className={styles.pomodoroControls}>
-              <button
-                className={styles.numberBtn}
-                type="button"
-                onClick={() => setPomodorosNumber((prev) => (prev - 1 < 0 ? 0 : prev - 1))}
-                aria-label={t('LessPomodoros')}
-              >
-                <AiFillCaretDown />
-              </button>
-              <button
-                className={styles.numberBtn}
-                type="button"
-                onClick={() => setPomodorosNumber((prev) => prev + 1)}
-                aria-label={t('MorePomodoros')}
-              >
-                <AiFillCaretUp />
-              </button>
+          </div>
+          <div className={styles.item}>
+            <p className={styles.subtitle}>{t('PomodoroTime')}</p>
+            <div className={styles.numbers}>
+              <div className={styles.numberWrapper}>
+                <span className={styles.numberLabel}>{t('Minutes')}</span>
+                <NumberInput
+                  value={pomodoroTime}
+                  min={minTimeInMinutes}
+                  max={maxTimeInMinutes}
+                  onChange={(value) => setPomodoroTime(value)}
+                />
+              </div>
+              <div className={styles.pomodoroControls}>
+                <button
+                  className={styles.numberBtn}
+                  type="button"
+                  onClick={() =>
+                    setPomodoroTime((prev) =>
+                      prev - 1 < minTimeInMinutes ? minTimeInMinutes : prev - 1
+                    )
+                  }
+                  aria-label={t('DecreasePomodoroTime')}
+                >
+                  <AiFillCaretDown />
+                </button>
+                <button
+                  className={styles.numberBtn}
+                  type="button"
+                  onClick={() =>
+                    setPomodoroTime((prev) =>
+                      prev + 1 > maxTimeInMinutes ? maxTimeInMinutes : prev + 1
+                    )
+                  }
+                  aria-label={t('IncreasePomodoroTime')}
+                >
+                  <AiFillCaretUp />
+                </button>
+              </div>
             </div>
           </div>
         </div>

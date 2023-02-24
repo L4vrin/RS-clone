@@ -11,9 +11,7 @@ type StatsWidgetProps = {
 const StatsWidget = ({ todos }: StatsWidgetProps) => {
   const { t } = useTranslation();
 
-  const inCompletedTodos = todos.filter(
-    (todo) => !todo.isCompleted && todo.user?._id === localStorage.getItem('userId')
-  );
+  const inCompletedTodos = todos.filter((todo) => !todo.isCompleted);
 
   const estimatedTime = inCompletedTodos.reduce(
     (acc, todo) => acc + todo.pomodoroTime * todo.pomodorosNumber,

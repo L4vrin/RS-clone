@@ -19,6 +19,12 @@ const Modal = ({ children, isVisible, setIsVisible }: ModalProps) => {
         exit: styles.modalExit,
         exitActive: styles.modalExitActive,
       }}
+      onEnter={() => {
+        document.body.style.overflow = 'hidden';
+      }}
+      onExit={() => {
+        document.body.style.overflow = 'auto';
+      }}
     >
       <div className={styles.modal} onClick={() => setIsVisible(false)} role="presentation">
         <div

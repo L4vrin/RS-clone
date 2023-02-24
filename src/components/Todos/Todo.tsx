@@ -1,7 +1,6 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import { BiCircle, BiCheckCircle, BiCheck } from 'react-icons/bi';
-import { BsPlayCircle } from 'react-icons/bs';
+import { BiCheck } from 'react-icons/bi';
 import { GrMoreVertical } from 'react-icons/gr';
 import { SlClock } from 'react-icons/sl';
 import useActions from '../../hooks/useActions';
@@ -11,14 +10,16 @@ import EditPanel from './EditPanel';
 import { useUpdateTodoRefreshMutation } from '../../store/tasks/tasksApi';
 import formatDeadlineDate from './helpers/formatDeadlineDate';
 import styles from './styles/Todo.module.scss';
+import WarningModal from '../ui/WarningModal';
 
 const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
   const [isEditState, setIsEditState] = useState(false);
-  const { addTaskToTimer, removeTaskFromTimer } = useActions();
+  const [isWarning, setIsWarning] = useState(false);
+  const { addTaskToTimer } = useActions();
 
-  const taskInTimer = useAppSelector((state) => state.timer.currentTask);
+  const { currentTask, isPomodoroStarted } = useAppSelector((state) => state.timer);
   const [updateTodo, { isLoading: isLoadingUpdate, isSuccess: isSuccessUpdate }] =
-  useUpdateTodoRefreshMutation();
+    useUpdateTodoRefreshMutation();
 
   const controlRef = useRef<HTMLButtonElement>(null);
   const { formattedDate, isExpired } = formatDeadlineDate(todo.deadlineAt);
@@ -37,10 +38,6 @@ const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
     setOverflow('hidden');
   };
 
-  useEffect(() => {
-    setContainerHeight(containerRef.current?.offsetHeight);
-  }, []);
-
   const openEditPanel = () => {
     setContainerHeight(containerRef.current?.offsetHeight);
     setIsEditState(true);
@@ -50,6 +47,16 @@ const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
     setContainerHeight(containerRef.current?.offsetHeight);
     setIsEditState(false);
   };
+
+  const addTaskToTimerHandler = () => {
+    if (isPomodoroStarted) {
+      setIsWarning(true);
+    } else {
+      addTaskToTimer(todo);
+    }
+  };
+
+  const isTaskInTimer = currentTask?._id === todo._id;
 
   return (
     <div
@@ -101,12 +108,13 @@ const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
                     </button>
 
                     <button
-                      className={styles.todoAddToTimerBtn}
+                      className={`${styles.todoAddToTimerBtn}`}
                       type="button"
                       aria-label="Add task to timer"
-                      onClick={() => addTaskToTimer(todo)}
+                      onClick={addTaskToTimerHandler}
+                      disabled={isTaskInTimer}
                     >
-                      {taskInTimer?._id === todo._id ? <SlClock /> : <BsPlayCircle />}
+                      {isTaskInTimer ? <SlClock className={styles.taskInTimerIcon} /> : <SlClock />}
                     </button>
                   </div>
                 ) : (
@@ -160,6 +168,11 @@ const Todo = ({ todo, deadline }: { todo: ITask; deadline: string }) => {
           )}
         </div>
       </CSSTransition>
+      <WarningModal
+        isVisible={isWarning}
+        setIsVisible={setIsWarning}
+        onConfirm={() => addTaskToTimer(todo)}
+      />
     </div>
   );
 };
