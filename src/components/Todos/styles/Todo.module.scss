@@ -99,6 +99,10 @@
   &:hover {
     color: red;
   }
+
+  &:disabled {
+    cursor: default;
+  }
 }
 
 .taskInTimerIcon {

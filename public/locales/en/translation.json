@@ -66,6 +66,9 @@
   "AlarmSound": "Alarm Sound",
   "AmbientSound": "Ambient Sound",
 
+  "LostPomodoroProgress": "Progress of current pomodoro will be lost.",
+  "ChangeTaskConfirm": "Are you sure you want to change task?",
+
   "Minutes": "Minutes",
   "m": "m",
   "h": "h",

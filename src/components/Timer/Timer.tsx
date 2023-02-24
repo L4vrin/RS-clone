@@ -35,7 +35,8 @@ const Timer = () => {
     ambientSound,
   } = useAppSelector((store) => store.timerSettings);
   const { currentTask, isRunning } = useAppSelector((store) => store.timer);
-  const { setIsRunning, setIsSettingsVisible, removeTaskFromTimer } = useActions();
+  const { setIsRunning, setIsSettingsVisible, setIsPomodoroStarted, removeTaskFromTimer } =
+    useActions();
   const [updateTodo] = useUpdateTodoRefreshMutation();
 
   const getWorkPeriodInSeconds = () => {
@@ -71,7 +72,7 @@ const Timer = () => {
   };
 
   const start = () => {
-    if (secondsLeft === 0) setSecondsLeft(totalSeconds.current);
+    if (currentTask) setIsPomodoroStarted(true);
     setIsRunning(true);
   };
 
@@ -81,6 +82,7 @@ const Timer = () => {
 
   const reset = () => {
     setIsRunning(false);
+    setIsPomodoroStarted(false);
     setCurrentMode(MODES.work);
     updatePeriod(MODES.work);
     setSecondsLeft(getWorkPeriodInSeconds());
@@ -118,6 +120,7 @@ const Timer = () => {
     }
 
     if (isRunning) interval.start();
+
     return interval.stop();
   }, [isRunning]);
 
@@ -131,7 +134,6 @@ const Timer = () => {
     }
 
     setCurrentMode(nextMode);
-
     if (!autoRunWork && nextMode === MODES.work) setIsRunning(false);
     if (!autoRunBreak && nextMode === MODES.break) setIsRunning(false);
     updatePeriod(nextMode);
