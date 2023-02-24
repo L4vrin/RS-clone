@@ -6,7 +6,7 @@ import styles from './SideBar.module.scss';
 const SideBar = () => {
   const { t } = useTranslation();
   return (
-    <ul>
+    <ul className="navMenu">
       <li className={styles.item}>
         <NavLink to={DEADLINES.today} className={styles.link}>
           {t('Today')}

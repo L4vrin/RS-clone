@@ -20,14 +20,17 @@ const TodoWidget = ({ deadline }: { deadline: string }) => {
   const completedTodos = filteredTodos.filter((task: ITask) => task.isCompleted);
 
   return (
-    <>
-      <StatsWidget todos={filteredTodos} />
+    <div className={`todoWidget ${styles.widgetWrap}`}>
+      <div className={styles.statsWrap}>
+        <StatsWidget todos={filteredTodos} />
+        <Timer />
+      </div>
       <AddTodo deadline={deadline} />
       <TodoList todos={InCompletedTodos} isLoading={isLoading} deadline={deadline} />
       <TodoCompletedList todos={completedTodos} isLoading={isLoading} deadline={deadline} />
-      <Timer />
+
       <TimerSettingsWidget />
-    </>
+    </div>
   );
 };
 
