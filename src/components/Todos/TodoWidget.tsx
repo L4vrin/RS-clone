@@ -7,6 +7,7 @@ import AddTodo from './AddTodo';
 import filterTasksByDeadline from './helpers/filterTasksByDeadline';
 import { useGetAllUserTasksQuery } from '../../store/tasks/tasksApi';
 import { ITask } from '../../models';
+import styles from './styles/TodoWidget.module.scss';
 
 const TodoWidget = ({ deadline }: { deadline: string }) => {
   const userId = localStorage.getItem('userId');

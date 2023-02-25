@@ -1,17 +1,17 @@
 .layoutContainer {
   min-height: calc(100vh - 141px);
-  display: grid;
-  grid-auto-rows: 1fr;
-  grid-template-columns: 1fr 1000px 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 0px 0px;
-  grid-template-areas:
-    'navMenu todoWidget .'
-    'navMenu todoWidget .';
+  // display: grid;
+  // grid-auto-rows: 1fr;
+  // grid-template-columns: 1fr 1000px 1fr;
+  // grid-template-rows: 1fr 1fr;
+  // gap: 0px 0px;
+  // grid-template-areas:
+  //   'navMenu todoWidget .'
+  //   'navMenu todoWidget .';
 }
-.todoWidget {
-  grid-area: todoWidget;
-}
-.navMenu {
-  grid-area: navMenu;
-}
+// .todoWidget {
+//   grid-area: todoWidget;
+// }
+// .navMenu {
+//   grid-area: navMenu;
+// }

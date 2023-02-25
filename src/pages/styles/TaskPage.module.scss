@@ -1,0 +1,7 @@
+.taskPageContainer {
+  min-height: calc(100vh - 141px);
+  display: grid;
+  grid-template-columns: 1fr 1000px 1fr;
+  grid-template-rows: 1fr;
+  gap: 0px 0px;
+}
