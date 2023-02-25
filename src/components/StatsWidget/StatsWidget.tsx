@@ -26,7 +26,7 @@ const StatsWidget = ({ todos }: StatsWidgetProps) => {
   const numberCompletedTodos = todos.length - numberIncompleteTodos;
 
   return (
-    <div className={`container ${styles.container}`}>
+    <div className={styles.container}>
       <StatsItem stat={<TimeStat time={estimatedTime} />} description={t('EstimatedTime')} />
       <StatsItem stat={numberIncompleteTodos} description={t('IncompletedTasks')} />
       <StatsItem stat={<TimeStat time={spentTime} />} description={t('SpentTime')} />

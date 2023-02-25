@@ -1,13 +1,30 @@
-.link {
-  color: black;
+.navBar {
+  background-color: var(--module-background-color);
+  height: fit-content;
+  width: fit-content;
+  margin-top: 30px;
+  justify-self: flex-end;
+  list-style-type: none;
+  margin-right: 30px;
+  border-radius: 5px;
+  padding: 10px 0;
 }
 
-.item {
-  .active {
-    color: red;
-  }
+.navBar a {
+  display: block;
+  padding: 5px 40px;
+  width: 100%;
+  text-decoration: none;
+  border-radius: 3px;
+  font-size: 20px;
 }
 
-.link.active {
-  color: red;
+.navBar a:hover {
+  color: var(--main-text-color);
+  opacity: 70%;
+}
+
+a.active {
+  color: var(--main-text-color);
+  text-decoration: underline;
 }

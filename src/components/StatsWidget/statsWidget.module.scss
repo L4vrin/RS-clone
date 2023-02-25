@@ -1,4 +1,3 @@
-@import '../../styles/base/colorVars';
 .container {
   margin-bottom: 25px;
   display: flex;
@@ -8,6 +7,9 @@
   border-radius: 5px;
   color: var(--main-text-color);
   margin-top: 30px;
+  flex: 70%;
+  gap: 10px;
+  align-items: baseline;
 }
 
 .item {
