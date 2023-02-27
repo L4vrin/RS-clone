@@ -54,6 +54,9 @@
   "Create": "Create",
   "Cancel": "Cancel",
 
+  "TimeForFocus": "Time to Focus!",
+  "TimeForBreak": "Time for a Break!",
+
   "TimerSettings": "Timer settings",
   "TimeMinutes": "Time (minutes)",
   "Pomodoro": "Pomodoro",

@@ -25,9 +25,11 @@ const Header = () => {
   };
 
   return (
-    <div className={styles.headerWrapper}>
+    <header className={styles.headerWrapper}>
       <div className={styles.headerContainer}>
-        <div className={styles.userContainer}>{isLogin ? user.fullName : <img src={logo} alt="logo symbol" className={styles.logo} />}</div>
+        <div className={styles.userContainer}>
+          {isLogin ? user.fullName : <img src={logo} alt="logo symbol" className={styles.logo} />}
+        </div>
         <div className={styles.buttonsContainer}>
           <ChangeLangBtn />
           <ThemeSwitch />
@@ -38,7 +40,7 @@ const Header = () => {
           )}
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 

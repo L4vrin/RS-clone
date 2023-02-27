@@ -176,17 +176,21 @@
 
 .stats {
   font-size: 0.9rem;
+  white-space: nowrap;
+  line-height: 1;
 }
 
 .date {
   margin: 0 10px;
   font-size: 0.9rem;
+  white-space: nowrap;
 }
 
 .expiredDate {
   margin: 0 10px;
   font-size: 0.9rem;
   color: red;
+  white-space: nowrap;
 }
 
 .inlineFlex {

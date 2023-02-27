@@ -7,6 +7,7 @@
 .headerContainer {
   max-width: 981px;
   margin: 0 auto;
+  padding: 0 10px;
   height: 70px;
   display: flex;
   justify-content: space-between;
@@ -49,7 +50,7 @@
   border: 0;
   border-radius: 4px;
   cursor: pointer;
-  margin: 0 10px;
+  margin: 0 0 0 10px;
 }
 
 .button:hover {

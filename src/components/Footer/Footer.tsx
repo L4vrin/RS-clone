@@ -2,7 +2,7 @@ import styles from './Footer.module.scss';
 
 const Footer = () => {
   return (
-    <div className={styles.footerWrapper}>
+    <footer className={styles.footerWrapper}>
       <div className={styles.footerContainer}>
         <div className={styles.githubContainer}>
           <div className={styles.teamText}>Team Plan B</div>
@@ -67,7 +67,7 @@ const Footer = () => {
           <div className={styles.rsSchoolLogo} />
         </a>
       </div>
-    </div>
+    </footer>
   );
 };
 
