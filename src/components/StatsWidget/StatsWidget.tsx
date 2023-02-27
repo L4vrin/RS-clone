@@ -30,7 +30,7 @@ const StatsWidget = ({ todos }: StatsWidgetProps) => {
       <StatsItem stat={<TimeStat time={estimatedTime} />} description={t('EstimatedTime')} />
       <StatsItem stat={numberIncompleteTodos} description={t('IncompletedTasks')} />
       <StatsItem stat={<TimeStat time={spentTime} />} description={t('SpentTime')} />
-      <StatsItem stat={numberCompletedTodos} description={t('СompletedTasks')} />
+      <StatsItem stat={numberCompletedTodos} description={t('CompletedTasks')} />
     </div>
   );
 };
