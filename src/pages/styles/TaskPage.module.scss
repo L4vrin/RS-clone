@@ -9,7 +9,7 @@
   background-position: right 30px bottom 30px;
 
   @media (max-width: 768px) {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(320px, 768px);
     margin: 0 auto;
   }
 }

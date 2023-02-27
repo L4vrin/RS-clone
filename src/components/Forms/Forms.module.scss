@@ -3,6 +3,10 @@
   flex-direction: column;
   min-width: 350px;
   background-color: var(--module-background-color);
+
+  @media (max-width: 425px) {
+    min-width: 300px;
+  }
 }
 
 h2 {
@@ -64,7 +68,7 @@ h2 {
   display: inline;
   border: 0px;
   background-color: transparent;
-  font-size: 15px;
+  font-size: 1rem;
   text-decoration: underline;
   color: var(--link-color);
   cursor: pointer;

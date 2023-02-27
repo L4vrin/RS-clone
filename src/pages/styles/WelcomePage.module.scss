@@ -1,10 +1,12 @@
 .wrapper {
+  padding: 20px 10px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 100px;
+  gap: 20px 100px;
   background-repeat: no-repeat;
   background-position: right 10px bottom 30px;
-  height: calc(100vh - 141px);
+  flex-grow: 1;
 }
 
 .leftContainer {
@@ -12,6 +14,23 @@
   display: flex;
   flex-direction: column;
   gap: 50px;
+  border-radius: 10px;
+  padding: 10px;
+  position: relative;
+  z-index: 1;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    opacity: 0.8;
+    background-color: var(--background-main-color);
+    border-radius: inherit;
+  }
 }
 
 .rightContainer {
@@ -19,7 +38,6 @@
   padding: 20px;
   border-radius: 17px;
   transition: box-shadow 0.2s ease-in;
-  width: 390px;
 }
 .rightContainer:hover {
   box-shadow: var(--hover-box-shadow);
@@ -32,7 +50,7 @@
 }
 
 .logo {
-  width: fit-content;
+  width: 70%;
 }
 
 .linkButton {
