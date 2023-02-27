@@ -63,7 +63,7 @@ const Footer = () => {
             </svg>
           </a>
         </div>
-        <a className={styles.rsSchoolContainer} href="https://rs.school/js/">
+        <a className={styles.rsSchoolContainer} href="https://rs.school/js/" aria-label="RSSchool">
           <div className={styles.rsSchoolLogo} />
         </a>
       </div>
