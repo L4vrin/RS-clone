@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useInterval } from '@mantine/hooks';
 import {
   BsGearFill,
@@ -23,6 +24,7 @@ const MODES = {
 };
 
 const Timer = () => {
+  const { t } = useTranslation();
   const {
     workPeriodInMinutes,
     shortBreakPeriodInMinutes,
@@ -168,7 +170,7 @@ const Timer = () => {
   );
 
   return (
-    <div className={`${styles.timer} ${currentTask ? styles.timerWithTask : ''}`}>
+    <div className={`${styles.container} ${currentTask ? styles.timerWithTask : ''}`}>
       <div className={styles.dial}>
         <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" fill="none">
           <circle className={styles.circleStatic} cx="40" cy="40" r="38.2" strokeDasharray="1" />
@@ -187,18 +189,27 @@ const Timer = () => {
           {getPadTime(minutes)}:{getPadTime(seconds)}
         </div>
       </div>
-      {currentTask && (
-        <div className={styles.task}>
-          <span>{currentTask.title}</span>
-          <button
-            type="button"
-            className={styles.removeTaskButton}
-            onClick={() => removeTaskFromTimer(currentTask._id)}
-          >
-            <AiOutlineClose />
-          </button>
+      <div className={styles.infoPanel}>
+        <div className={styles.instructionsPanel}>
+          {currentMode === MODES.work ? (
+            <span className={styles.focusInstruction}>{t('TimeForFocus')}</span>
+          ) : (
+            <span className={styles.breakInstruction}>{t('TimeForBreak')}</span>
+          )}
         </div>
-      )}
+        {currentTask && (
+          <div className={styles.task}>
+            <span>{currentTask.title}</span>
+            <button
+              type="button"
+              className={styles.removeTaskButton}
+              onClick={() => removeTaskFromTimer(currentTask._id)}
+            >
+              <AiOutlineClose />
+            </button>
+          </div>
+        )}
+      </div>
 
       <div className={styles.controls}>
         {isRunning ? (

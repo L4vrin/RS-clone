@@ -12,6 +12,10 @@
   align-items: center;
   margin: 0 auto;
   background-color: transparent;
+
+  @media (max-width: 425px) {
+    flex-direction: column;
+  }
 }
 
 .teamText {

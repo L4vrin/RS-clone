@@ -54,6 +54,9 @@
   "Create": "Создать",
   "Cancel": "Отменить",
 
+  "TimeForFocus": "Время поработать!",
+  "TimeForBreak": "Можно отдохнуть!",
+
   "TimerSettings": "Настройки таймера",
   "TimeMinutes": "Время (минуты)",
   "Pomodoro": "Томат",

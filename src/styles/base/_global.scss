@@ -1,4 +1,17 @@
 @import './colorVars';
+
+html {
+  font-size: 16px;
+
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
+
+  @media (max-width: 425px) {
+    font-size: 14px;
+  }
+}
+
 .container {
   max-width: 1000px;
   margin: 0 auto;
@@ -18,15 +31,4 @@ a {
 
 a:hover {
   color: var(--link-hover-color);
-}
-
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  border: 0;
-  clip: rect(0 0 0 0);
 }

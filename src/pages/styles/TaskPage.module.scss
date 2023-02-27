@@ -1,9 +1,15 @@
 .taskPageContainer {
-  min-height: calc(100vh - 141px);
+  flex-grow: 1;
+  padding: 0 10px;
   display: grid;
-  grid-template-columns: 1fr 1000px 1fr;
+  grid-template-columns: 1fr minmax(320px, 1000px) 1fr;
   grid-template-rows: 1fr;
   gap: 0px 0px;
   background-repeat: no-repeat;
   background-position: right 30px bottom 30px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    margin: 0 auto;
+  }
 }
