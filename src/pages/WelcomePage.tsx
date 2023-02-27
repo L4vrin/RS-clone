@@ -1,9 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import useMousePosition from '../hooks/useMousePosition';
 import styles from './styles/WelcomePage.module.scss';
 import logo from '../assets/img/logo.png';
 import bgCalendar from '../assets/img/calendar-bg.png';
+import bgClock from '../assets/img/clock.png';
 import FormReg from '../components/Forms/FormReg';
 import FormLog from '../components/Forms/FormLog';
 import useAppSelector from '../hooks/useAppSelector';
@@ -13,6 +15,7 @@ const WelcomePage = () => {
   const user = localStorage.getItem('user');
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const position = useMousePosition();
 
   useEffect(() => {
     if (user) {
@@ -21,7 +24,17 @@ const WelcomePage = () => {
   }, [navigate, user]);
 
   return (
-    <div className={styles.wrapper} style={{ backgroundImage: `url(${bgCalendar})` }}>
+    <div
+      className={styles.wrapper}
+      style={{
+        backgroundImage: `url(${bgCalendar}), url(${bgClock})`,
+        backgroundPosition: `
+        right ${12 + (position.x - window.innerWidth / 2) / 20}px
+        bottom ${23 - (position.y - window.innerHeight / 2) / 60}px, 
+        right ${300 - (position.x + window.innerWidth / 2) / 33}px
+        bottom ${150 + (position.y - window.innerHeight / 2) / 40}px `,
+      }}
+    >
       <div className={styles.leftContainer}>
         <img src={logo} alt="logo" className={styles.logo} />
         <div className={styles.aboutContainer}>
