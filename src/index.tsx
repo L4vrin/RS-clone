@@ -4,7 +4,7 @@ import { ApiProvider } from '@reduxjs/toolkit/dist/query/react';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store';
-import './styles/index.scss';
+import './index.scss';
 import App from './App';
 import { tasksApi } from './store/tasks/tasksApi';
 import './settings/language/i18n';
