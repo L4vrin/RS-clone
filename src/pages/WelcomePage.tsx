@@ -27,6 +27,7 @@ const WelcomePage = () => {
     <div
       className={styles.wrapper}
       style={{
+        overflow: 'hidden',
         backgroundImage: `url(${bgCalendar}), url(${bgClock})`,
         backgroundPosition: `
         right ${12 + (position.x - window.innerWidth / 2) / 20}px
