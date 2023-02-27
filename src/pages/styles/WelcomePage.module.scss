@@ -34,11 +34,13 @@
 }
 
 .rightContainer {
+  max-width: 390px;
   background-color: var(--module-background-color);
   padding: 20px;
   border-radius: 17px;
   transition: box-shadow 0.2s ease-in;
 }
+
 .rightContainer:hover {
   box-shadow: var(--hover-box-shadow);
 }
