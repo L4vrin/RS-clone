@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import Footer from './Footer';
 
@@ -12,12 +11,12 @@ describe('Footer component', () => {
   it('Link to repositories', () => {
     render(<Footer />);
     const repositoriesLinks = screen.getAllByRole('link')
-    const KonstantinRep = repositoriesLinks[0]
-    const AlexRep = repositoriesLinks[1]
-    const GeorgeRep = repositoriesLinks[2]
-    expect(KonstantinRep).toHaveAttribute('href', 'https://github.com/L4vrin');
-    expect(AlexRep).toHaveAttribute('href', 'https://github.com/aleksryab');
-    expect(GeorgeRep).toHaveAttribute('href', 'https://github.com/MaDKnighT404');
+    const konstantinRep = repositoriesLinks[0]
+    const alexRep = repositoriesLinks[1]
+    const georgeRep = repositoriesLinks[2]
+    expect(konstantinRep).toHaveAttribute('href', 'https://github.com/L4vrin');
+    expect(alexRep).toHaveAttribute('href', 'https://github.com/aleksryab');
+    expect(georgeRep).toHaveAttribute('href', 'https://github.com/MaDKnighT404');
   })
 
   it('Link to RSShool', () => {
