@@ -18,9 +18,9 @@ interface TimerSettingsState {
 const initialState: TimerSettingsState = JSON.parse(
   localStorage.getItem(LS_TIMER_SETTINGS_KEY) || 'null'
 ) ?? {
-  workPeriodInMinutes: 2,
-  shortBreakPeriodInMinutes: 1,
-  longBreakPeriodInMinutes: 3,
+  workPeriodInMinutes: 25,
+  shortBreakPeriodInMinutes: 5,
+  longBreakPeriodInMinutes: 15,
   longBreakInterval: 4,
   autoRunWork: true,
   autoRunBreak: true,
